@@ -54,6 +54,8 @@ hi WarningMsg	guifg=salmon
 "hi Tooltip
 hi MatchParen guibg=grey30 guifg=#dfffdf
 
+hi Pmenu guibg=Salmon gui=bold
+
 " syntax highlighting groups
 hi Comment	guifg=SkyBlue
 hi Constant	guifg=#ffa0a0
