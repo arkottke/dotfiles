@@ -11,6 +11,13 @@ set expandtab
 " General Settings
 " ----------------
 set cursorline
+set number
+
+set wildmenu " turn on command line completion wild style
+" ignore these list file extensions
+set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
+            \,*.pdf,*.un~,*.swp
+set wildmode=list:longest " turn on wild mode huge list
 
 " GUI Settings
 " ------------

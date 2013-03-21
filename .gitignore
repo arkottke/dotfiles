@@ -1,0 +1,3 @@
+# Vim swap and undo files
+*.un~
+*.swp
