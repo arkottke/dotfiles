@@ -19,18 +19,18 @@
 [submodule "vim/bundle/jellybeans"]
 	path = vim/bundle/jellybeans
 	url = git://github.com/nanotech/jellybeans.vim.git
-[submodule ".\\vim\\bundle\\vim-surround"]
-	path = .\\vim\\bundle\\vim-surround
+[submodule "vim/bundle/vim-surround"]
+	path = vim/bundle/vim-surround
 	url = git://github.com/tpope/vim-surround.git
-[submodule ".\\vim\\bundle\\delimitMate"]
-	path = .\\vim\\bundle\\delimitMate
+[submodule "vim/bundle/delimitMate"]
+	path = vim/bundle/delimitMate
 	url = git://github.com/Raimondi/delimitMate.git
-[submodule ".\\vim\\bundle\\syntastic"]
-	path = .\\vim\\bundle\\syntastic
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
-[submodule ".\\vim\\bundle\\pep8-indent"]
-	path = .\\vim\\bundle\\pep8-indent
+[submodule "vim/bundle/pep8-indent"]
+	path = vim/bundle/pep8-indent
 	url = git://github.com/hynek/vim-python-pep8-indent.git
-[submodule ".\\vim\\bundle\\vim-ipython"]
-	path = .\\vim\\bundle\\vim-ipython
+[submodule "vim/bundle/vim-ipython"]
+	path = vim/bundle/vim-ipython
 	url = git://github.com/ivanov/vim-ipython.git
