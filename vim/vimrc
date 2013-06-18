@@ -36,3 +36,7 @@ if has("gui_gtk2")
 elseif has("win32") || has("win64")
 	set guifont=DejaVu_Sans_Mono:h9:cANSI
 endif
+
+" Plugin Settings
+" ---------------
+let g:SuperTabContextDefaultCompletionType = "context"
