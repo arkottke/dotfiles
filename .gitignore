@@ -1,3 +1,6 @@
 # Vim swap and undo files
 *.un~
 *.swp
+
+# Remove vim .netrwhist
+vim/.netrwhist
