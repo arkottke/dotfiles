@@ -21,7 +21,7 @@ set wildmode=list:longest " turn on wild mode huge list
 
 " GUI Settings
 " ------------
-set background=dark
+set background=light
 
 if has('gui_running')
     colorscheme solarized
@@ -32,7 +32,7 @@ set guioptions=ce
 "              |+-- use simple dialogs rather than pop-ups
 "              +  use GUI tabs, not console style tabs
 if has("gui_gtk2")
-	set guifont=DejaVu\ Sans\ Mono\ 9
+	set guifont=DejaVu\ Sans\ Mono\ 10
 elseif has("win32") || has("win64")
 	set guifont=DejaVu_Sans_Mono:h9:cANSI
 endif

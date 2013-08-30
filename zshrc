@@ -60,3 +60,6 @@ title $cmd[1]:t "$cmd[2,-1]"
 function mergepdf() {
 gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$@[1] $@[2,-1]
 }
+
+# Fasd setup for zsh
+eval "$(fasd --init auto)"
