@@ -39,4 +39,4 @@ endif
 
 " Plugin Settings
 " ---------------
-let g:SuperTabContextDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "context"
