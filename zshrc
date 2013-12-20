@@ -34,6 +34,10 @@ alias ls='ls --color'
 export EDITOR='vim'
 export SVN_EDITOR='vim'
 
+# Fasd setup for zsh
+eval "$(fasd --init auto)"
+
+# Functions for setting window title
 function title {
 if [[ $TERM == "screen" ]]; then
     # Use these two for GNU Screen:
@@ -61,5 +65,7 @@ function mergepdf() {
 gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$@[1] $@[2,-1]
 }
 
-# Fasd setup for zsh
-eval "$(fasd --init auto)"
+# Random videos in folder
+function playrandom() {
+ls $1/**/*.(mp4|mov) | xargs vlc --random
+}
