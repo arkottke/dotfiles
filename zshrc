@@ -1,5 +1,8 @@
 source /etc/profile
 
+# Add local bin/
+export PATH=/home/albert/.local/bin:$PATH
+
 # No beeping
 unsetopt beep
 
