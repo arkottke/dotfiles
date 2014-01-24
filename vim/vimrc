@@ -37,6 +37,9 @@ elseif has("win32") || has("win64")
 	set guifont=DejaVu_Sans_Mono:h9:cANSI
 endif
 
+" Use an undofile for persistent undos
+set undofile
+
 " Plugin Settings
 " ---------------
 let g:SuperTabDefaultCompletionType = "context"
