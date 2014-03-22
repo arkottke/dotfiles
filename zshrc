@@ -65,10 +65,23 @@ title $cmd[1]:t "$cmd[2,-1]"
 
 # Merge pdf
 function mergepdf() {
-gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$@[1] $@[2,-1]
+    gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$@[1] $@[2,-1]
 }
 
 # Random videos in folder
 function playrandom() {
-ls $1/**/*.(mp4|mov) | xargs vlc --random
+    ls $1/**/*.(mp4|mov) | xargs vlc --random
 }
+
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] ) )
+}
+compctl -K _pip_completion pip
+# pip zsh completion end
+
