@@ -12,8 +12,8 @@ HISTSIZE=5000
 SAVEHIST=5000
 # Location of history file
 HISTFILE=~/.zhistory
-# Share history across shells
-setopt share_history
+
+# Remove duplicates from the history
 setopt hist_save_no_dups
 
 # Vi style key bindings
