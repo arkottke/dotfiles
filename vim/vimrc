@@ -1,5 +1,28 @@
-" Start pathogen
-call pathogen#infect()
+" Initialize Vundle
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Bundles to load
+Bundle 'gmarik/Vundle.vim'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'tpope/vim-surround'
+
+Bundle 'tpope/vim-git'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'kien/ctrlp.vim'
+Bundle 'bling/vim-airline'
+Bundle 'scrooloose/syntastic'
+Bundle 'hynek/vim-python-pep8-indent'
+Bundle 'sjl/gundo.vim'
+
 
 " Text Settings
 " -------------
@@ -10,6 +33,8 @@ set expandtab
 
 " General Settings
 " ----------------
+filetype plugin indent on  
+
 "set cursorline
 set number
 
