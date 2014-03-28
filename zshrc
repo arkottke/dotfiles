@@ -85,3 +85,7 @@ function _pip_completion {
 compctl -K _pip_completion pip
 # pip zsh completion end
 
+# Commands with passwords are excluded from github
+if [[ -a .zshrc_priv ]]; then
+   source ~/.zshrc_priv
+fi
