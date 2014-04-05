@@ -1,0 +1,7 @@
+[user]
+        name = arkottke
+	email = albert.kottke@gmail.com
+[push]
+	default = simple
+[credential]
+	helper = cache --timeout=3600
