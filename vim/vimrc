@@ -12,8 +12,13 @@ set expandtab
 syntax on
 filetype plugin indent on  
 
-"set cursorline
+set autoindent
+set backspace=ident,eol,start
+set complete-=i
+set incsearch
 set number
+set showcmd
+set smarttab
 
 set wildmenu " turn on command line completion wild style
 " ignore these list file extensions
@@ -23,10 +28,11 @@ set wildmode=list:longest " turn on wild mode huge list
 
 " GUI Settings
 " ------------
-set background=light
+"set background=light
 
 if has('gui_running')
     colorscheme solarized
+    set cusorline
 endif
 
 set guioptions=ce 
@@ -38,9 +44,6 @@ if has("gui_gtk2")
 elseif has("win32") || has("win64")
 	set guifont=DejaVu_Sans_Mono:h9:cANSI
 endif
-
-" Use an undofile for persistent undos
-set undofile
 
 " Plugin Settings
 " ---------------
