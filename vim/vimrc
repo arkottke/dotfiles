@@ -13,7 +13,7 @@ syntax on
 filetype plugin indent on  
 
 set autoindent
-set backspace=ident,eol,start
+set backspace=indent,eol,start
 set complete-=i
 set incsearch
 set number
