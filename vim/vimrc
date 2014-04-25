@@ -2,10 +2,11 @@ execute pathogen#infect()
 
 " Text Settings
 " -------------
+set autoindent
+set expandtab
 set shiftwidth=4 	" auto-ident width when using cindent
 set softtabstop=4 	" spaces added when hitting tab
 set tabstop=8 		" real tab width
-set expandtab
 
 " General Settings
 " ----------------
@@ -16,15 +17,19 @@ set autoindent
 set backspace=indent,eol,start
 set complete-=i
 set incsearch
+set laststatus=2
 set number
+set ruler
 set showcmd
 set smarttab
 
-set wildmenu " turn on command line completion wild style
+" turn on command line completion wild style
+set wildmenu 
 " ignore these list file extensions
 set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
             \,*.pdf,*.un~,*.swp
-set wildmode=list:longest " turn on wild mode huge list
+" turn on wild mode huge list
+set wildmode=list:longest 
 
 " GUI Settings
 " ------------
@@ -32,7 +37,8 @@ set wildmode=list:longest " turn on wild mode huge list
 
 if has('gui_running')
     colorscheme solarized
-    set cusorline
+    set cursorline
+    set lines=25 columns=90
 endif
 
 set guioptions=ce 
@@ -49,6 +55,6 @@ endif
 " ---------------
 let g:SuperTabDefaultCompletionType = 'context'
 autocmd FileType *
-    \ if &omnifunc != '' |
-    \   call SuperTabChain(&omnifunc, "<c-p>") |
-    \ endif
+\ if &omnifunc != '' |
+\   call SuperTabChain(&omnifunc, "<c-p>") |
+\ endif
