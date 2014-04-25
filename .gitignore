@@ -2,5 +2,8 @@
 *.un~
 *.swp
 
+# Ignore compiled Python files
+*.pyc
+
 # Remove vim .netrwhist
 vim/.netrwhist
