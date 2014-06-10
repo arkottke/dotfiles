@@ -1,4 +1,4 @@
-let g:pathogen_disabled = ['ctrlp', 'yankstack', 'supertab']
+let g:pathogen_disabled = ['ctrlp', 'ultisnips', 'yankstack', 'supertab', 'vinegar']
 execute pathogen#infect()
 
 " Text Settings
@@ -62,7 +62,7 @@ nnoremap <space>/ :Unite grep:.<CR>
 nnoremap <space>y :Unite history/yank<CR>
 nnoremap <space>s :Unite -quick-match buffer<CR>
 
-nnoremap <C-p> :Unite -start-insert buffer file_rec/async:!<CR>
+nnoremap <C-p> :Unite -start-insert file_rec:!<CR>
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 
@@ -99,10 +99,11 @@ let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 " Don't close the preview
 let g:neocomplete#enable_auto_close_preview = 0
+let g:neocomplete#enable_auto_select = 1
 
 " Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+inoremap <expr><C-g> neocomplete#undo_completion()
+inoremap <expr><C-l> neocomplete#complete_common_string()
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -118,3 +119,8 @@ inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
