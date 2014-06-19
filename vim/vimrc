@@ -1,4 +1,5 @@
-let g:pathogen_disabled = ['ctrlp', 'ultisnips', 'yankstack', 'supertab', 'vinegar']
+let g:pathogen_disabled = ['neocomplete', 'neosnippet', 'neosnippet-snippets',
+            \'unite', 'vimproc', 'yankstack']
 execute pathogen#infect()
 
 " Text Settings
@@ -54,29 +55,40 @@ endif
 
 " Plugin Settings
 " ---------------
-" Unite
-let g:unite_source_history_yank_enable = 1
-let g:unite_winheight = 10
+" Supertab
+let g:SuperTabDefaultCompletionType = "context"
+autocmd FileType *
+\ if &omnifunc != '' |
+\   call SuperTabChain(&omnifunc, "<c-p>") |
+\   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+\ endif
 
-nnoremap <space>/ :Unite grep:.<CR>
-nnoremap <space>y :Unite history/yank<CR>
-nnoremap <space>s :Unite -quick-match buffer<CR>
+" CtrlP
+let g:ctrlp_root_markers = ['.ctrlp']
 
-nnoremap <C-p> :Unite -start-insert file_rec:!<CR>
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-
-autocmd FileType unite call s:unite_settings()
-
-function! s:unite_settings()
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-  imap <silent><buffer><expr> <C-x> unite#do_action('split')
-  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-
-  nmap <buffer> <ESC> <Plug>(unite_exit)
-endfunction
+"" " Unite
+"" let g:unite_source_history_yank_enable = 1
+"" let g:unite_winheight = 10
+"" 
+"" nnoremap <space>/ :Unite grep:.<CR>
+"" nnoremap <space>y :Unite history/yank<CR>
+"" nnoremap <space>s :Unite -quick-match buffer<CR>
+"" 
+"" nnoremap <C-p> :Unite -start-insert file_rec:!<CR>
+"" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"" call unite#filters#sorter_default#use(['sorter_rank'])
+"" 
+"" autocmd FileType unite call s:unite_settings()
+"" 
+"" function! s:unite_settings()
+""   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+""   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+""   imap <silent><buffer><expr> <C-x> unite#do_action('split')
+""   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+""   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+"" 
+""   nmap <buffer> <ESC> <Plug>(unite_exit)
+"" endfunction
 
 " Sneak. Use f instead of s
 nmap f <Plug>Sneak_s
@@ -86,41 +98,43 @@ xmap F <Plug>Sneak_S
 omap f <Plug>Sneak_s
 omap F <Plug>Sneak_S
 
-" Disable Jedi completion
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#completions_enabled=0
+" Jedi. Disable selecting first so that tab can be used to select the first.
+let g:jedi#popup_select_first = 0
+let g:jedi#completions_enabled = 1
 
-" NeoComplete
-" Use neocomplete
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-" Don't close the preview
-let g:neocomplete#enable_auto_close_preview = 0
-let g:neocomplete#enable_auto_select = 1
 
-" Plugin key-mappings.
-inoremap <expr><C-g> neocomplete#undo_completion()
-inoremap <expr><C-l> neocomplete#complete_common_string()
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
+"" " NeoComplete
+"" " Use neocomplete
+"" let g:neocomplete#enable_at_startup = 1
+"" " Use smartcase.
+"" let g:neocomplete#enable_smart_case = 1
+"" " Set minimum syntax keyword length.
+"" let g:neocomplete#sources#syntax#min_keyword_length = 3
+"" " Don't close the preview
+"" let g:neocomplete#enable_auto_close_preview = 0
+"" let g:neocomplete#enable_auto_select = 1
+"" 
+"" " Plugin key-mappings.
+"" inoremap <expr><C-g> neocomplete#undo_completion()
+"" inoremap <expr><C-l> neocomplete#complete_common_string()
+"" " Recommended key-mappings.
+"" " <CR>: close popup and save indent.
+"" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"" function! s:my_cr_function()
+""   return neocomplete#close_popup() . "\<CR>"
+""   " For no inserting <CR> key.
+""   "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+"" endfunction
+"" " <TAB>: completion.
+"" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"" " <C-h>, <BS>: close popup and delete backword char.
+"" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+"" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+"" inoremap <expr><C-y>  neocomplete#close_popup()
+"" inoremap <expr><C-e>  neocomplete#cancel_popup()
+"" 
+"" if !exists('g:neocomplcache_force_omni_patterns')
+""   let g:neocomplcache_force_omni_patterns = {}
+"" endif
+"" let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
