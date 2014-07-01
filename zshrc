@@ -31,6 +31,9 @@ autoload -U colors && colors
 PS1="%{$fg[green]%}%n@%m %{$fg[yellow]%}%3c
 %{$reset_color%}$ "
 
+bindkey -M viins '^N' history-incremental-search-backward
+bindkey -M viins '^P' history-incremental-search-forward
+
 alias ls='ls --color'
 
 # Set the editor

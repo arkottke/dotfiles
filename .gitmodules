@@ -61,3 +61,6 @@
 [submodule "vim/bundle/neosnippet-snippets"]
 	path = vim/bundle/neosnippet-snippets
 	url = https://github.com/Shougo/neosnippet-snippets.git
+[submodule "vim/bundle/sudoedit"]
+	path = vim/bundle/sudoedit
+	url = https://github.com/chrisbra/SudoEdit.vim.git
