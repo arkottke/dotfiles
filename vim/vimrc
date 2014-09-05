@@ -1,5 +1,5 @@
 let g:pathogen_disabled = ['neocomplete', 'neosnippet', 'neosnippet-snippets',
-            \'unite', 'vimproc', 'yankstack']
+            \'unite', 'vimproc']
 execute pathogen#infect()
 
 " Text Settings
@@ -30,13 +30,20 @@ set smarttab
 set wildmenu 
 " ignore these list file extensions
 set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
-            \,*.pdf,*.un~,*.swp
+            \,*.pdf,*.un~,*.swp,*.xlsx,*.docx,*/.git/*,*/.svn/*
 " turn on wild mode huge list
 set wildmode=list:longest 
 
 set completeopt=menuone,longest,preview
 " Open new windows below the current window
 "set splitbelow
+
+if has("win32") || has("win64")
+    set fileformat=unix
+    set encoding=utf-8
+    set dir=C:/temp
+    set grepprg=C:/cygwin64/bin/grep.exe\ -niH
+endif
 
 " GUI Settings
 " ------------
@@ -53,9 +60,9 @@ set guioptions=ce
 "              |+-- use simple dialogs rather than pop-ups
 "              +  use GUI tabs, not console style tabs
 if has("gui_gtk2")
-	set guifont=DejaVu\ Sans\ Mono\ 10
+    set guifont=DejaVu\ Sans\ Mono\ 10
 elseif has("win32") || has("win64")
-	set guifont=DejaVu_Sans_Mono:h9:cANSI
+    set guifont=DejaVu_Sans_Mono:h9:cANSI
 endif
 
 " Plugin Settings
