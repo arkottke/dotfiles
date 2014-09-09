@@ -1,15 +1,14 @@
 source /etc/profile
 
-# Add local bin/
-export PATH=/home/albert/.local/bin:$PATH
-
 # No beeping
 unsetopt beep
 
 # Number of lines kept in history
 HISTSIZE=5000
+
 # Number of lines saved in the history after logout
 SAVEHIST=5000
+
 # Location of history file
 HISTFILE=~/.zhistory
 
@@ -18,7 +17,7 @@ setopt hist_save_no_dups
 
 # Vi style key bindings
 bindkey -v
-# End of lines configured by zsh-newuser-install
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/albert/.zshrc'
 
@@ -66,16 +65,6 @@ local -a cmd; cmd=(${(z)1})
 title $cmd[1]:t "$cmd[2,-1]"
 }
 
-# Merge pdf
-function mergepdf() {
-    gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$@[1] $@[2,-1]
-}
-
-# Random videos in folder
-function playrandom() {
-    ls $1/**/*.(mp4|mov) | xargs vlc --random
-}
-
 # pip zsh completion start
 function _pip_completion {
   local words cword
@@ -87,6 +76,25 @@ function _pip_completion {
 }
 compctl -K _pip_completion pip
 # pip zsh completion end
+
+if [[$HOST == "SFBD29905"]]; then
+    # Commands for work computer
+    
+    # Don't buffer Python -- import for windows
+    export PYTHONUNBUFFERED=1
+    alias 'py=/opt/miniconda/python.exe'
+else
+    # Other computers
+    # Merge pdf
+    function mergepdf() {
+        gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$@[1] $@[2,-1]
+    }
+
+    # Random videos in folder
+    function playrandom() {
+        ls $1/**/*.(mp4|mov) | xargs vlc --random
+    }
+fi
 
 # Commands with passwords are excluded from github
 if [[ -a .zshrc_priv ]]; then
