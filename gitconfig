@@ -1,7 +1,9 @@
 [user]
-        name = arkottke
+        name = Albert Kottke
 	email = albert.kottke@gmail.com
 [push]
 	default = simple
 [credential]
 	helper = cache --timeout=3600
+[github]
+	user = arkottke

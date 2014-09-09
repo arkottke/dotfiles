@@ -65,18 +65,6 @@ local -a cmd; cmd=(${(z)1})
 title $cmd[1]:t "$cmd[2,-1]"
 }
 
-# pip zsh completion start
-function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] ) )
-}
-compctl -K _pip_completion pip
-# pip zsh completion end
-
 if [[$HOST == "SFBD29905"]]; then
     # Commands for work computer
     
@@ -94,6 +82,12 @@ else
     function playrandom() {
         ls $1/**/*.(mp4|mov) | xargs vlc --random
     }
+
+    # Add local bin/
+    export PATH=/home/albert/.local/bin:$PATH
+
+    # Add qwt to ld_path
+    export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/home/albert/Documents/programs/qwt-6.1/lib 
 fi
 
 # Commands with passwords are excluded from github
