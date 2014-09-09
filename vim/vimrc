@@ -74,6 +74,10 @@ autocmd FileType *
             \   call SuperTabChain(&omnifunc, "<c-p>") |
             \ endif
 
+" Ultisnips
+let g:ultinsips_python_quoting_style = 'double'
+let g:ultinsips_python_style = 'sphinx'
+
 " CtrlP
 let g:ctrlp_root_markers = ['.ctrlp']
 
