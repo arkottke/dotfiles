@@ -1,5 +1,5 @@
 let g:pathogen_disabled = ['neocomplete', 'neosnippet', 'neosnippet-snippets',
-            \'unite', 'vimproc', 'yankstack']
+            \'unite', 'vimproc']
 execute pathogen#infect()
 
 " Text Settings
