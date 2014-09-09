@@ -3,6 +3,9 @@ source /etc/profile
 # Add local bin/
 export PATH=/home/albert/.local/bin:$PATH
 
+# Add qwt to ld_path
+export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/home/albert/Documents/programs/qwt-6.1/lib 
+
 # No beeping
 unsetopt beep
 
@@ -73,7 +76,7 @@ function mergepdf() {
 
 # Random videos in folder
 function playrandom() {
-    ls $1/**/*.(mp4|mov) | xargs vlc --random
+    ls $1/**/*.(mp4|mov|wmv) | xargs vlc --random
 }
 
 # pip zsh completion start
