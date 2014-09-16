@@ -65,12 +65,12 @@ local -a cmd; cmd=(${(z)1})
 title $cmd[1]:t "$cmd[2,-1]"
 }
 
-if [[$HOST == "SFBD29905"]]; then
+if [[ $HOST == "SFBD29905" ]]; then
     # Commands for work computer
     
     # Don't buffer Python -- import for windows
     export PYTHONUNBUFFERED=1
-    alias 'py=/opt/miniconda/python.exe'
+    alias py='/opt/miniconda/python.exe'
 else
     # Other computers
     # Merge pdf
