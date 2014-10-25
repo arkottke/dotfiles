@@ -1,5 +1,4 @@
-let g:pathogen_disabled = ['neocomplete', 'neosnippet', 'neosnippet-snippets',
-            \'unite', 'vimproc']
+let g:pathogen_disabled = ['neocomplete', 'neosnippet', 'neosnippet-snippets', 'unite', 'vimproc']
 execute pathogen#infect()
 
 " Text Settings
@@ -25,6 +24,7 @@ set ruler
 set shellslash
 set showcmd
 set smarttab
+set t_Co=256
 
 " turn on command line completion wild style
 set wildmenu 
@@ -47,8 +47,6 @@ endif
 
 " GUI Settings
 " ------------
-"set background=light
-
 if has('gui_running')
     colorscheme solarized
     set cursorline
@@ -67,6 +65,8 @@ endif
 
 " Plugin Settings
 " ---------------
+" Airline
+let g:airline_theme = 'light'
 " Supertab
 let g:SuperTabDefaultCompletionType = 'context'
 autocmd FileType *
