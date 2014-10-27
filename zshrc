@@ -34,6 +34,7 @@ bindkey -M viins '^N' history-incremental-search-backward
 bindkey -M viins '^P' history-incremental-search-forward
 
 alias ls='ls --color'
+alias tmux='tmux -2'
 
 # Set the editor
 export EDITOR='vim'
@@ -84,7 +85,7 @@ else
     }
 
     # Add local bin/
-    export PATH=/home/albert/.local/bin:$PATH
+    export PATH=/home/albert/miniconda3/bin:/home/albert/.local/bin:$PATH
 
     # Add qwt to ld_path
     export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/home/albert/Documents/programs/qwt-6.1/lib 
