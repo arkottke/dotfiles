@@ -45,6 +45,10 @@ if has("win32") || has("win64")
     set grepprg=C:/cygwin64/bin/grep.exe\ -niH
 endif
 
+" Configure ctags
+nnoremap <F4> :!ctags -f .tags<CR>
+set tags=./.tags
+
 " GUI Settings
 " ------------
 if has('gui_running')
@@ -80,6 +84,7 @@ let g:ultinsips_python_style = 'sphinx'
 
 " CtrlP
 let g:ctrlp_root_markers = ['.ctrlp']
+nnoremap <Leader>. :CtrlPTag<cr>
 
 " Sneak. Use f instead of s
 nmap f <Plug>Sneak_s
