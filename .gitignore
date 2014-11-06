@@ -5,5 +5,10 @@
 # Ignore compiled Python files
 *.pyc
 
+# Ignore ipython databases and history
+ipython/*/db/
+ipython/*/static/
+ipython/*/history.sqlite
+
 # Remove vim .netrwhist
 vim/.netrwhist

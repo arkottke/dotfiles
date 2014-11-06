@@ -11,7 +11,7 @@ set tabstop=8 		" real tab width
 
 " General Settings
 " ----------------
-syntax on
+syntax enable
 filetype plugin indent on  
 
 set autoindent
@@ -24,7 +24,10 @@ set ruler
 set shellslash
 set showcmd
 set smarttab
+
 set t_Co=256
+set background=dark
+colorscheme solarized
 
 " turn on command line completion wild style
 set wildmenu 
@@ -45,10 +48,13 @@ if has("win32") || has("win64")
     set grepprg=C:/cygwin64/bin/grep.exe\ -niH
 endif
 
+" Configure ctags
+nnoremap <F4> :!ctags -f .tags<CR>
+set tags=./.tags
+
 " GUI Settings
 " ------------
 if has('gui_running')
-    colorscheme solarized
     set cursorline
     set lines=25 columns=90
 endif
@@ -80,6 +86,7 @@ let g:ultinsips_python_style = 'sphinx'
 
 " CtrlP
 let g:ctrlp_root_markers = ['.ctrlp']
+nnoremap <Leader>. :CtrlPTag<cr>
 
 " Sneak. Use f instead of s
 nmap f <Plug>Sneak_s
