@@ -5,5 +5,5 @@
 	default = simple
 [credential]
 	helper = cache --timeout=3600
-[github]
-	user = arkottke
+[core]
+	askpass = /usr/bin/ksshaskpass
