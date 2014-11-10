@@ -1,5 +1,30 @@
 source /etc/profile
 
+if [[ $HOST == "SFBD29905" ]]; then
+    # Commands for work computer
+    
+    # Don't buffer Python -- import for windows
+    export PYTHONUNBUFFERED=1
+    alias 'py=/opt/miniconda/python.exe'
+else
+    # Other computers
+    # Merge pdf
+    function mergepdf() {
+        gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$@[1] $@[2,-1]
+    }
+
+    # Random videos in folder
+    function playrandom() {
+        ls $1/**/*.(mp4|mov) | xargs vlc --random
+    }
+
+    # Add local bin/
+    export PATH=/home/albert/.local/bin:$PATH
+
+    # Add qwt to ld_path
+    export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/home/albert/Documents/programs/qwt-6.1/lib 
+fi
+
 # No beeping
 unsetopt beep
 
@@ -34,64 +59,44 @@ bindkey -M viins '^N' history-incremental-search-backward
 bindkey -M viins '^P' history-incremental-search-forward
 
 alias ls='ls --color'
-alias tmux='tmux -2'
+alias tmux='TERM=xterm-256color tmux'
 
 # Set the editor
 export EDITOR='vim'
 export SVN_EDITOR='vim'
 
-# Fasd setup for zsh
-eval "$(fasd --init auto)"
+# format titles for screen and rxvt
+function title() {
+  # escape '%' chars in $1, make nonprintables visible
+  a=${(V)1//\%/\%\%}
 
-# Functions for setting window title
-function title {
-if [[ $TERM == "screen" ]]; then
-    # Use these two for GNU Screen:
-    print -nR $'\033k'$1$'\033'\\
+  # Truncate command, and join lines.
+  a=$(print -Pn "%40>...>$a" | tr -d "\n")
 
-    print -nR $'\033]0;'$2$'\a'
-elif [[ $TERM == "xterm" || $TERM == "rxvt" ]]; then
-    # Use this one instead for XTerms:
-    print -nR $'\033]0;'$*$'\a'
-fi
+  case $TERM in
+  screen)
+    print -Pn "\ek$a:$3\e\\"      # screen title (in ^A")
+    ;;
+  xterm*|rxvt)
+    print -Pn "\e]2;$2 | $a:$3\a" # plain xterm title
+    ;;
+  esac
 }
 
-function precmd {
-title zsh "$PWD"
+# precmd is called just before the prompt is printed
+function precmd() {
+  title "zsh" "$USER@%m" "%55<...<%~"
 }
 
-function preexec {
-emulate -L zsh
-local -a cmd; cmd=(${(z)1})
-title $cmd[1]:t "$cmd[2,-1]"
+# preexec is called just before any command line is executed
+function preexec() {
+  title "$1" "$USER@%m" "%35<...<%~"
 }
-
-if [[ $HOST == "SFBD29905" ]]; then
-    # Commands for work computer
-    
-    # Don't buffer Python -- import for windows
-    export PYTHONUNBUFFERED=1
-    alias py='/opt/miniconda/python.exe'
-else
-    # Other computers
-    # Merge pdf
-    function mergepdf() {
-        gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$@[1] $@[2,-1]
-    }
-
-    # Random videos in folder
-    function playrandom() {
-        ls $1/**/*.(mp4|mov) | xargs vlc --random
-    }
-
-    # Add local bin/
-    export PATH=/home/albert/miniconda3/bin:/home/albert/.local/bin:$PATH
-
-    # Add qwt to ld_path
-    export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/home/albert/Documents/programs/qwt-6.1/lib 
-fi
 
 # Commands with passwords are excluded from github
 if [[ -a .zshrc_priv ]]; then
    source ~/.zshrc_priv
 fi
+
+# Fasd setup for zsh
+eval "$(fasd --init auto)"
