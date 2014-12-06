@@ -55,6 +55,11 @@ autoload -U colors && colors
 PS1="%{$fg[green]%}%n@%m %{$fg[yellow]%}%3c
 %{$reset_color%}$ "
 
+# Called before drawing the prompt
+precmd () { print -Pn "\e]0;%n@%m | %3~\a" }
+# Called before executing a command
+preexec () { print -Pn "\e]0;%n@%m | %3~: ($1)\a" }
+
 bindkey -M viins '^N' history-incremental-search-backward
 bindkey -M viins '^P' history-incremental-search-forward
 
@@ -65,33 +70,6 @@ alias tmux='TERM=xterm-256color tmux'
 export EDITOR='vim'
 export SVN_EDITOR='vim'
 
-# format titles for screen and rxvt
-function title() {
-  # escape '%' chars in $1, make nonprintables visible
-  a=${(V)1//\%/\%\%}
-
-  # Truncate command, and join lines.
-  a=$(print -Pn "%40>...>$a" | tr -d "\n")
-
-  case $TERM in
-  screen)
-    print -Pn "\ek$a:$3\e\\"      # screen title (in ^A")
-    ;;
-  xterm*|rxvt)
-    print -Pn "\e]2;$2 | $a:$3\a" # plain xterm title
-    ;;
-  esac
-}
-
-# precmd is called just before the prompt is printed
-function precmd() {
-  title "zsh" "$USER@%m" "%55<...<%~"
-}
-
-# preexec is called just before any command line is executed
-function preexec() {
-  title "$1" "$USER@%m" "%35<...<%~"
-}
 
 # Commands with passwords are excluded from github
 if [[ -a .zshrc_priv ]]; then
