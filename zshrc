@@ -55,10 +55,14 @@ autoload -U colors && colors
 PS1="%{$fg[green]%}%n@%m %{$fg[yellow]%}%3c
 %{$reset_color%}$ "
 
-# Called before drawing the prompt
-precmd () { print -Pn "\e]0;%n@%m | %3~\a" }
-# Called before executing a command
-preexec () { print -Pn "\e]0;%n@%m | %3~: ($1)\a" }
+case $TERM in 
+    xterm|screen)
+        # Called before drawing the prompt
+        precmd () { print -Pn "\e]0;%n@%m | %3~\a" }
+        # Called before executing a command
+        preexec () { print -Pn "\e]0;%n@%m | %3~: ($1)\a" }
+        ;;
+esac
 
 bindkey -M viins '^N' history-incremental-search-backward
 bindkey -M viins '^P' history-incremental-search-forward
