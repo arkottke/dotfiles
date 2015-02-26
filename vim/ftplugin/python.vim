@@ -1,3 +1,4 @@
+set textwidth=78
 
 " Set F5 to run Python with the appropriate interpreter
 if has("win32") || has("win64")
