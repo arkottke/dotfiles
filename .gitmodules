@@ -73,3 +73,6 @@
 [submodule "vim/bundle/zenburn"]
 	path = vim/bundle/zenburn
 	url = https://github.com/jnurmine/Zenburn.git
+[submodule "vim/bundle/gutentags"]
+	path = vim/bundle/gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags.git

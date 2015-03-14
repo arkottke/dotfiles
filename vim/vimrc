@@ -28,7 +28,7 @@ set smarttab
 set diffopt+=iwhite,vertical
 
 set t_Co=256
-set background=dark
+"set background=light
 colorscheme solarized
 
 " turn on command line completion wild style
@@ -100,4 +100,5 @@ omap F <Plug>Sneak_S
 
 " Jedi. Disable selecting first so that tab can be used to select the first.
 let g:jedi#popup_select_first = 0
+let g:jedi#popup_on_dot = 0
 let g:jedi#completions_enabled = 1
