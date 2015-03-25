@@ -12,7 +12,7 @@ if has("win32") || has("win64")
     map <F5> <ESC>:w<CR>:!C:/Miniconda3/python %<CR>
 else
     " Use the shebang line in linux
-    map <F5> <ESC>:w<CR>:!./%<CR>
+    map <F5> <ESC>:w<CR>:!python3 %<CR>
 endif
 
 " Remove trailing whitespace
