@@ -82,3 +82,15 @@ fi
 
 # Fasd setup for zsh
 eval "$(fasd --init auto)"
+
+function extract_clip() {
+    fname=$1
+    start=$2
+    if [[ $# -ge 3 ]]; then
+        length=$3
+    else
+        length=00:00:15
+    fi
+    echo $length
+    avconv -ss $start -t $length -i $fname -an -aq 5 -ac 2 -qmax 25 -threads 2 myvideo.webm
+}
