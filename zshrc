@@ -69,6 +69,7 @@ bindkey -M viins '^P' history-incremental-search-forward
 
 alias ls='ls --color'
 alias tmux='TERM=xterm-256color tmux'
+alias ko='kde-open5'
 
 # Set the editor
 export EDITOR='vim'
