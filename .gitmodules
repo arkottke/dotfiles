@@ -76,3 +76,6 @@
 [submodule "vim/bundle/gutentags"]
 	path = vim/bundle/gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule "vim/bundle/vim-airline-theme"]
+	path = vim/bundle/vim-airline-theme
+	url = https://github.com/vim-airline/vim-airline-themes
