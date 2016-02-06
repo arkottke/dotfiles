@@ -1,5 +1,8 @@
 set textwidth=78
 
+" Turn on spell checking
+set spell spelllang=en_us
+
 " Set F5 to run Python with the appropriate interpreter
 if has("win32") || has("win64")
     " Set F4 to run ctags
