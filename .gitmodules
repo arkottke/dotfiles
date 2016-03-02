@@ -61,3 +61,6 @@
 [submodule "vim/bundle/table-mode"]
 	path = vim/bundle/table-mode
 	url = https://github.com/dhruvasagar/vim-table-mode.git
+[submodule "vim/bundle/julia-vim"]
+	path = vim/bundle/julia-vim
+	url = git://github.com/JuliaLang/julia-vim.git
