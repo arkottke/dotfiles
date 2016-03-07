@@ -52,17 +52,17 @@ compinit
 
 autoload -U colors && colors
 # Custom prompt
-PS1="%{$fg[green]%}%n@%m %{$fg[yellow]%}%3c
-%{$reset_color%}$ "
+# PS1="%{$fg[green]%}%n@%m %{$fg[yellow]%}%3c
+# %{$reset_color%}$ "
 
-case $TERM in 
-    xterm|screen)
-        # Called before drawing the prompt
-        precmd () { print -Pn "\e]0;%n@%m | %3~\a" }
-        # Called before executing a command
-        preexec () { print -Pn "\e]0;%n@%m | %3~: ($1)\a" }
-        ;;
-esac
+# case $TERM in 
+#     xterm|screen)
+#         # Called before drawing the prompt
+#         precmd () { print -Pn "\e]0;%n@%m | %3~\a" }
+#         # Called before executing a command
+#         preexec () { print -Pn "\e]0;%n@%m | %3~: ($1)\a" }
+#         ;;
+# esac
 
 bindkey -M viins '^N' history-incremental-search-backward
 bindkey -M viins '^P' history-incremental-search-forward
@@ -74,7 +74,6 @@ alias ko='kde-open5'
 # Set the editor
 export EDITOR='vim'
 export SVN_EDITOR='vim'
-
 
 # Commands with passwords are excluded from github
 if [[ -a .zshrc_priv ]]; then
