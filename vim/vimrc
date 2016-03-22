@@ -28,7 +28,7 @@ set smarttab
 set diffopt+=iwhite,vertical
 
 set t_Co=256
-"set background=light
+set background=dark
 colorscheme solarized
 
 " turn on command line completion wild style
@@ -87,7 +87,7 @@ let g:ultinsips_python_quoting_style = 'double'
 let g:ultinsips_python_style = 'sphinx'
 
 " CtrlP
-let g:ctrlp_root_markers = ['.ctrlp']
+let g:ctrl_work_path_mode = 'ra'
 nnoremap <Leader>. :CtrlPTag<cr>
 
 " Sneak. Use f instead of s

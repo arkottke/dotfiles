@@ -12,3 +12,6 @@ ipython/*/history.sqlite
 
 # Remove vim .netrwhist
 vim/.netrwhist
+
+# Vim tags
+tags
