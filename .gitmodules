@@ -61,3 +61,6 @@
 [submodule "vim/bundle/table-mode"]
 	path = vim/bundle/table-mode
 	url = https://github.com/dhruvasagar/vim-table-mode.git
+[submodule "vim/bundle/unimpaired"]
+	path = vim/bundle/unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
