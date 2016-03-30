@@ -9,6 +9,7 @@
 ipython/*/db/
 ipython/*/static/
 ipython/*/history.sqlite
+ipython/*/security/*
 
 # Remove vim .netrwhist
 vim/.netrwhist
