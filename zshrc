@@ -97,6 +97,9 @@ eval `dircolors $HOME/.dir_colors`
 alias ko='kde-open5'
 alias tmux='TERM=xterm-256color tmux'
 
+# Error with msys2 vim on windows
+# alias vim='vim -u NONE'
+
 function extract_clip() {
     fname=$1
     start=$2
