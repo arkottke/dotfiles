@@ -8,7 +8,7 @@
 ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -54,6 +54,11 @@ plugins=(git fasd vi-mode tmux)
 
 # User configuration
 
+if [[ -n $MSYSTEM ]]; then
+    # Add Miniconda to the path for MSYS environments
+    export PATH=/c/Miniconda3:/c/Miniconda3/Scripts:$PATH
+fi
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -95,7 +100,7 @@ eval `dircolors $HOME/.dir_colors`
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias ko='kde-open5'
-alias tmux='TERM=xterm-256color tmux'
+# alias tmux='TERM=xterm-256color tmux'
 
 # Error with msys2 vim on windows
 # alias vim='vim -u NONE'
