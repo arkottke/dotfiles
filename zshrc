@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fasd vi-mode)
+plugins=(git fasd vi-mode tmux)
 
 # User configuration
 
@@ -96,6 +96,9 @@ eval `dircolors $HOME/.dir_colors`
 
 alias ko='kde-open5'
 alias tmux='TERM=xterm-256color tmux'
+
+# Error with msys2 vim on windows
+# alias vim='vim -u NONE'
 
 function extract_clip() {
     fname=$1
