@@ -90,8 +90,8 @@ fi
 # Load solarized directory colors
 eval `dircolors $HOME/.dir_colors`
 
-# Use / for incremental search
-bindkey '/' history-incremental-search-backward
+# Incremental search
+bindkey '^r' history-incremental-search-backward
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
