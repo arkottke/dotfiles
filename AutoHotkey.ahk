@@ -1,21 +1,34 @@
+hasValue(haystack, needle) {
+    if(!isObject(haystack))
+        return false
+    if(haystack.Length()==0)
+        return false
+    for k,v in haystack
+        if(v==needle)
+            return true
+    return false
+}
+
+; Persistant numlock
+SetNumlockState, AlwaysOn
 
 /* Replace the CapsLock key in both Vim and PuTTY with ESC. If the CapsLock key
  * is on, then it should be turned off.
  */
-classname = ""
-keystate = ""
 
 *CapsLock::
-	WinGetClass, classname, A
-	if (classname = "Vim" || classname = "PuTTY") {
-		SetCapsLockState, Off
-		send, {ESC}
-	} else {
-		GetKeyState, keystate, CapsLock, T
-		if (keystate = "D") {
-			SetCapsLockState, Off
-		} else {
-			SetCapsLockState, On
-		}
-	} 
-	return
+    blacklist := ["Vim", "mintty", "PuTTY"]
+    classname = ""
+    WinGetClass, classname, A
+    if (hasValue(blacklist, classname)) {
+        SetCapsLockState, Off
+        send, {ESC}
+    } else {
+        state := GetKeyState("Capslock", "T")
+        if (state) {
+            SetCapsLockState, Off
+        } else {
+            SetCapsLockState, On
+        }
+    } 
+    return
