@@ -18,7 +18,7 @@ let g:Tex_MultipleCompileFormats='dvi,pdf'
 
 " Compile with rubber or texify
 if has('win32') || has('win64')
-    map <F5> <ESC>:w<CR>:!texify -d %<CR>
+    map <F5> <ESC>:w<CR>:!texify -b -p %<CR>
 else
     let g:Tex_CompileRule_pdf='rubber -d $*'
     map <F5> <ESC>:w<CR>:!rubber -d %<CR>
