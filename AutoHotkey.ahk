@@ -17,7 +17,7 @@ SetNumlockState, AlwaysOn
  */
 
 *CapsLock::
-    blacklist := ["Vim", "mintty", "PuTTY"]
+    blacklist := ["Vim", "mintty", "PuTTY", "SunAwtFrame"]
     classname = ""
     WinGetClass, classname, A
     if (hasValue(blacklist, classname)) {
