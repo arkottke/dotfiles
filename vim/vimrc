@@ -1,4 +1,4 @@
-let g:pathogen_disabled = ['neocomplete', 'neosnippet', 'neosnippet-snippets', 'unite', 'vimproc']
+let g:pathogen_disabled = ['gutentags']
 execute pathogen#infect()
 
 " Text Settings
