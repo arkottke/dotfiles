@@ -1,4 +1,4 @@
-set textwidth=78
+set textwidth=79
 
 " Turn on spell checking
 set spell spelllang=en_us
