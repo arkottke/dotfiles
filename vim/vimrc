@@ -107,5 +107,5 @@ let g:jedi#completions_enabled = 1
 let g:table_mode_corner_corner="+"
 let g:table_mode_header_fillchar="="
 
-" No GUI for SudoWrite
+" Disable Sudo GUI mode
 let g:sudo_no_gui=1

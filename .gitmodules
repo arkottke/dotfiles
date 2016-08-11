@@ -67,3 +67,9 @@
 [submodule "vim/bundle/editorconfig"]
 	path = vim/bundle/editorconfig
 	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule "vim/bundle/vimwiki"]
+	path = vim/bundle/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git
+[submodule "vim/bundle/simpylfold"]
+	path = vim/bundle/simpylfold
+	url = https://github.com/tmhedberg/SimpylFold.git
