@@ -106,3 +106,6 @@ let g:jedi#completions_enabled = 1
 " Table-mode
 let g:table_mode_corner_corner="+"
 let g:table_mode_header_fillchar="="
+
+" Disable Sudo GUI mode
+let g:sudo_no_gui=1
