@@ -15,7 +15,7 @@ set textwidth=80
 
 " Compile with rubber or texify
 if has('win32') || has('win64')
-    map <F5> <ESC>:w<CR>:cd %:p:h<CR>:!texify -bp -bibtex %<CR>
+    map <F5> <ESC>:w<CR>:cd %:p:h<CR>:!texify -bp %<CR>
 else
     map <F5> <ESC>:w<CR>:cd %:p:h<CR>:!rubber -d %<CR>
 endif
