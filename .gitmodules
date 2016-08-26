@@ -73,3 +73,6 @@
 [submodule "vim/bundle/simpylfold"]
 	path = vim/bundle/simpylfold
 	url = https://github.com/tmhedberg/SimpylFold.git
+[submodule "vim/bundle/vimtex"]
+	path = vim/bundle/vimtex
+	url = https://github.com/lervag/vimtex.git
