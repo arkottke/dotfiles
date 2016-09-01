@@ -3,11 +3,15 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
-" Required:
-set runtimepath+=/home/albert/Documents/dotfiles/neovim/./repos/github.com/Shougo/dein.vim
-
-" Required:
-call dein#begin('/home/albert/Documents/dotfiles/neovim/.')
+:echom "Hostname: " hostname()
+" Required: paths to dein
+if hostname() == "BUTEO"
+    set runtimepath+=C:\\Users\\albert\\AppData\\Local\\nvim\\repos\\github.com\\Shougo\\dein.vim
+    call dein#begin('C:\\Users\\albert\\AppData\\Local\\nvim.')
+else
+    set runtimepath^=/home/albert/.config/nvim/repos/github.com/Shougo/dein.vim
+    call dein#begin('/home/albert/.config/nvim/.')
+endif
 
 " Let dein manage dein
 " Required:
