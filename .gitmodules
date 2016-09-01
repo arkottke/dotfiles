@@ -88,3 +88,33 @@
 [submodule "vim/bundle/fastfold"]
 	path = vim/bundle/fastfold
 	url = https://github.com/Konfekt/FastFold
+[submodule "neovim/bundle/deoplete"]
+	path = neovim/bundle/deoplete
+	url = https://github.com/Shougo/deoplete.nvim.git
+[submodule "neovim/bundle/neosnippet"]
+	path = neovim/bundle/neosnippet
+	url = https://github.com/Shougo/neosnippet.vim.git
+[submodule "neovim/bundle/neosnippet-snippets"]
+	path = neovim/bundle/neosnippet-snippets
+	url = https://github.com/Shougo/neosnippet-snippets.git
+[submodule "neovim/bundle/base16-vim"]
+	path = neovim/bundle/base16-vim
+	url = https://github.com/chriskempson/base16-vim.git
+[submodule "neovim/bundle/vim-sensible"]
+	path = neovim/bundle/vim-sensible
+	url = https://github.com/tpope/vim-sensible.git
+[submodule "neovim/bundle/syntastic"]
+	path = neovim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "neovim/bundle/vimtex"]
+	path = neovim/bundle/vimtex
+	url = https://github.com/lervag/vimtex.git
+[submodule "neovim/bundle/vim-fugitive"]
+	path = neovim/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "neovim/bundle/vim-vinegar"]
+	path = neovim/bundle/vim-vinegar
+	url = https://github.com/tpope/vim-vinegar.git
+[submodule "neovim/bundle/denite"]
+	path = neovim/bundle/denite
+	url = https://github.com/Shougo/denite.nvim.git
