@@ -1,50 +1,11 @@
-"dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
-:echom "Hostname: " hostname()
-" Required: paths to dein
-if hostname() == "BUTEO"
-    set runtimepath+=C:\\Users\\albert\\AppData\\Local\\nvim\\repos\\github.com\\Shougo\\dein.vim
-    call dein#begin('C:\\Users\\albert\\AppData\\Local\\nvim.')
-else
-    set runtimepath^=/home/albert/.config/nvim/repos/github.com/Shougo/dein.vim
-    call dein#begin('/home/albert/.config/nvim/.')
-endif
+" Required: Load pathogen
+execute pathogen#infect()
 
-" Let dein manage dein
-" Required:
-call dein#add('Shougo/dein.vim')
-
-" Add or remove your plugins here:
-call dein#add('Shougo/deoplete.nvim')
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
-
-call dein#add('chriskempson/base16-vim')
-call dein#add('kien/ctrlp.vim')
-call dein#add('lervag/vimtex')
-call dein#add('scrooloose/syntastic')
-call dein#add('tpope/vim-fugitive')
-call dein#add('tpope/vim-unimpaired')
-call dein#add('tpope/vim-vinegar')
-
-" You can specify revision/branch/tag.
-" call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
-
-" Required:
-call dein#end()
-
-" Required:
-filetype plugin indent on
-
-" If you want to install not installed plugins on startup.
-"if dein#check_install()
-"  call dein#install()
-"endif
-
-"End dein Scripts-------------------------
+filetype plugin indent on  
 
 " Text Settings
 " -------------
@@ -57,7 +18,6 @@ set tabstop=8 		" real tab width
 " General Settings
 " ----------------
 syntax enable
-filetype plugin indent on  
 
 set autoindent
 set backspace=indent,eol,start
