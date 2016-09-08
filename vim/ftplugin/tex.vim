@@ -19,3 +19,13 @@ if has('win32') || has('win64')
 else
     map <F5> <ESC>:w<CR>:cd %:p:h<CR>:!rubber -d %<CR>
 endif
+
+if has('win32') || has('win64')
+    let g:vimtex_view_general_viewer='mupdf'
+endif
+
+let g:vimtex_latexmk_options='-pdf -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
+
+if has('unix')
+    let g:vimtex_latexmk_options+=' -lualatex'
+endif

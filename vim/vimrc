@@ -1,4 +1,4 @@
-let g:pathogen_disabled = ['gutentags']
+let g:pathogen_disabled = []
 execute pathogen#infect()
 
 " Text Settings
@@ -29,7 +29,7 @@ set diffopt+=iwhite,vertical
 
 set t_Co=256
 set background=dark
-colorscheme solarized
+colorscheme base16-solarized-dark
 
 " turn on command line completion wild style
 set wildmenu 
@@ -66,7 +66,7 @@ set guioptions=ce
 "              |+-- use simple dialogs rather than pop-ups
 "              +  use GUI tabs, not console style tabs
 if has("gui_gtk2")
-    set guifont=DejaVu\ Sans\ Mono\ 10
+    set guifont=DejaVu\ Sans\ Mono\ 11
 elseif has("win32") || has("win64")
     set guifont=DejaVu_Sans_Mono:h9:cANSI
 endif
@@ -76,15 +76,15 @@ endif
 " Airline
 let g:airline_theme = 'solarized'
 " Supertab
-let g:SuperTabDefaultCompletionType = 'context'
-autocmd FileType *
-            \ if &omnifunc != '' |
-            \   call SuperTabChain(&omnifunc, "<c-p>") |
-            \ endif
+" let g:SuperTabDefaultCompletionType = 'context'
+" autocmd FileType *
+"             \ if &omnifunc != '' |
+"             \   call SuperTabChain(&omnifunc, "<c-p>") |
+"             \ endif
 
 " Ultisnips
-let g:ultinsips_python_quoting_style = 'double'
-let g:ultinsips_python_style = 'sphinx'
+" let g:ultinsips_python_quoting_style = 'double'
+" let g:ultinsips_python_style = 'sphinx'
 
 " CtrlP
 let g:ctrl_work_path_mode = 'ra'
@@ -99,13 +99,59 @@ omap f <Plug>Sneak_s
 omap F <Plug>Sneak_S
 
 " Jedi. Disable selecting first so that tab can be used to select the first.
-let g:jedi#popup_select_first = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_enabled = 1
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#smart_auto_mappings = 0
 
 " Table-mode
-let g:table_mode_corner_corner="+"
-let g:table_mode_header_fillchar="="
+let g:table_mode_corner_corner = "+"
+let g:table_mode_header_fillchar = "="
 
 " Disable Sudo GUI mode
-let g:sudo_no_gui=1
+let g:sudo_no_gui = 1
+
+
+" Neocomplete config
+""""""""""""""""""""
+
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+
+" Neosnippet config
+"""""""""""""""""""
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ neosnippet#expandable_or_jumpable() ?
+            \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+"if has('conceal')
+"    set conceallevel=2 concealcursor=niv
+"endif
+
+if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+endif
+" Use jedi for python
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:neocomplete#force_omni_input_patterns.python =
+            \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+" alternative pattern: '\h\w*\|[^. \t]\.\w*'
+
