@@ -119,3 +119,9 @@ function extract_clip() {
     echo $length
     avconv -ss $start -t $length -i $fname -an -aq 5 -ac 2 -qmax 25 -threads 2 myvideo.webm
 }
+
+# Enable FZF
+if [[ -e /usr/share/fzf/key-bindings.zsh ]]; then
+    . /usr/share/fzf/key-bindings.zsh
+    . /usr/share/fzf/completion.zsh
+fi
