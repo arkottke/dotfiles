@@ -29,7 +29,7 @@ set diffopt+=iwhite,vertical
 
 set t_Co=256
 set background=dark
-colorscheme base16-solarized-dark
+colorscheme solarized
 
 " turn on command line completion wild style
 set wildmenu 
