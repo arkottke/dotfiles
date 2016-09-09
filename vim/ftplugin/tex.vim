@@ -13,13 +13,10 @@ setlocal spell spelllang=en_us
 " Set the width of text
 set textwidth=80
 
-" Compile with rubber or texify
-if has('win32') || has('win64')
-    map <F5> <ESC>:w<CR>:cd %:p:h<CR>:!texify -bp %<CR>
-else
-    map <F5> <ESC>:w<CR>:cd %:p:h<CR>:!rubber -d %<CR>
-endif
+" Use the shebang line in linux
+map <F5> :VimtexCompileToggle<CR>
 
+" Compile with rubber or texify
 if has('win32') || has('win64')
     let g:vimtex_view_general_viewer='mupdf'
 endif
@@ -27,5 +24,5 @@ endif
 let g:vimtex_latexmk_options='-pdf -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
 
 if has('unix')
-    let g:vimtex_latexmk_options+=' -lualatex'
+    let g:vimtex_latexmk_options.=' -lualatex'
 endif
