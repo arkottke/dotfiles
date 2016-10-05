@@ -1,78 +1,106 @@
+!!!!!!!!!!!!
+! Xft Config
+!!!!!!!!!!!!
 Xft.dpi:        96
 Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintslight
 
-XTerm*VT100.geometry:     80x25
-XTerm*faceName:           Liberation Mono:style=Regular:size=12
-XTerm*dynamicColors:      true
-XTerm*utf8:               2
-XTerm*eightBitInput:      true
-XTerm*saveLines:          2048
-XTerm*scrollKey:          true
-XTerm*scrollTtyOutput:    false
-XTerm*scrollBar:          true
-XTerm*rightScrollBar:     true
-XTerm*jumpScroll:         true
-XTerm*multiScroll:        true
-XTerm*toolBar:            false
+!!!!!!!!!!!!!!
+! URxvt Config
+!!!!!!!!!!!!!!
+URxvt.depth:                32
+URxvt.geometry:             90x30
+URxvt.transparent:          false
+URxvt.fading:               0
+! URxvt.urgentOnBell:         true
+! URxvt.visualBell:           true
+URxvt.loginShell:           false
+URxvt.saveLines:            5000
+URxvt.internalBorder:       3
+URxvt.lineSpace:            0
+
+! Fonts
+URxvt.allow_bold:           false
+URxvt*font:                 xft:Hack:style=Regular:pixelsize=14
+URxvt*boldFont:             xft:Hack:style=Bold:pixelsize=14
+
+! Fix font space
+URxvt*letterSpace:          -1
+
+! Scrollbar
+URxvt.scrollStyle:          rxvt
+URxvt.scrollBar:            false
+
+! Perl extensions
+URxvt.perl-ext-common:      default,matcher
+URxvt.matcher.button:       1
+URxvt.urlLauncher:          google-chrome-stable
+
+! Cursor
+URxvt.cursorBlink:          true
+URxvt.cursorUnderline:      false
+
+! Pointer
+URxvt.pointerBlank:         true
+
 
 !! Solarized colors, dark
 !! Source: https://raw.githubusercontent.com/solarized/xresources/master/Xresources.dark
-#define S_base03        #002b36
-#define S_base02        #073642
-#define S_base01        #586e75
-#define S_base00        #657b83
-#define S_base0         #839496
-#define S_base1         #93a1a1
-#define S_base2         #eee8d5
-#define S_base3         #fdf6e3
+#define S_base03            #002b36
+#define S_base02            #073642
+#define S_base01            #586e75
+#define S_base00            #657b83
+#define S_base0             #839496
+#define S_base1             #93a1a1
+#define S_base2             #eee8d5
+#define S_base3             #fdf6e3
 
-XTerm*background:            S_base03
-XTerm*foreground:            S_base0
-XTerm*fadeColor:             S_base03
-XTerm*cursorColor:           S_base1
-XTerm*pointerColorBackground:S_base01
-XTerm*pointerColorForeground:S_base1
+*background:                S_base03
+*foreground:                S_base0
+*fadeColor:                 S_base03
+*cursorColor:               S_base1
+*pointerColorBackground:    S_base01
+*pointerColorForeground:    S_base1
 
-#define S_yellow        #b58900
-#define S_orange        #cb4b16
-#define S_red           #dc322f
-#define S_magenta       #d33682
-#define S_violet        #6c71c4
-#define S_blue          #268bd2
-#define S_cyan          #2aa198
-#define S_green         #859900
+#define S_yellow            #b58900
+#define S_orange            #cb4b16
+#define S_red               #dc322f
+#define S_magenta           #d33682
+#define S_violet            #6c71c4
+#define S_blue              #268bd2
+#define S_cyan              #2aa198
+#define S_green             #859900
 
 !! black dark/light
-XTerm*color0:                S_base02
-XTerm*color8:                S_base03
+*color0:                    S_base02
+*color8:                    S_base03
 
 !! red dark/light
-XTerm*color1:                S_red
-XTerm*color9:                S_orange
+*color1:                    S_red
+*color9:                    S_orange
 
 !! green dark/light
-XTerm*color2:                S_green
-XTerm*color10:               S_base01
+*color2:                    S_green
+*color10:                   S_base01
 
 !! yellow dark/light
-XTerm*color3:                S_yellow
-XTerm*color11:               S_base00
+*color3:                    S_yellow
+*color11:                   S_base00
 
 !! blue dark/light
-XTerm*color4:                S_blue
-XTerm*color12:               S_base0
+*color4:                    S_blue
+*color12:                   S_base0
 
 !! magenta dark/light
-XTerm*color5:                S_magenta
-XTerm*color13:               S_violet
+*color5:                    S_magenta
+*color13:                   S_violet
 
 !! cyan dark/light
-XTerm*color6:                S_cyan
-XTerm*color14:               S_base1
+*color6:                    S_cyan
+*color14:                   S_base1
 
 !! white dark/light
-XTerm*color7:                S_base2
-XTerm*color15:               S_base3
+*color7:                    S_base2
+*color15:                   S_base3
