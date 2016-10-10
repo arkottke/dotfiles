@@ -1,11 +1,10 @@
 BoldAsColour=yes
 BoldAsFont=yes
-Font=DejaVu Sans Mono
+Font=Hack
 FontHeight=9
 OpaqueWhenFocused=yes
 Term=xterm-256color
 Transparency=low
-
 Black=7,54,66
 Red=220,50,47
 Green=133,153,0
