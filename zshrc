@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -81,10 +81,10 @@ source $ZSH/oh-my-zsh.sh
 
 # Add fake paths on MSYS for completion
 if [[ -n $MSYSTEM && $MSYSTEM == MSYS ]]; then
-	# complete hard drives in msys2
-	drives=$(mount | sed -rn 's#^[A-Z]: on /([a-z]).*#\1#p' | tr '\n' ' ')
-	zstyle ':completion:*' fake-files /: "/:$drives"
-	unset drives
+    # complete hard drives in msys2
+    drives=$(mount | sed -rn 's#^[A-Z]: on /([a-z]).*#\1#p' | tr '\n' ' ')
+    zstyle ':completion:*' fake-files /: "/:$drives"
+    unset drives
 fi
 
 # Load solarized directory colors
