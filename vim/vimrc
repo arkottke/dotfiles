@@ -68,7 +68,7 @@ set guioptions=ce
 if has("gui_gtk2")
     set guifont=Hack\ 10
 elseif has("win32") || has("win64")
-    set guifont=DejaVu_Sans_Mono:h9:cANSI
+    set guifont=Hack:h9:cANSI:qDRAFT
 endif
 
 " Plugin Settings
