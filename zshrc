@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fasd vi-mode tmux)
+plugins=(extract git fasd vi-mode tmux)
 
 # User configuration
 
@@ -92,6 +92,9 @@ eval `dircolors $HOME/.dir_colors`
 
 # Incremental search
 bindkey '^r' history-incremental-search-backward
+
+# Export java options for antialiasing
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
