@@ -28,8 +28,8 @@ set smarttab
 set diffopt+=iwhite,vertical
 
 set t_Co=256
-set background=light
-colorscheme solarized
+set background=dark
+colorscheme dracula
 
 " turn on command line completion wild style
 set wildmenu 
@@ -74,7 +74,7 @@ endif
 " Plugin Settings
 " ---------------
 " Airline
-let g:airline_theme = 'solarized'
+let g:airline_theme = 'dracula'
 " Supertab
 " let g:SuperTabDefaultCompletionType = 'context'
 " autocmd FileType *
