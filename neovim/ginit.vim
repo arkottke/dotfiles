@@ -1,4 +1,4 @@
 
-if !exists('g:GuiLoaded')
-    Guifont Hack:h09
+if exists('g:GuiLoaded')
+    Guifont Fira Code:h9:cANSI:qDRAFT
 endif
