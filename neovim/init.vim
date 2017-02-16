@@ -2,7 +2,45 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+" Add runtime paths -- REQUIRED
+set runtimepath+=~/Documents/GitHub/dotfiles/neovim/bundle/deoplete
+set runtimepath+=~/Documents/GitHub/dotfiles/neovim/bundle/deoplete-jedi
+
+" Text Settings
+" -------------
+set autoindent
+set expandtab
+set shiftwidth=4 	" auto-ident width when using cindent
+set softtabstop=4 	" spaces added when hitting tab
+set tabstop=8 		" real tab width
+
+" General Settings
+" ----------------
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set incsearch
+set laststatus=2
+set number
+set ruler
+set shellslash
+set showcmd
+set smarttab
+
+set diffopt+=iwhite,vertical
+
+set t_Co=256
 colorscheme dracula
+
+" turn on command line completion wild style
+set wildmenu 
+" ignore these list file extensions
+set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
+            \,*.pdf,*.un~,*.swp,*.xlsx,*.docx,*/.git/*,*/.svn/*
+" turn on wild mode huge list
+set wildmode=list:longest 
+
+set completeopt=menuone,longest,preview
 
 " Deoplete
 " """"""""
@@ -40,3 +78,7 @@ call denite#custom#map(
 \ '<denite:move_to_previous_line>',
 \ 'noremap'
 \)
+
+" Neomake
+" """""""
+let g:neomake_open_list=2
