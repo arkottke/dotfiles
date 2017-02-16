@@ -109,6 +109,9 @@
 [submodule "neovim/bundle/pep8-indent"]
 	path = neovim/bundle/pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent.git
-[submodule "neovim/bundle/sensible"]
-	path = neovim/bundle/sensible
-	url = https://github.com/tpope/vim-sensible.git
+[submodule "neovim/bundle/context_filetype"]
+	path = neovim/bundle/context_filetype
+	url = https://github.com/Shougo/context_filetype.vim.git
+[submodule "neovim/bundle/neopairs"]
+	path = neovim/bundle/neopairs
+	url = https://github.com/Shougo/neopairs.vim.git
