@@ -2,10 +2,6 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
-" Add runtime paths -- REQUIRED
-set runtimepath+=~/Documents/GitHub/dotfiles/neovim/bundle/deoplete
-set runtimepath+=~/Documents/GitHub/dotfiles/neovim/bundle/deoplete-jedi
-
 " Text Settings
 " -------------
 set autoindent
@@ -56,6 +52,11 @@ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
   return deoplete#close_popup() . "\<CR>"
 endfunction
+
+if has('win64')
+    let g:python_host_prog = 'C:/Python27/python.exe'
+    let g:python3_host_prog = 'C:/Users/akottke/AppData/Local/Continuum/Miniconda3/python.exe'
+end
 
 " Denite
 " """"""
