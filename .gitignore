@@ -17,4 +17,4 @@ ipython/*/security/*
 neovim/rplugin.vim
 
 # Vim tags
-tags
+**/tags
