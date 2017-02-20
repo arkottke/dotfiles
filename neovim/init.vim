@@ -59,9 +59,14 @@ endfunction
 
 " Denite
 " """"""
-" Use pt which supports linux and windows
-call denite#custom#var('file_rec', 'command',
-\ ['pt', '--follow', '--nocolor', '--nogroup', '-g:', ''])
+" Use pt on windows
+if has('win64')
+    call denite#custom#var('file_rec', 'command',
+    \ ['pt', '--follow', '--nocolor', '--nogroup', '-g:', ''])
+else
+    call denite#custom#var('file_rec', 'command',
+    \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+end
 " Find the git directory
 nnoremap <silent> <C-p> :<C-u>Denite
 \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
@@ -79,6 +84,22 @@ call denite#custom#map(
 \ 'noremap'
 \)
 
+call denite#custom#source('file_mru', 'converters',
+      \ ['converter_relative_word'])
+
+" Define alias
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+
+" Change default prompt
+call denite#custom#option('default', 'prompt', '>')
+
+" Change ignore_globs
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+      \ [ '.git/', '.ropeproject/', '__pycache__/',
+      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+<
 " Neomake
 " """""""
 let g:neomake_open_list=2
