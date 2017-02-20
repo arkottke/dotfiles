@@ -109,3 +109,6 @@
 [submodule "neovim/bundle/pep8-indent"]
 	path = neovim/bundle/pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent.git
+[submodule "neovim/bundle/neomru"]
+	path = neovim/bundle/neomru
+	url = https://github.com/Shougo/neomru.vim
