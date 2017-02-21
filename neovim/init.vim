@@ -42,12 +42,19 @@ set wildmode=list:longest
 
 set completeopt=menuone,longest,preview
 
+"
+" PLUGINS
+" """""""
+"
+
 " Deoplete
 " """"""""
 " Use deoplete
 let g:deoplete#enable_at_startup = 1
 " Use smartcase.
 let g:deoplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:deoplete#sources#syntax#min_keyword_length = 3
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
@@ -56,6 +63,14 @@ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
   return deoplete#close_popup() . "\<CR>"
 endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+"
+" Neosnippet
+" """"""""""
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " Denite
 " """"""
@@ -85,21 +100,22 @@ call denite#custom#map(
 \)
 
 call denite#custom#source('file_mru', 'converters',
-      \ ['converter_relative_word'])
+\ ['converter_relative_word'])
 
 " Define alias
 call denite#custom#alias('source', 'file_rec/git', 'file_rec')
 call denite#custom#var('file_rec/git', 'command',
-      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+\ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 " Change default prompt
 call denite#custom#option('default', 'prompt', '>')
 
 " Change ignore_globs
 call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-      \ [ '.git/', '.ropeproject/', '__pycache__/',
-      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
-<
+\ [ '.git/', '.ropeproject/', '__pycache__/',
+\   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+
 " Neomake
 " """""""
 let g:neomake_open_list=2
+
