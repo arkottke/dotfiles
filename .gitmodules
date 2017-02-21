@@ -115,3 +115,6 @@
 [submodule "neovim/bundle/neopairs"]
 	path = neovim/bundle/neopairs
 	url = https://github.com/Shougo/neopairs.vim.git
+[submodule "neovim/bundle/neomru"]
+	path = neovim/bundle/neomru
+	url = https://github.com/Shougo/neomru.vim
