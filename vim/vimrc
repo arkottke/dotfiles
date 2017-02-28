@@ -11,8 +11,8 @@ set tabstop=8 		" real tab width
 
 " General Settings
 " ----------------
-syntax enable
 filetype plugin indent on  
+syntax on
 
 set autoindent
 set backspace=indent,eol,start
@@ -29,7 +29,7 @@ set diffopt+=iwhite,vertical
 
 set t_Co=256
 set background=dark
-colorscheme solarized
+colorscheme dracula
 
 " turn on command line completion wild style
 set wildmenu 
@@ -74,7 +74,7 @@ endif
 " Plugin Settings
 " ---------------
 " Airline
-let g:airline_theme = 'solarized'
+let g:airline_theme = 'dracula'
 " Supertab
 " let g:SuperTabDefaultCompletionType = 'context'
 " autocmd FileType *
@@ -155,3 +155,6 @@ autocmd FileType python setlocal omnifunc=jedi#completions
 let g:neocomplete#force_omni_input_patterns.python =
             \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 " alternative pattern: '\h\w*\|[^. \t]\.\w*'
+
+" Add comment support to CSV files
+let g:csv_comment = '#'

@@ -12,7 +12,9 @@ ipython/*/history.sqlite
 ipython/*/security/*
 
 # Remove vim .netrwhist
-vim/.netrwhist
+*/.netrwhist
+
+neovim/rplugin.vim
 
 # Vim tags
-tags
+**/tags

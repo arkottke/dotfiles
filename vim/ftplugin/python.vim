@@ -9,7 +9,7 @@ if has("win32") || has("win64")
     map <F4> <ESC>:cd %:p:h<CR>:!ctags -R -f .tags<CR>
 
     " Default to python3 on windows
-    map <F5> <ESC>:w<CR>:!C:/Miniconda3/python %<CR>
+    map <F5> <ESC>:w<CR>:!python.exe %<CR>
 else
     " Use the shebang line in linux
     map <F5> <ESC>:w<CR>:!python3 %<CR>

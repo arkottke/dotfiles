@@ -67,3 +67,54 @@
 [submodule "vim/bundle/solarized"]
 	path = vim/bundle/solarized
 	url = https://github.com/altercation/vim-colors-solarized
+[submodule "vim/bundle/csv"]
+	path = vim/bundle/csv
+	url = https://github.com/chrisbra/csv.vim.git
+[submodule "submodules/dracula-mintty"]
+	path = submodules/dracula-mintty
+	url = https://github.com/dracula/mintty.git
+[submodule "submodules/dracula-zsh"]
+	path = submodules/dracula-zsh
+	url = https://github.com/dracula/zsh.git
+[submodule "vim/bundle/dracula"]
+	path = vim/bundle/dracula
+	url = https://github.com/dracula/vim.git
+[submodule "submodules/dracula-xresources"]
+	path = submodules/dracula-xresources
+	url = https://github.com/dracula/xresources.git
+[submodule "neovim/bundle/dracula"]
+	path = neovim/bundle/dracula
+	url = https://github.com/dracula/vim.git
+[submodule "neovim/bundle/deoplete"]
+	path = neovim/bundle/deoplete
+	url = https://github.com/Shougo/deoplete.nvim.git
+[submodule "neovim/bundle/denite"]
+	path = neovim/bundle/denite
+	url = https://github.com/Shougo/denite.nvim.git
+[submodule "neovim/bundle/deol"]
+	path = neovim/bundle/deol
+	url = https://github.com/Shougo/deol.nvim.git
+[submodule "neovim/bundle/neosnippet"]
+	path = neovim/bundle/neosnippet
+	url = https://github.com/Shougo/neosnippet.vim.git
+[submodule "neovim/bundle/snippets"]
+	path = neovim/bundle/snippets
+	url = https://github.com/Shougo/neosnippet-snippets.git
+[submodule "neovim/bundle/neomake"]
+	path = neovim/bundle/neomake
+	url = https://github.com/neomake/neomake.git
+[submodule "neovim/bundle/deoplete-jedi"]
+	path = neovim/bundle/deoplete-jedi
+	url = https://github.com/zchee/deoplete-jedi.git
+[submodule "neovim/bundle/pep8-indent"]
+	path = neovim/bundle/pep8-indent
+	url = https://github.com/Vimjas/vim-python-pep8-indent.git
+[submodule "neovim/bundle/context_filetype"]
+	path = neovim/bundle/context_filetype
+	url = https://github.com/Shougo/context_filetype.vim.git
+[submodule "neovim/bundle/neopairs"]
+	path = neovim/bundle/neopairs
+	url = https://github.com/Shougo/neopairs.vim.git
+[submodule "neovim/bundle/neomru"]
+	path = neovim/bundle/neomru
+	url = https://github.com/Shougo/neomru.vim
