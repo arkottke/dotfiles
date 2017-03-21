@@ -107,19 +107,19 @@ end
 " Find the git directory
 nnoremap <silent> <C-p> :<C-u>Denite
 \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
-" Change mappings.
-call denite#custom#map(
-\ 'insert',
-\ '<C-j>',
-\ '<denite:move_to_next_line>',
-\ 'noremap'
-\)
-call denite#custom#map(
-\ 'insert',
-\ '<C-k>',
-\ '<denite:move_to_previous_line>',
-\ 'noremap'
-\)
+" Mappings for next and previous
+ call denite#custom#map(
+ \ 'insert',
+ \ '<C-j>',
+ \ '<denite:move_to_next_line>',
+ \ 'noremap'
+ \)
+ call denite#custom#map(
+ \ 'insert',
+ \ '<C-k>',
+ \ '<denite:move_to_previous_line>',
+ \ 'noremap'
+ \)
 
 call denite#custom#source('file_mru', 'converters',
 \ ['converter_relative_word'])
