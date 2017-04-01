@@ -16,6 +16,7 @@ set autoindent
 set backspace=indent,eol,start
 set complete-=i
 set incsearch
+set inccommand=nosplit
 set laststatus=2
 set number
 set ruler
@@ -38,10 +39,13 @@ set wildmode=list:longest
 
 set completeopt=menuone,longest,preview
 
+" Clear the last search with enter
+nnoremap <CR> :noh<CR><CR>
+
 "
 " PLUGINS
 " """""""
-"
+
 
 " Deoplete
 " """"""""
@@ -84,11 +88,28 @@ end
 " """"""
 " Use pt on windows
 if has('win64')
+    " Pt command on file_rec
     call denite#custom#var('file_rec', 'command',
     \ ['pt', '--follow', '--nocolor', '--nogroup', '-g:', ''])
+    " Pt command on grep source
+    call denite#custom#var('grep', 'command', ['pt'])
+    call denite#custom#var('grep', 'default_opts',
+                    \ ['--nogroup', '--nocolor', '--smart-case'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', [])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
 else
     call denite#custom#var('file_rec', 'command',
     \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    " Ag command on grep source
+    call denite#custom#var('grep', 'command', ['ag'])
+    call denite#custom#var('grep', 'default_opts',
+                    \ ['-i', '--vimgrep'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', [])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
 end
 " Find the git directory
 nnoremap <silent> <C-p> :<C-u>Denite
