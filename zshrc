@@ -57,6 +57,8 @@ plugins=(extract git fasd vi-mode tmux)
 if [[ -n $MSYSTEM ]]; then
     # Add Miniconda to the path for MSYS environments
     export PATH=/c/Miniconda3:/c/Miniconda3/Scripts:$PATH
+else
+    export PATH=~/.local/bin:$PATH
 fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
