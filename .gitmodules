@@ -118,3 +118,6 @@
 [submodule "neovim/bundle/neomru"]
 	path = neovim/bundle/neomru
 	url = https://github.com/Shougo/neomru.vim
+[submodule "neovim/bundle/sudoedit"]
+	path = neovim/bundle/sudoedit
+	url = https://github.com/chrisbra/SudoEdit.vim
