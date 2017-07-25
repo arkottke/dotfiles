@@ -80,7 +80,7 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 if has('win64')
-    let g:python_host_prog = 'C:/Python27/python.exe'
+    " let g:python_host_prog = 'C:/Python27/python.exe'
     let g:python3_host_prog = 'C:/Users/akottke/AppData/Local/Continuum/Miniconda3/python.exe'
 end
 
