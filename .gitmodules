@@ -121,3 +121,6 @@
 [submodule "neovim/bundle/sudoedit"]
 	path = neovim/bundle/sudoedit
 	url = https://github.com/chrisbra/SudoEdit.vim
+[submodule "neovim/bundle/vimtex"]
+	path = neovim/bundle/vimtex
+	url = https://github.com/lervag/vimtex
