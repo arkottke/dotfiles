@@ -64,9 +64,17 @@ function! s:my_cr_function() abort
   return deoplete#close_popup() . "\<CR>"
 endfunction
 " <TAB>: completion.
+<<<<<<< HEAD
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+=======
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+"  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-"
+>>>>>>> 2bb11e774b6315731dc4358559b1da5e98dd53bf
+
 " Neosnippet
 " """"""""""
 " Plugin key-mappings.
@@ -74,6 +82,7 @@ endfunction
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
+<<<<<<< HEAD
 
 " SuperTab like snippets' behavior.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -83,6 +92,8 @@ imap <expr><TAB>
 \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+=======
+>>>>>>> 2bb11e774b6315731dc4358559b1da5e98dd53bf
 
 if has('win64')
     let g:python_host_prog = 'C:/Python27/python.exe'
