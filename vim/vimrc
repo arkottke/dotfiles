@@ -102,6 +102,7 @@ omap F <Plug>Sneak_S
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#completions_enabled = 0
 let g:jedi#smart_auto_mappings = 0
+let g:jedi#force_py_version = 3
 
 " Table-mode
 let g:table_mode_corner_corner = "+"
