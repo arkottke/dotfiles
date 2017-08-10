@@ -130,7 +130,7 @@ end
 " Find the git directory
 nnoremap <silent> <C-p> :<C-u>Denite
 \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
-" Mappings for next and previous
+" Mappings
  call denite#custom#map(
  \ 'insert',
  \ '<C-j>',
@@ -141,6 +141,12 @@ nnoremap <silent> <C-p> :<C-u>Denite
  \ 'insert',
  \ '<C-k>',
  \ '<denite:move_to_previous_line>',
+ \ 'noremap'
+ \)
+ call denite#custom#map(
+ \ 'insert',
+ \ '<C-CR>',
+ \ '<denite:do_action:split>',
  \ 'noremap'
  \)
 
