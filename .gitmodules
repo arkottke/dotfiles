@@ -130,3 +130,6 @@
 [submodule "neovim/bundle/deoplete-julia"]
 	path = neovim/bundle/deoplete-julia
 	url = https://github.com/JuliaEditorSupport/deoplete-julia.git
+[submodule "neovim/bundle/deoplete-clang"]
+	path = neovim/bundle/deoplete-clang
+	url = https://github.com/zchee/deoplete-clang.git
