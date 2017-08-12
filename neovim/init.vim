@@ -162,4 +162,4 @@ call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
 " Neomake
 " """""""
 let g:neomake_open_list=2
-
+let g:neomake_maketest_maker = {'exe': make, 'args': ['test']}
