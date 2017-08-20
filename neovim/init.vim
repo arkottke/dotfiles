@@ -64,12 +64,12 @@ function! s:my_cr_function() abort
   return deoplete#close_popup() . "\<CR>"
 endfunction
 " <TAB>: completion.
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 imap <expr><TAB>
  \ pumvisible() ? "\<C-n>" :
  \ neosnippet#expandable_or_jumpable() ?
  \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 "  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
 
 " Neosnippet
 " """"""""""
@@ -79,8 +79,17 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
+" SuperTab like snippets' behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><TAB>
+\ pumvisible() ? "\<C-n>" :
+\ neosnippet#expandable_or_jumpable() ?
+\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
 if has('win64')
-    let g:python_host_prog = 'C:/Python27/python.exe'
+    " let g:python_host_prog = 'C:/Python27/python.exe'
     let g:python3_host_prog = 'C:/Users/akottke/AppData/Local/Continuum/Miniconda3/python.exe'
 end
 
@@ -114,7 +123,7 @@ end
 " Find the git directory
 nnoremap <silent> <C-p> :<C-u>Denite
 \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
-" Mappings for next and previous
+" Mappings
  call denite#custom#map(
  \ 'insert',
  \ '<C-j>',
@@ -125,6 +134,12 @@ nnoremap <silent> <C-p> :<C-u>Denite
  \ 'insert',
  \ '<C-k>',
  \ '<denite:move_to_previous_line>',
+ \ 'noremap'
+ \)
+ call denite#custom#map(
+ \ 'insert',
+ \ '<C-CR>',
+ \ '<denite:do_action:split>',
  \ 'noremap'
  \)
 

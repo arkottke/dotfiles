@@ -124,3 +124,12 @@
 [submodule "neovim/bundle/vimtex"]
 	path = neovim/bundle/vimtex
 	url = https://github.com/lervag/vimtex
+[submodule "neovim/bundle/julia-vim"]
+	path = neovim/bundle/julia-vim
+	url = https://github.com/JuliaEditorSupport/julia-vim.git
+[submodule "neovim/bundle/deoplete-julia"]
+	path = neovim/bundle/deoplete-julia
+	url = https://github.com/JuliaEditorSupport/deoplete-julia.git
+[submodule "neovim/bundle/deoplete-clang"]
+	path = neovim/bundle/deoplete-clang
+	url = https://github.com/zchee/deoplete-clang.git
