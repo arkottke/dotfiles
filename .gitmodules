@@ -133,3 +133,6 @@
 [submodule "neovim/bundle/deoplete-clang"]
 	path = neovim/bundle/deoplete-clang
 	url = https://github.com/zchee/deoplete-clang.git
+[submodule "neovim/bundle/tagbar"]
+	path = neovim/bundle/tagbar
+	url = https://github.com/majutsushi/tagbar.git
