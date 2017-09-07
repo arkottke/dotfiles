@@ -163,4 +163,9 @@ call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
 " Neomake
 " """""""
 let g:neomake_open_list=2
+let g:neomake_maketest_maker = {'exe': 'make', 'args': ['test']}
 
+" Deoplete Clang
+" """"""""""""""
+let g:deoplete#sources#clang#libclang_path='/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header='/usr/lib/clang'
