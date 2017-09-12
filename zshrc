@@ -58,7 +58,7 @@ if [[ -n $MSYSTEM ]]; then
     # Add Miniconda to the path for MSYS environments
     export PATH=/c/Miniconda3:/c/Miniconda3/Scripts:$PATH
 else
-    export PATH=~/.local/bin:$PATH
+    export PATH=~/.local/bin:~/.gem/ruby/2.4.0/bin:$PATH
 fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -130,3 +130,6 @@ if [[ -e /usr/share/fzf/key-bindings.zsh ]]; then
     . /usr/share/fzf/key-bindings.zsh
     . /usr/share/fzf/completion.zsh
 fi
+
+# added by travis gem
+[ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
