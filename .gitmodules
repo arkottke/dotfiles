@@ -136,3 +136,9 @@
 [submodule "neovim/bundle/tagbar"]
 	path = neovim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
+[submodule "neovim/bundle/tabular"]
+	path = neovim/bundle/tabular
+	url = https://github.com/godlygeek/tabular.git
+[submodule "vim/bundle/tabular"]
+	path = vim/bundle/tabular
+	url = https://github.com/godlygeek/tabular.git
