@@ -150,3 +150,6 @@
 [submodule "vim/bundle/tabular"]
 	path = vim/bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
+[submodule "neovim/bundle/fugitive"]
+	path = neovim/bundle/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
