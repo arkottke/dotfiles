@@ -8,5 +8,5 @@ autocmd BufWritePre *.py :%s/\s\+$//e
 autocmd BufWritePost *.py Neomake
 
 " Use the shebang line in linux
-map <F5> <ESC>:TagbarToggle<CR>
-map <F5> <ESC>:x<CR>:!python %<CR>
+nnoremap <F4> <ESC>:TagbarToggle<CR>
+nnoremap <F5> <ESC>:wa<CR>:!python %<CR>
