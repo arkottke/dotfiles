@@ -6,3 +6,7 @@ set textwidth=79
 autocmd BufWritePre *.py :%s/\s\+$//e
 " Run Neomake on save
 autocmd BufWritePost *.py Neomake
+
+" Use the shebang line in linux
+map <F5> <ESC>:TagbarToggle<CR>
+map <F5> <ESC>:x<CR>:!python %<CR>
