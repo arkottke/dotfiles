@@ -18,3 +18,7 @@ neovim/rplugin.vim
 
 # Vim tags
 **/tags
+
+# Binary spell files
+neovim/spell/en.utf-8.add.spl 
+vim/spell/en.utf-8.add.spl 
