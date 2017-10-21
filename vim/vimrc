@@ -111,7 +111,6 @@ let g:table_mode_header_fillchar = "="
 " Disable Sudo GUI mode
 let g:sudo_no_gui = 1
 
-
 " Neocomplete config
 """"""""""""""""""""
 
