@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(extract git fasd vi-mode tmux)
+plugins=(extract fasd fzf git tmux vi-mode)
 
 # User configuration
 
@@ -125,11 +125,16 @@ function extract_clip() {
     avconv -ss $start -t $length -i $fname -an -aq 5 -ac 2 -qmax 25 -threads 2 myvideo.webm
 }
 
-# Enable FZF
-if [[ -e /usr/share/fzf/key-bindings.zsh ]]; then
-    . /usr/share/fzf/key-bindings.zsh
-    . /usr/share/fzf/completion.zsh
+# Returns whether the given command is executable or aliased.
+_has() {
+  return $( whence $1 >/dev/null )
+}
+
+# fzf + ag configuration
+if _has fzf && _has ag; then
+  export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
 fi
 
 # added by travis gem
 [ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
+
