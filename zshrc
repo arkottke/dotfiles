@@ -138,3 +138,5 @@ fi
 # added by travis gem
 [ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
