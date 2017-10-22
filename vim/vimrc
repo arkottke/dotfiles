@@ -1,0 +1,133 @@
+" LOAD PLUGINS
+" ------------
+
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+Plug 'altercation/vim-colors-solarized'
+Plug 'dracula/vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" Plug 'itchyny/lightline.vim'
+Plug 'lervag/vimtex', { 'for': 'tex' }
+Plug 'majutsushi/tagbar'
+Plug 'mileszs/ack.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-vinegar'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
+Plug 'w0rp/ale'
+" Plug 'sheerun/vim-polyglot'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
+Plug 'junegunn/fzf.vim'
+
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+
+Plug 'valloric/youcompleteme', { 'do': function('BuildYCM') }
+call plug#end()
+
+" GENERAL SETTINGS
+" ----------------
+
+colorscheme dracula
+
+let mapleader=","
+
+set number
+set autoindent
+set expandtab
+set shiftwidth=4 	" auto-ident width when using cindent
+set softtabstop=4 	" spaces added when hitting tab
+set tabstop=8 		" real tab width
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set incsearch
+set laststatus=2
+set number
+set ruler
+set shellslash
+set showcmd
+set smarttab
+
+set diffopt+=iwhite,vertical
+
+set t_Co=256
+set background=dark
+colorscheme dracula
+
+" turn on command line completion wild style
+set wildmenu 
+" ignore these list file extensions
+set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
+            \,*.pdf,*.un~,*.swp,*.xlsx,*.docx,*/.git/*,*/.svn/*
+" turn on wild mode huge list
+set wildmode=list:longest 
+
+set completeopt=menuone,longest,preview
+
+" ignore these list file extensions
+set wildignore=tags,*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
+            \,*.pdf,*.un~,*.swp,*.xlsx,*.docx,*/.git/*,*/.svn/*,*.pyc
+
+" Essential for filetype plugins.
+filetype plugin indent on
+syntax on
+
+if has('gui_running')
+    set cursorline
+    set lines=25 columns=90
+endif
+
+set guioptions=ce 
+"              ||
+"              |+-- use simple dialogs rather than pop-ups
+"              +  use GUI tabs, not console style tabs
+
+" PLUGIN SETTINGS
+" --------------
+
+let g:airline_theme='dracula'
+
+" FZF (replaces Ctrl-P, FuzzyFinder and Command-T)
+nmap ; :Buffers<CR>
+nmap <Leader>t :Files<CR>
+nmap <Leader>r :Tags<CR>
+
+" Tell ack.vim to use ag (the Silver Searcher) instead
+let g:ackprg = 'ag --vimgrep'
+
+" Configure lightline
+let g:lightline = {
+	\ 'colorscheme': 'Dracula',
+	\ }
+
+" Ultisnips triggers
+let g:UltiSnipsExpandTrigger='<C-j>'
+let g:UltiSnipsJumpForwardTrigger='<C-j>'
+let g:UltiSnipsJumpBackwardTrigger='<C-k>'
+
+let g:ycm_min_num_of_chars_for_completion = 3
+
+" Add comment support to CSV files
+" let g:csv_comment = '#'
+"
+" let g:ale_sign_error = '•'
+" let g:ale_sign_warning = '•'
+" 
+" hi Error   cterm=bold gui=bold
+" hi Warning cterm=bold gui=bold
+
+" vim:set tw=100:
