@@ -1,86 +1,9 @@
-[submodule "vim/bundle/jedi-vim"]
-	path = vim/bundle/jedi-vim
-	url = https://github.com/davidhalter/jedi-vim.git
-        ignore = dirty
-[submodule "vim/bundle/vim-fugitive"]
-	path = vim/bundle/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-[submodule "vim/bundle/vim-airline"]
-	path = vim/bundle/vim-airline
-	url = https://github.com/bling/vim-airline.git
-[submodule "vim/bundle/ctrlp"]
-	path = vim/bundle/ctrlp
-	url = https://github.com/kien/ctrlp.vim.git
-[submodule "vim/bundle/syntastic"]
-	path = vim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
-[submodule "vim/bundle/delimitmate"]
-	path = vim/bundle/delimitmate
-	url = https://github.com/Raimondi/delimitMate.git
-[submodule "vim/bundle/tagbar"]
-	path = vim/bundle/tagbar
-	url = https://github.com/majutsushi/tagbar.git
-[submodule "vim/bundle/sneak"]
-	path = vim/bundle/sneak
-	url = https://github.com/justinmk/vim-sneak.git
-[submodule "vim/bundle/vinegar"]
-	path = vim/bundle/vinegar
-	url = https://github.com/tpope/vim-vinegar.git
-[submodule "vim/bundle/pep8-indent"]
-	path = vim/bundle/pep8-indent
-	url = https://github.com/hynek/vim-python-pep8-indent.git
-[submodule "vim/bundle/sudoedit"]
-	path = vim/bundle/sudoedit
-	url = https://github.com/chrisbra/SudoEdit.vim.git
-[submodule "vim/bundle/a"]
-	path = vim/bundle/a
-	url = https://github.com/vim-scripts/a.vim.git
-[submodule "vim/bundle/vim-airline-theme"]
-	path = vim/bundle/vim-airline-theme
-	url = https://github.com/vim-airline/vim-airline-themes
-[submodule "vim/bundle/unimpaired"]
-	path = vim/bundle/unimpaired
-	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "vim/bundle/editorconfig"]
-	path = vim/bundle/editorconfig
-	url = https://github.com/editorconfig/editorconfig-vim.git
-[submodule "vim/bundle/vimwiki"]
-	path = vim/bundle/vimwiki
-	url = https://github.com/vimwiki/vimwiki.git
-[submodule "vim/bundle/vimtex"]
-	path = vim/bundle/vimtex
-	url = https://github.com/lervag/vimtex.git
-        ignore = dirty
-[submodule "vim/bundle/neocomplete"]
-	path = vim/bundle/neocomplete
-	url = https://github.com/Shougo/neocomplete.vim.git
-[submodule "vim/bundle/neosnippet"]
-	path = vim/bundle/neosnippet
-	url = https://github.com/Shougo/neosnippet.vim.git
-[submodule "vim/bundle/neosnippet-snippets"]
-	path = vim/bundle/neosnippet-snippets
-	url = https://github.com/Shougo/neosnippet-snippets.git
-[submodule "vim/bundle/base16-vim"]
-	path = vim/bundle/base16-vim
-	url = https://github.com/chriskempson/base16-vim.git
-[submodule "vim/bundle/sensible"]
-	path = vim/bundle/sensible
-	url = https://github.com/tpope/vim-sensible.git
-[submodule "vim/bundle/solarized"]
-	path = vim/bundle/solarized
-	url = https://github.com/altercation/vim-colors-solarized
-[submodule "vim/bundle/csv"]
-	path = vim/bundle/csv
-	url = https://github.com/chrisbra/csv.vim.git
 [submodule "submodules/dracula-mintty"]
 	path = submodules/dracula-mintty
 	url = https://github.com/dracula/mintty.git
 [submodule "submodules/dracula-zsh"]
 	path = submodules/dracula-zsh
 	url = https://github.com/dracula/zsh.git
-[submodule "vim/bundle/dracula"]
-	path = vim/bundle/dracula
-	url = https://github.com/dracula/vim.git
 [submodule "submodules/dracula-xresources"]
 	path = submodules/dracula-xresources
 	url = https://github.com/dracula/xresources.git
@@ -146,9 +69,6 @@
 	url = https://github.com/majutsushi/tagbar.git
 [submodule "neovim/bundle/tabular"]
 	path = neovim/bundle/tabular
-	url = https://github.com/godlygeek/tabular.git
-[submodule "vim/bundle/tabular"]
-	path = vim/bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
 [submodule "neovim/bundle/fugitive"]
 	path = neovim/bundle/fugitive

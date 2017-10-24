@@ -1,19 +1,56 @@
-let g:pathogen_disabled = []
-execute pathogen#infect()
+" LOAD PLUGINS
+" ------------
 
-" Text Settings
-" -------------
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+Plug 'altercation/vim-colors-solarized'
+Plug 'dracula/vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" Plug 'itchyny/lightline.vim'
+Plug 'lervag/vimtex', { 'for': 'tex' }
+Plug 'majutsushi/tagbar'
+Plug 'mileszs/ack.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-vinegar'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
+Plug 'w0rp/ale'
+" Plug 'sheerun/vim-polyglot'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
+Plug 'junegunn/fzf.vim'
+
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+
+Plug 'valloric/youcompleteme', { 'do': function('BuildYCM') }
+call plug#end()
+
+" GENERAL SETTINGS
+" ----------------
+
+colorscheme dracula
+
+let mapleader=","
+
+set number
 set autoindent
 set expandtab
 set shiftwidth=4 	" auto-ident width when using cindent
 set softtabstop=4 	" spaces added when hitting tab
 set tabstop=8 		" real tab width
-
-" General Settings
-" ----------------
-filetype plugin indent on  
-syntax on
-
 set autoindent
 set backspace=indent,eol,start
 set complete-=i
@@ -40,22 +77,15 @@ set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
 set wildmode=list:longest 
 
 set completeopt=menuone,longest,preview
-" Open new windows below the current window
-"set splitbelow
 
-if has("win32") || has("win64")
-    set fileformat=unix
-    set encoding=utf-8
-    set dir=C:/temp
-    set grepprg=C:/cygwin64/bin/grep.exe\ -niH
-endif
+" ignore these list file extensions
+set wildignore=tags,*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
+            \,*.pdf,*.un~,*.swp,*.xlsx,*.docx,*/.git/*,*/.svn/*,*.pyc
 
-" Configure ctags
-nnoremap <F4> :!ctags -f .tags<CR>
-set tags=./.tags
+" Essential for filetype plugins.
+filetype plugin indent on
+syntax on
 
-" GUI Settings
-" ------------
 if has('gui_running')
     set cursorline
     set lines=25 columns=90
@@ -65,97 +95,39 @@ set guioptions=ce
 "              ||
 "              |+-- use simple dialogs rather than pop-ups
 "              +  use GUI tabs, not console style tabs
-if has("gui_gtk2")
-    set guifont=Hack\ 10
-elseif has("win32") || has("win64")
-    set guifont=Hack:h9:cANSI:qDRAFT
-endif
 
-" Plugin Settings
-" ---------------
-" Airline
-let g:airline_theme = 'dracula'
-" Supertab
-" let g:SuperTabDefaultCompletionType = 'context'
-" autocmd FileType *
-"             \ if &omnifunc != '' |
-"             \   call SuperTabChain(&omnifunc, "<c-p>") |
-"             \ endif
+" PLUGIN SETTINGS
+" --------------
 
-" Ultisnips
-" let g:ultinsips_python_quoting_style = 'double'
-" let g:ultinsips_python_style = 'sphinx'
+let g:airline_theme='dracula'
 
-" CtrlP
-let g:ctrl_work_path_mode = 'ra'
-nnoremap <Leader>. :CtrlPTag<cr>
+" FZF (replaces Ctrl-P, FuzzyFinder and Command-T)
+nmap ; :Buffers<CR>
+nmap <Leader>t :Files<CR>
+nmap <Leader>r :Tags<CR>
 
-" Sneak. Use f instead of s
-nmap f <Plug>Sneak_s
-nmap F <Plug>Sneak_S
-xmap f <Plug>Sneak_s
-xmap F <Plug>Sneak_S
-omap f <Plug>Sneak_s
-omap F <Plug>Sneak_S
+" Tell ack.vim to use ag (the Silver Searcher) instead
+let g:ackprg = 'ag --vimgrep'
 
-" Jedi. Disable selecting first so that tab can be used to select the first.
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#force_py_version = 3
+" Configure lightline
+let g:lightline = {
+	\ 'colorscheme': 'Dracula',
+	\ }
 
-" Table-mode
-let g:table_mode_corner_corner = "+"
-let g:table_mode_header_fillchar = "="
+" Ultisnips triggers
+let g:UltiSnipsExpandTrigger='<C-j>'
+let g:UltiSnipsJumpForwardTrigger='<C-j>'
+let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
-" Disable Sudo GUI mode
-let g:sudo_no_gui = 1
-
-
-" Neocomplete config
-""""""""""""""""""""
-
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
-
-" Neosnippet config
-"""""""""""""""""""
-let g:neosnippet#snippets_directory=split(&rtp,",")[0].'/snippets'
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ neosnippet#expandable_or_jumpable() ?
-            \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-"if has('conceal')
-"    set conceallevel=2 concealcursor=niv
-"endif
-
-if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-" Use jedi for python
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:neocomplete#force_omni_input_patterns.python =
-            \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-" alternative pattern: '\h\w*\|[^. \t]\.\w*'
+let g:ycm_min_num_of_chars_for_completion = 3
 
 " Add comment support to CSV files
-let g:csv_comment = '#'
+" let g:csv_comment = '#'
+"
+" let g:ale_sign_error = '•'
+" let g:ale_sign_warning = '•'
+" 
+" hi Error   cterm=bold gui=bold
+" hi Warning cterm=bold gui=bold
+
+" vim:set tw=100:
