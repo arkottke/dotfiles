@@ -20,7 +20,9 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'w0rp/ale'
-" Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
+Plug 'Raimondi/delimitMate'
+
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
@@ -106,7 +108,7 @@ set guioptions=ce
 " PLUGIN SETTINGS
 " --------------
 
-let g:airline_theme='dracula'
+" let g:airline_theme='dracula'
 
 " FZF (replaces Ctrl-P, FuzzyFinder and Command-T)
 nmap ; :Buffers<CR>
@@ -126,7 +128,7 @@ let g:lightline = {
 "            \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 
 " Ultisnips triggers
-let g:UltiSnipsExpandTrigger='<C-j>'
+let g:UltiSnipsExpandTrigger='<C-h>'
 let g:UltiSnipsJumpForwardTrigger='<C-j>'
 let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
