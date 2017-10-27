@@ -6,9 +6,9 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'dracula/vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-" Plug 'itchyny/lightline.vim'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'majutsushi/tagbar'
 Plug 'mileszs/ack.vim'
@@ -36,6 +36,13 @@ function! BuildYCM(info)
 endfunction
 
 Plug 'valloric/youcompleteme', { 'do': function('BuildYCM') }
+
+" Plug 'Shougo/denite.nvim'
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'roxma/nvim-yarp'
+" Plug 'roxma/vim-hug-neovim-rpc'
+" Plug 'zchee/deoplete-jedi'
+
 call plug#end()
 
 " GENERAL SETTINGS
@@ -114,18 +121,22 @@ let g:lightline = {
 	\ 'colorscheme': 'Dracula',
 	\ }
 
+" Use ag 
+"call denite#custom#var('file_rec', 'command',
+"            \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
 " Ultisnips triggers
 let g:UltiSnipsExpandTrigger='<C-j>'
 let g:UltiSnipsJumpForwardTrigger='<C-j>'
 let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
-let g:ycm_min_num_of_chars_for_completion = 3
+" let g:ycm_min_num_of_chars_for_completion = 3
 
 " Add comment support to CSV files
 " let g:csv_comment = '#'
 "
-" let g:ale_sign_error = '•'
-" let g:ale_sign_warning = '•'
+let g:ale_sign_error = '•'
+let g:ale_sign_warning = '•'
 " 
 " hi Error   cterm=bold gui=bold
 " hi Warning cterm=bold gui=bold
