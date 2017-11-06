@@ -22,7 +22,7 @@ Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'Raimondi/delimitMate'
-
+Plug 'vimwiki/vimwiki'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
