@@ -53,11 +53,14 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(extract fasd fzf git tmux vi-mode)
 
 # User configuration
+autoload -U zmv
+setopt HIST_FIND_NO_DUPS
 
 if [[ -n $MSYSTEM ]]; then
     # Add Miniconda to the path for MSYS environments
     export PATH=/c/Miniconda3:/c/Miniconda3/Scripts:$PATH
 else
+    #export PATH=~/.local/opt/miniconda3/bin:~/.local/bin:~/.gem/ruby/2.4.0/bin:$PATH
     export PATH=~/.local/bin:~/.gem/ruby/2.4.0/bin:$PATH
 fi
 
@@ -137,6 +140,5 @@ fi
 
 # added by travis gem
 [ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -27,23 +27,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.py
-  endif
-endfunction
-
-Plug 'valloric/youcompleteme', { 'do': function('BuildYCM') }
-
-" Plug 'Shougo/denite.nvim'
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'roxma/nvim-yarp'
-" Plug 'roxma/vim-hug-neovim-rpc'
-" Plug 'zchee/deoplete-jedi'
+Plug 'lifepillar/vim-mucomplete'
 
 call plug#end()
 
@@ -54,22 +38,22 @@ colorscheme dracula
 
 let mapleader=","
 
-set number
-set autoindent
-set expandtab
-set shiftwidth=4 	" auto-ident width when using cindent
-set softtabstop=4 	" spaces added when hitting tab
-set tabstop=8 		" real tab width
 set autoindent
 set backspace=indent,eol,start
 set complete-=i
+set cursorline
+set expandtab
 set incsearch
 set laststatus=2
+set nojoinspaces
 set number
 set ruler
 set shellslash
 set showcmd
 set smarttab
+set shiftwidth=4 	" auto-ident width when using cindent
+set softtabstop=4 	" spaces added when hitting tab
+set tabstop=8 		" real tab width
 
 set diffopt+=iwhite,vertical
 
@@ -85,7 +69,7 @@ set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
 " turn on wild mode huge list
 set wildmode=list:longest 
 
-set completeopt=menuone,longest,preview
+set completeopt=menuone,longest,preview,noinsert,noselect
 
 " ignore these list file extensions
 set wildignore=tags,*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
@@ -132,6 +116,14 @@ let g:UltiSnipsExpandTrigger='<C-h>'
 let g:UltiSnipsJumpForwardTrigger='<C-j>'
 let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
+" Jedi
+let g:jedi#popup_on_dot = 0
+
+" mucomplete settings
+set shortmess+=c   " Shut off completion messages
+" set belloff+=ctrlg " If Vim beeps during completion
+let g:mucomplete#enable_auto_at_startup = 1
+
 " let g:ycm_min_num_of_chars_for_completion = 3
 
 " Add comment support to CSV files
@@ -139,7 +131,7 @@ let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 "
 let g:ale_sign_error = '•'
 let g:ale_sign_warning = '•'
-" 
+ 
 " hi Error   cterm=bold gui=bold
 " hi Warning cterm=bold gui=bold
 
