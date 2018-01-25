@@ -22,6 +22,7 @@ Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'Raimondi/delimitMate'
+Plug 'ludovicchabant/vim-gutentags'
 
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
@@ -131,5 +132,9 @@ let g:ycm_min_num_of_chars_for_completion = 3
 " 
 " hi Error   cterm=bold gui=bold
 " hi Warning cterm=bold gui=bold
+"
+
+" Disable latex
+let g:polyglot_disabled = ['latex']
 
 " vim:set tw=100:
