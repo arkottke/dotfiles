@@ -4,30 +4,33 @@
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
 
+Plug 'Raimondi/delimitMate'
+Plug 'SirVer/ultisnips'
+Plug 'airblade/vim-rooter'
 Plug 'altercation/vim-colors-solarized'
+Plug 'derekwyatt/vim-fswitch'
 Plug 'dracula/vim'
+Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
-Plug 'lervag/vimtex', { 'for': 'tex' }
+" Plug 'justmao945/vim-clang'
+Plug 'lifepillar/vim-mucomplete'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mileszs/ack.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-vinegar'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
-Plug 'w0rp/ale'
-Plug 'sheerun/vim-polyglot'
-Plug 'Raimondi/delimitMate'
-Plug 'ludovicchabant/vim-gutentags'
-
 Plug 'vimwiki/vimwiki'
+Plug 'w0rp/ale'
+
+Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
+
+Plug 'lervag/vimtex', { 'for': 'tex' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
-
-Plug 'lifepillar/vim-mucomplete'
 
 call plug#end()
 
@@ -41,6 +44,8 @@ let mapleader=","
 set autoindent
 set backspace=indent,eol,start
 set complete-=i
+set completeopt=menuone,noinsert,noselect
+" set completeopt=menuone,longest,preview,noinsert,noselect
 set cursorline
 set expandtab
 set incsearch
@@ -64,16 +69,10 @@ colorscheme dracula
 " turn on command line completion wild style
 set wildmenu 
 " ignore these list file extensions
-set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
-            \,*.pdf,*.un~,*.swp,*.xlsx,*.docx,*/.git/*,*/.svn/*
-" turn on wild mode huge list
-set wildmode=list:longest 
-
-set completeopt=menuone,longest,preview,noinsert,noselect
-
-" ignore these list file extensions
 set wildignore=tags,*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
             \,*.pdf,*.un~,*.swp,*.xlsx,*.docx,*/.git/*,*/.svn/*,*.pyc
+" turn on wild mode huge list
+set wildmode=list:longest 
 
 " Essential for filetype plugins.
 filetype plugin indent on
@@ -107,10 +106,6 @@ let g:lightline = {
 	\ 'colorscheme': 'Dracula',
 	\ }
 
-" Use ag 
-"call denite#custom#var('file_rec', 'command',
-"            \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
 " Ultisnips triggers
 let g:UltiSnipsExpandTrigger='<C-h>'
 let g:UltiSnipsJumpForwardTrigger='<C-j>'
@@ -119,16 +114,24 @@ let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 " Jedi
 let g:jedi#popup_on_dot = 0
 
+" Clang
+ let g:clang_c_options = '-std=gnu14'
+ let g:clang_c_completeopt = 'menuone,noinsert,noselect'
+ let g:clang_cpp_options = '-std=c++14 -stdlib=libc++'
+ let g:clang_cpp_completeopt = 'menuone,noinsert,noselect'
+
 " mucomplete settings
 set shortmess+=c   " Shut off completion messages
 " set belloff+=ctrlg " If Vim beeps during completion
 let g:mucomplete#enable_auto_at_startup = 1
 
-" let g:ycm_min_num_of_chars_for_completion = 3
+let g:mucomplete#chains = { 
+            \ 'default' : ['path', 'omni', 'keyn', 'dict', 'uspl', 'ulti'], 
+            \ 'cpp' : ['omni', 'incl', 'ulti'] }
 
 " Add comment support to CSV files
 " let g:csv_comment = '#'
-"
+
 let g:ale_sign_error = '•'
 let g:ale_sign_warning = '•'
  
@@ -138,5 +141,16 @@ let g:ale_sign_warning = '•'
 
 " Disable latex
 let g:polyglot_disabled = ['latex']
+
+" Switch between C source files
+nmap <silent> <Leader>of :FSHere<cr>
+nmap <silent> <Leader>ol :FSRight<cr>
+nmap <silent> <Leader>oL :FSSplitRight<cr>
+nmap <silent> <Leader>oh :FSLeft<cr>
+nmap <silent> <Leader>oH :FSSplitLeft<cr>
+nmap <silent> <Leader>ok :FSAbove<cr>
+nmap <silent> <Leader>oK :FSSplitAbove<cr>
+nmap <silent> <Leader>oj :FSBelow<cr>
+nmap <silent> <Leader>oJ :FSSplitBelow<cr>
 
 " vim:set tw=100:
