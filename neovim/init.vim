@@ -55,6 +55,11 @@ nmap ; :Denite buffer<CR>
 nmap <Leader>t :Denite file_rec<CR>
 nmap <Leader>r :Denite tag<CR>
 
+" Change ignore_globs
+call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+            \ [ '.git/', '.ropeproject/', '__pycache__/', '.idea/',
+            \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+
 " Change mappings.
 call denite#custom#map(
       \ 'insert',
@@ -82,6 +87,9 @@ imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 " if has('conceal')
 "   set conceallevel=2 concealcursor=niv
 " endif
+
+"This unsets the "last search pattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
 
 " Disable polyglot for latex
 let g:polyglot_disabled = ['latex']
