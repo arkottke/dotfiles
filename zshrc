@@ -111,7 +111,7 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias ko='kde-open5'
-# alias tmux='TERM=xterm-256color tmux'
+alias tmux='TERM=xterm-256color tmux'
 
 # Error with msys2 vim on windows
 # alias vim='vim -u NONE'
