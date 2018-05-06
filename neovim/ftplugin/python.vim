@@ -13,6 +13,6 @@ augroup python
     nmap <Leader>m :wa<CR>:make<CR>
     nmap <Leader>b :TagbarToggle<CR>
     " Use the shebang line in linux
-    "nnoremap <F4> <ESC>:TagbarToggle<CR>
-    "nnoremap <F5> <ESC>:wa<CR>:!python %<CR>
+    nnoremap <F4> <ESC>:TagbarToggle<CR>
+    nnoremap <F5> <ESC>:w<CR>:!python %<CR>
 augroup END
