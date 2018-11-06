@@ -23,6 +23,7 @@ Plug 'majutsushi/tagbar'
 Plug 'sheerun/vim-polyglot'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
+Plug 'romainl/Apprentice'
 
 Plug 'zchee/deoplete-jedi', { 'for': 'python' } 
 Plug 'lervag/vimtex', { 'for': 'tex' }
