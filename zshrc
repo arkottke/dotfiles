@@ -54,7 +54,7 @@ plugins=(extract fasd fzf git tmux vi-mode)
 
 # User configuration
 autoload -U zmv
-setopt HIST_FIND_NO_DUPS
+# setopt HIST_FIND_NO_DUPS
 
 if [[ -n $MSYSTEM ]]; then
     # Add Miniconda to the path for MSYS environments
@@ -72,11 +72,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"

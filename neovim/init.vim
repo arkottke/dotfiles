@@ -1,26 +1,29 @@
 
 
 " Specify a directory for plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.nvim/plugged')
 
 " Completion
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
 "Colors
+Plug 'RRethy/vim-illuminate'
 Plug 'altercation/vim-colors-solarized'
-Plug 'morhetz/gruvbox'
 Plug 'dracula/vim'
+Plug 'morhetz/gruvbox'
 
-Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'Shougo/neosnippet.vim'
 Plug 'airblade/vim-rooter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'itchyny/lightline.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
+Plug 'rking/ag.vim'
 Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
 
@@ -43,6 +46,7 @@ set shellslash
 set shiftwidth=4 	" auto-ident width when using cindent
 set softtabstop=4 	" spaces added when hitting tab
 set tabstop=8 		" real tab width
+set wildmode=longest,list,full
 
 " Colors
 colorscheme dracula
@@ -54,6 +58,7 @@ let g:lightline = {
 nmap ; :Denite buffer<CR>
 nmap <Leader>t :Denite file_rec<CR>
 nmap <Leader>r :Denite tag<CR>
+nmap <Leader>e :Denite grep<CR>
 
 " Change ignore_globs
 call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
