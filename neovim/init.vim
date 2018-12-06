@@ -26,6 +26,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
+Plug 'romainl/Apprentice'
 
 Plug 'zchee/deoplete-jedi', { 'for': 'python' } 
 Plug 'lervag/vimtex', { 'for': 'tex' }
