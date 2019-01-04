@@ -49,6 +49,10 @@ set softtabstop=4 	" spaces added when hitting tab
 set tabstop=8 		" real tab width
 set wildmode=longest,list,full
 
+set wildignore=*.o,*.a,*.so,*.pyc,*.swp,.git*
+
+" ,tags,.git,.git/*,.idea/*,__pycache__/*,venv/*,.pytest-cache/*,*.egg-info/*
+
 " Colors
 colorscheme dracula
 let g:lightline = {
@@ -61,10 +65,12 @@ nmap <Leader>t :Denite file_rec<CR>
 nmap <Leader>r :Denite tag<CR>
 nmap <Leader>e :Denite grep<CR>
 
+call denite#custom#var('file/rec', 'command', ['scantree.py'])
+
 " Change ignore_globs
-call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
-            \ [ '.git/', '.ropeproject/', '__pycache__/', '.idea/',
-            \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+" call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+"             \ [ '.git/', '.ropeproject/', '__pycache__/', '.idea/',
+"             \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 
 " Change mappings.
 call denite#custom#map(
