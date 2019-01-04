@@ -56,15 +56,8 @@ plugins=(extract fasd fzf git tmux vi-mode)
 autoload -U zmv
 # setopt HIST_FIND_NO_DUPS
 
-if [[ -n $MSYSTEM ]]; then
-    # Add Miniconda to the path for MSYS environments
-    export PATH=/c/Miniconda3:/c/Miniconda3/Scripts:$PATH
-else
-    #export PATH=~/.local/opt/miniconda3/bin:~/.local/bin:~/.gem/ruby/2.4.0/bin:$PATH
-    export PATH=~/.local/bin:~/.gem/ruby/2.4.0/bin:$PATH
-fi
-
-# export MANPATH="/usr/local/man:$MANPATH"
+# Add local to path
+export PATH="/home/albert/.local/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -112,6 +105,7 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 
 alias ko='kde-open5'
 alias tmux='TERM=xterm-256color tmux'
+alias jn='jupyter notebook'
 
 # Error with msys2 vim on windows
 # alias vim='vim -u NONE'
