@@ -14,7 +14,7 @@ set --universal fish_user_paths $fish_user_paths /home/albert/.local/bin
 # Always start tmux
 if status is-interactive 
 and not set -q TMUX
-    exec tmux
+    exec tmux attach; or tmux new-session
 end
 
 function ko
