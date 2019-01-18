@@ -12,9 +12,12 @@ fish_vi_key_bindings
 set --universal fish_user_paths $fish_user_paths /home/albert/.local/bin
 
 # Always start tmux
-if status is-interactive 
-and not set -q TMUX
-    exec tmux attach; or tmux new-session
+if status is-interactive; and not set -q TMUX
+    if tmux has
+        tmux attach 
+    else 
+        tmux new
+    end
 end
 
 function ko
