@@ -127,12 +127,27 @@ _has() {
   return $( whence $1 >/dev/null )
 }
 
-# fzf + ag configuration
-if _has fzf && _has ag; then
-  export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
+# conda
+if [[ -f /home/albert/miniconda3/bin/conda ]]; then
+    export PATH="$PATH:/home/albert/miniconda3/bin"
+    source /home/albert/miniconda3/etc/profile.d/conda.sh
 fi
+
+fpath+=$ZSH_CUSTOM/plugins/conda-zsh-completion
+compinit conda
+zstyle ':completion::complete:*' use-cache 1
 
 # added by travis gem
 [ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
 
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [[ -z "$TMUX" ]]; then
+    tmux attach || tmux new
+fi
+
+# fzf + ag configuration
+if _has fzf && _has ag; then
+  export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
+fi
