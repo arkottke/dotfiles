@@ -57,7 +57,7 @@ autoload -U zmv
 # setopt HIST_FIND_NO_DUPS
 
 # Add local to path
-export PATH="/home/albert/.local/bin:$PATH"
+export PATH="/home/albert/.local/bin:/home/albert/.gem/ruby/2.6.0/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,7 +104,7 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias ko='kde-open5'
-alias tmux='TERM=xterm-256color tmux'
+alias tmux='TERM=screen-256color tmux'
 alias jn='jupyter notebook'
 
 # Error with msys2 vim on windows
@@ -130,7 +130,7 @@ _has() {
 # conda
 if [[ -f /home/albert/miniconda3/bin/conda ]]; then
     export PATH="$PATH:/home/albert/miniconda3/bin"
-    source /home/albert/miniconda3/etc/profile.d/conda.sh
+# source /home/albert/miniconda3/etc/profile.d/conda.sh  # commented out by conda initialize
 fi
 
 fpath+=$ZSH_CUSTOM/plugins/conda-zsh-completion
@@ -151,3 +151,21 @@ fi
 if _has fzf && _has ag; then
   export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
 fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/albert/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/albert/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/albert/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/albert/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+conda deactivate
+# <<< conda initialize <<<
+
