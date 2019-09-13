@@ -14,6 +14,7 @@ Plug 'dracula/vim'
 Plug 'morhetz/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
 
+
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 Plug 'airblade/vim-rooter'
@@ -23,19 +24,24 @@ Plug 'itchyny/lightline.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'rking/ag.vim'
+Plug 'romainl/Apprentice'
+Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
-Plug 'romainl/Apprentice'
-Plug 'bfredl/nvim-ipy'
 
-Plug 'zchee/deoplete-jedi', { 'for': 'python' } 
+Plug 'jupyter-vim/jupyter-vim', { 'for': 'python' } 
+Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' } 
+
+Plug 'deoplete-plugins/deoplete-clang', { 'for': 'cpp' } 
+
 Plug 'lervag/vimtex', { 'for': 'tex' }
 
 call plug#end()
 
 let mapleader=","
+let maplocalleader=",,"
 
 set autoindent
 set backspace=indent,eol,start
@@ -104,6 +110,8 @@ function! s:denite_filter_my_settings() abort
     " for compatibility with FZF
     inoremap <silent><buffer> <C-n> <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
     inoremap <silent><buffer> <C-p> <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+    " disable completion
+    call deoplete#custom#buffer_option('auto_complete', v:false)
 endfunction
 
 let s:denite_options = {
@@ -145,17 +153,30 @@ call denite#custom#map(
       \)
 
 " Deoplete
+let g:deoplete#converter_auto_paren = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
 " Neosnippet
-" Use tab to complete and jump
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets' behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ neosnippet#expandable_or_jumpable() ?
+            \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 " if has('conceal')
-"   set conceallevel=2 concealcursor=niv
+"     set conceallevel=2 concealcursor=niv
 " endif
 
 "This unsets the "last search pattern" register by hitting return
