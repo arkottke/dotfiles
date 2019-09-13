@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(extract fasd fzf git tmux vi-mode)
+plugins=(extract fasd fzf git sudo tmux vi-mode)
 
 # User configuration
 autoload -U zmv
@@ -106,9 +106,8 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 alias ko='kde-open5'
 alias tmux='TERM=screen-256color tmux'
 alias jn='jupyter notebook'
-
-# Error with msys2 vim on windows
-# alias vim='vim -u NONE'
+alias jc='jupyter console'
+alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
 
 function extract_clip() {
     fname=$1
@@ -120,11 +119,6 @@ function extract_clip() {
     fi
     echo $length
     avconv -ss $start -t $length -i $fname -an -aq 5 -ac 2 -qmax 25 -threads 2 myvideo.webm
-}
-
-# Returns whether the given command is executable or aliased.
-_has() {
-  return $( whence $1 >/dev/null )
 }
 
 # conda
@@ -147,25 +141,12 @@ if [[ -z "$TMUX" ]]; then
     tmux attach || tmux new
 fi
 
+# Returns whether the given command is executable or aliased.
+_has() {
+  return $( whence $1 >/dev/null )
+}
+
 # fzf + ag configuration
 if _has fzf && _has ag; then
   export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
 fi
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/albert/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/albert/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/albert/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/albert/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-
-conda deactivate
-# <<< conda initialize <<<
-
