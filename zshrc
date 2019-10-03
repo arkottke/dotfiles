@@ -108,6 +108,7 @@ alias tmux='TERM=screen-256color tmux'
 alias jn='jupyter notebook'
 alias jc='jupyter console'
 alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
+alias conda='/opt/miniconda3/bin/conda'
 
 function extract_clip() {
     fname=$1
@@ -120,16 +121,6 @@ function extract_clip() {
     echo $length
     avconv -ss $start -t $length -i $fname -an -aq 5 -ac 2 -qmax 25 -threads 2 myvideo.webm
 }
-
-# conda
-if [[ -f /home/albert/miniconda3/bin/conda ]]; then
-    export PATH="$PATH:/home/albert/miniconda3/bin"
-# source /home/albert/miniconda3/etc/profile.d/conda.sh  # commented out by conda initialize
-fi
-
-fpath+=$ZSH_CUSTOM/plugins/conda-zsh-completion
-compinit conda
-zstyle ':completion::complete:*' use-cache 1
 
 # added by travis gem
 [ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
