@@ -7,3 +7,21 @@
 [submodule "submodules/dracula-xresources"]
 	path = submodules/dracula-xresources
 	url = https://github.com/dracula/xresources.git
+[submodule "nord-tmux"]
+	path = nord-tmux
+	url = git@github.com:arcticicestudio/nord-tmux.git
+[submodule "submodules/nord-tmux"]
+	path = submodules/nord-tmux
+	url = git@github.com:arcticicestudio/nord-tmux.git
+[submodule "submodules/nord-vim"]
+	path = submodules/nord-vim
+	url = git@github.com:arcticicestudio/nord-vim.git
+[submodule "submodules/nord-dircolors"]
+	path = submodules/nord-dircolors
+	url = git@github.com:arcticicestudio/nord-dircolors.git
+[submodule "submodules/nord-konsole"]
+	path = submodules/nord-konsole
+	url = git@github.com:arcticicestudio/nord-konsole.git
+[submodule "submodules/nord-xresources"]
+	path = submodules/nord-xresources
+	url = git@github.com:arcticicestudio/nord-xresources.git
