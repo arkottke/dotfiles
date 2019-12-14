@@ -22,3 +22,6 @@
 [submodule "submodules/nord-xresources"]
 	path = submodules/nord-xresources
 	url = git@github.com:arcticicestudio/nord-xresources.git
+[submodule "submodules/nord-alacritty"]
+	path = submodules/nord-alacritty
+	url = git@github.com:arcticicestudio/nord-alacritty.git

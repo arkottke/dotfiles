@@ -8,11 +8,8 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
 "Colors
-Plug 'RRethy/vim-illuminate'
-Plug 'altercation/vim-colors-solarized'
-Plug 'dracula/vim'
-Plug 'morhetz/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'arcticicestudio/nord-vim', { 'as': 'nord' }
 
 
 Plug 'Shougo/neosnippet-snippets'
@@ -31,7 +28,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
 
-Plug 'jupyter-vim/jupyter-vim', { 'for': 'python' } 
+" Plug 'jupyter-vim/jupyter-vim', { 'for': 'python' } 
 Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' } 
 
 Plug 'deoplete-plugins/deoplete-clang', { 'for': 'cpp' } 
@@ -68,9 +65,7 @@ let g:python_host_prog = '/bin/python2'
 let g:python3_host_prog = '/bin/python3'
 
 " Colors
-if has('gui')
-    colorscheme dracula
-endif
+colorscheme nord
 let g:lightline = {
     \ 'colorscheme': 'dracula',
     \ }
@@ -121,9 +116,8 @@ let s:denite_options = {
       \ 'auto_resize': 1,
       \ 'source_names': 'short',
       \ 'direction': 'botright',
-      \ 'highlight_filter_background': 'CursorLine',
-      \ 'highlight_matched_char': 'Type',
       \ 'reversed': 'true',
+      \ 'highlight_window_background': 'PmenuSel',
       \ }
 call denite#custom#option('default', s:denite_options)
 
@@ -136,7 +130,12 @@ nmap <Leader>e :Denite grep<CR>
 call denite#custom#var('file/rec', 'command',
             \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 call denite#custom#source('file/rec', 'matchers', 
-            \ ['matcher/fuzzy', 'matcher/hide_hidden_files'])
+            \ ['matcher/fuzzy', 'matcher/hide_hidden_files', 'matcher/ignore_globs'])
+
+call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+              \ [ '*~', '*.o', '*.exe', '*.bak', '*.png', '*.pdf', '*.jpg', 
+              \   '*.pyc', '*.sw[po]', '*.class', '.hg/', '.git/', '.bzr/', 
+              \   '.svn/', 'tags', 'tags-*', '__pycache__/'])
 
 " Change mappings.
 call denite#custom#map(

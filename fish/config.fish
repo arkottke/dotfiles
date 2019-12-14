@@ -23,7 +23,3 @@ end
 function ko
     kde-open5 $argv
 end
-
-# Add miniconda
-set -gx PATH $PATH /home/albert/miniconda3/bin
-source (conda info --root)/etc/fish/conf.d/conda.fish
