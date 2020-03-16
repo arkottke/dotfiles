@@ -27,6 +27,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
+Plug 'Rykka/InstantRst'
 
 " Plug 'jupyter-vim/jupyter-vim', { 'for': 'python' } 
 Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' } 
@@ -155,6 +156,9 @@ call denite#custom#map(
 let g:deoplete#converter_auto_paren = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
+
+" InstantRst
+let g:instant_rst_browser = "google-chrome-stable"
 
 " Neosnippet
 "
