@@ -76,13 +76,19 @@
 ## A file to be run
 #c.InteractiveShellApp.file_to_run = ''
 
-## Enable GUI event loop integration with any of ('glut', 'gtk', 'gtk2', 'gtk3',
-#  'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'tk', 'wx', 'gtk2', 'qt4').
+## Enable GUI event loop integration with any of ('asyncio', 'glut', 'gtk',
+#  'gtk2', 'gtk3', 'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'tk', 'wx', 'gtk2',
+#  'qt4').
 #c.InteractiveShellApp.gui = None
 
 ## Should variables loaded at startup (by startup files, exec_lines, etc.) be
 #  hidden from tools like %who?
 #c.InteractiveShellApp.hide_initial_ns = True
+
+## If True, IPython will not add the current working directory to sys.path. When
+#  False, the current working directory is added to sys.path, allowing imports of
+#  modules defined in the current directory.
+#c.InteractiveShellApp.ignore_cwd = False
 
 ## Configure matplotlib for interactive use with the default matplotlib backend.
 #c.InteractiveShellApp.matplotlib = None
@@ -185,11 +191,17 @@
 #  HANDLE of the parent process, otherwise it is simply boolean.
 #c.IPKernelApp.parent_handle = 0
 
+## Only send stdout/stderr to output stream
+#c.IPKernelApp.quiet = True
+
+## Set main event loop.
+#c.IPKernelApp.trio_loop = False
+
 #------------------------------------------------------------------------------
 # Kernel(SingletonConfigurable) configuration
 #------------------------------------------------------------------------------
 
-## Whether to use appnope for compatiblity with OS X App Nap.
+## Whether to use appnope for compatibility with OS X App Nap.
 #  
 #  Only affects OS X >= 10.9.
 #c.Kernel._darwin_app_nap = True
@@ -198,14 +210,28 @@
 #c.Kernel._execute_sleep = 0.0005
 
 ## 
-#c.Kernel._poll_interval = 0.05
+#c.Kernel._poll_interval = 0.01
+
+## time (in seconds) to wait for messages to arrive when aborting queued requests
+#  after an error.
+#  
+#  Requests that arrive within this window after an error will be cancelled.
+#  
+#  Increase in the event of unusually slow network causing significant delays,
+#  which can manifest as e.g. "Run all" in a notebook aborting some, but not all,
+#  messages after an error.
+#c.Kernel.stop_on_error_timeout = 0.1
 
 #------------------------------------------------------------------------------
 # IPythonKernel(Kernel) configuration
 #------------------------------------------------------------------------------
 
 ## 
-#c.IPythonKernel.help_links = [{'text': 'Python', 'url': 'http://docs.python.org/3.6'}, {'text': 'IPython', 'url': 'http://ipython.org/documentation.html'}, {'text': 'NumPy', 'url': 'http://docs.scipy.org/doc/numpy/reference/'}, {'text': 'SciPy', 'url': 'http://docs.scipy.org/doc/scipy/reference/'}, {'text': 'Matplotlib', 'url': 'http://matplotlib.org/contents.html'}, {'text': 'SymPy', 'url': 'http://docs.sympy.org/latest/index.html'}, {'text': 'pandas', 'url': 'http://pandas.pydata.org/pandas-docs/stable/'}]
+#c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3.8'}, {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'}, {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'}, {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'}, {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'}, {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'}, {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}]
+
+## Set this flag to False to deactivate the use of experimental IPython
+#  completion APIs.
+#c.IPythonKernel.use_experimental_completions = True
 
 #------------------------------------------------------------------------------
 # InteractiveShell(SingletonConfigurable) configuration
@@ -220,6 +246,9 @@
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
 #c.InteractiveShell.ast_transformers = []
+
+## Automatically run await statement in the top level repl.
+#c.InteractiveShell.autoawait = True
 
 ## Make IPython automatically call any callable object even if you didn't type
 #  explicit parentheses. For example, 'str 43' becomes 'str(43)' automatically.
@@ -236,7 +265,7 @@
 #c.InteractiveShell.automagic = True
 
 ## The part of the banner to be printed before the profile
-#c.InteractiveShell.banner1 = "Python 3.6.2 (default, Jul 20 2017, 03:52:27) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
+#c.InteractiveShell.banner1 = "Python 3.8.3 (default, May 17 2020, 18:15:42) \nType 'copyright', 'credits' or 'license' for more information\nIPython 7.15.0 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 ## The part of the banner to be printed after the profile
 #c.InteractiveShell.banner2 = ''
@@ -290,6 +319,10 @@
 ## Start logging to the default log file in overwrite mode. Use `logappend` to
 #  specify a log file to **append** logs to.
 #c.InteractiveShell.logstart = False
+
+## Select the loop runner that will be used to execute top-level asynchronous
+#  code
+#c.InteractiveShell.loop_runner = 'IPython.core.interactiveshell._asyncio_runner'
 
 ## 
 #c.InteractiveShell.object_info_string_level = 0

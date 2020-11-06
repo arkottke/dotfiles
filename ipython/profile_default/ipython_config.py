@@ -30,16 +30,14 @@
 
 ## lines of code to run at IPython startup.
 c.InteractiveShellApp.exec_lines = [
+    '%load_ext autoreload',
+    '%autoreload 2',
     'import numpy as np',
     'import matplotlib.pyplot as plt',
-    'import pandas as pd',
-    '%autoreload 2',
 ]
 
 ## A list of dotted module names of IPython extensions to load.
-c.InteractiveShellApp.extensions = [
-    'autoreload'
-]
+#c.InteractiveShellApp.extensions = []
 
 ## dotted module name of an IPython extension to load.
 #c.InteractiveShellApp.extra_extension = ''
@@ -47,13 +45,19 @@ c.InteractiveShellApp.extensions = [
 ## A file to be run
 #c.InteractiveShellApp.file_to_run = ''
 
-## Enable GUI event loop integration with any of ('glut', 'gtk', 'gtk2', 'gtk3',
-#  'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'tk', 'wx', 'gtk2', 'qt4').
+## Enable GUI event loop integration with any of ('asyncio', 'glut', 'gtk',
+#  'gtk2', 'gtk3', 'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'tk', 'wx', 'gtk2',
+#  'qt4').
 #c.InteractiveShellApp.gui = None
 
 ## Should variables loaded at startup (by startup files, exec_lines, etc.) be
 #  hidden from tools like %who?
 #c.InteractiveShellApp.hide_initial_ns = True
+
+## If True, IPython will not add the current working directory to sys.path. When
+#  False, the current working directory is added to sys.path, allowing imports of
+#  modules defined in the current directory.
+#c.InteractiveShellApp.ignore_cwd = False
 
 ## Configure matplotlib for interactive use with the default matplotlib backend.
 #c.InteractiveShellApp.matplotlib = None
@@ -157,6 +161,9 @@ c.InteractiveShellApp.extensions = [
 #  user input before code is run.
 #c.InteractiveShell.ast_transformers = []
 
+## Automatically run await statement in the top level repl.
+#c.InteractiveShell.autoawait = True
+
 ## Make IPython automatically call any callable object even if you didn't type
 #  explicit parentheses. For example, 'str 43' becomes 'str(43)' automatically.
 #  The value can be '0' to disable the feature, '1' for 'smart' autocall, where
@@ -172,7 +179,7 @@ c.InteractiveShellApp.extensions = [
 #c.InteractiveShell.automagic = True
 
 ## The part of the banner to be printed before the profile
-#c.InteractiveShell.banner1 = "Python 3.6.2 (default, Jul 20 2017, 03:52:27) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
+#c.InteractiveShell.banner1 = "Python 3.8.3 (default, May 17 2020, 18:15:42) \nType 'copyright', 'credits' or 'license' for more information\nIPython 7.15.0 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 ## The part of the banner to be printed after the profile
 #c.InteractiveShell.banner2 = ''
@@ -227,6 +234,10 @@ c.InteractiveShellApp.extensions = [
 #  specify a log file to **append** logs to.
 #c.InteractiveShell.logstart = False
 
+## Select the loop runner that will be used to execute top-level asynchronous
+#  code
+#c.InteractiveShell.loop_runner = 'IPython.core.interactiveshell._asyncio_runner'
+
 ##
 #c.InteractiveShell.object_info_string_level = 0
 
@@ -278,6 +289,9 @@ c.InteractiveShellApp.extensions = [
 # TerminalInteractiveShell(InteractiveShell) configuration
 #------------------------------------------------------------------------------
 
+## Autoformatter to reformat Terminal code. Can be `'black'` or `None`
+#c.TerminalInteractiveShell.autoformatter = None
+
 ## Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
 #  direct exit without any confirmation.
@@ -292,7 +306,10 @@ c.InteractiveShellApp.extensions = [
 #c.TerminalInteractiveShell.editing_mode = 'emacs'
 
 ## Set the editor used by IPython (default to $EDITOR/vi/notepad).
-#c.TerminalInteractiveShell.editor = 'vi'
+#c.TerminalInteractiveShell.editor = 'nvim'
+
+## Allows to enable/disable the prompt toolkit history search
+#c.TerminalInteractiveShell.enable_history_search = True
 
 ## Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor. This is
 #  in addition to the F2 binding, which is always enabled.
@@ -306,17 +323,22 @@ c.InteractiveShellApp.extensions = [
 ## Highlight matching brackets.
 #c.TerminalInteractiveShell.highlight_matching_brackets = True
 
-## The name or class of a Pygments style to use for syntax
-#         highlighting:
-#  default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc, pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor, paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
+## The name or class of a Pygments style to use for syntax highlighting. To see
+#  available styles, run `pygmentize -L styles`.
 #c.TerminalInteractiveShell.highlighting_style = traitlets.Undefined
 
 ## Override highlighting format for specific tokens
 #c.TerminalInteractiveShell.highlighting_style_overrides = {}
 
+##
+#c.TerminalInteractiveShell.mime_renderers = {}
+
 ## Enable mouse support in the prompt (Note: prevents selecting text with the
 #  mouse)
 #c.TerminalInteractiveShell.mouse_support = False
+
+## Display the current vi mode (when using vi editing mode).
+#c.TerminalInteractiveShell.prompt_includes_vi_mode = True
 
 ## Class used to generate Prompt token for prompt_toolkit
 #c.TerminalInteractiveShell.prompts_class = 'IPython.terminal.prompts.Prompts'
@@ -331,7 +353,10 @@ c.InteractiveShellApp.extensions = [
 #  variable is set, or the current terminal is not a tty.
 #c.TerminalInteractiveShell.simple_prompt = False
 
-## Number of line at the bottom of the screen to reserve for the completion menu
+## Number of line at the bottom of the screen to reserve for the tab completion
+#  menu, search history, ...etc, the height of these menus will at most this
+#  value. Increase it is you prefer long and skinny menus, decrease for short and
+#  wide.
 #c.TerminalInteractiveShell.space_for_menu = 6
 
 ## Automatically set the terminal title
@@ -358,7 +383,7 @@ c.InteractiveShellApp.extensions = [
 ## Options for configuring the SQLite connection
 #
 #  These options are passed as keyword args to sqlite3.connect when establishing
-#  database conenctions.
+#  database connections.
 #c.HistoryAccessor.connection_options = {}
 
 ## enable the SQLite history
@@ -523,7 +548,7 @@ c.InteractiveShellApp.extensions = [
 #c.Completer.jedi_compute_type_timeout = 400
 
 ## Experimental: Use Jedi to generate autocompletions. Default to True if jedi is
-#  installed
+#  installed.
 #c.Completer.use_jedi = True
 
 #------------------------------------------------------------------------------
