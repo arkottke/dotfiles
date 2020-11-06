@@ -1,4 +1,5 @@
-
+" Disable polyglot for latex
+let g:polyglot_disabled = ['latex']
 
 " Specify a directory for plugins
 call plug#begin('~/.nvim/plugged')
@@ -155,7 +156,11 @@ call denite#custom#map(
 " Deoplete
 let g:deoplete#converter_auto_paren = 1
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+
+call deoplete#custom#option({
+            \ 'auto_complete_delay': 200,
+            \ 'smart_case': v:true,
+            \ })
 
 " InstantRst
 let g:instant_rst_browser = "google-chrome-stable"
@@ -184,9 +189,6 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
-
-" Disable polyglot for latex
-let g:polyglot_disabled = ['latex']
 
 " Switch between C source files
 nmap <silent> <Leader>of :FSHere<cr>
