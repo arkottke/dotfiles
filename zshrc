@@ -50,14 +50,14 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(extract fasd fzf git sudo tmux vi-mode)
+plugins=(extract fasd fzf git ssh-agent sudo tmux vi-mode)
 
 # User configuration
 autoload -U zmv
 # setopt HIST_FIND_NO_DUPS
 
 # Add local to path
-export PATH="/home/albert/.local/bin:/home/albert/.gem/ruby/2.6.0/bin:$PATH"
+export PATH="/home/albert/.local/bin:/home/albert/.gem/ruby/2.7.0/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -108,7 +108,7 @@ alias tmux='TERM=screen-256color tmux'
 alias jn='jupyter notebook'
 alias jc='jupyter console'
 alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
-alias conda='/opt/miniconda3/bin/conda'
+alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 
 function extract_clip() {
     fname=$1
@@ -122,14 +122,28 @@ function extract_clip() {
     avconv -ss $start -t $length -i $fname -an -aq 5 -ac 2 -qmax 25 -threads 2 myvideo.webm
 }
 
-# added by travis gem
-[ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
+function to_gdrive() {
+    for i do
+        echo "Transferring: $i"
+        rclone copy -P $i gdrive:working/
+    done
+}
 
-# fzf
+function merge_pdf() {
+    gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=combined.pdf -dBATCH $*
+}
+
+function xlsx_to_csv() {
+    libreoffice --headless --convert-to csv $1 --outdir .
+}
+
+# Load extensions
+[ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [[ -z "$TMUX" ]]; then
-    tmux attach || tmux new
+    # Create a new session if it doesn't exist
+    tmux has-session || tmux new
 fi
 
 # Returns whether the given command is executable or aliased.
@@ -141,3 +155,19 @@ _has() {
 if _has fzf && _has ag; then
   export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
 fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/albert/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/albert/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/albert/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/albert/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
