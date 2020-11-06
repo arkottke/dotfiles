@@ -3,17 +3,11 @@
 " Specify a directory for plugins
 call plug#begin('~/.nvim/plugged')
 
-" Completion
-Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
-"Colors
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'arcticicestudio/nord-vim', { 'as': 'nord' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/neosnippet.vim'
+Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-rooter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'derekwyatt/vim-fswitch'
@@ -21,20 +15,35 @@ Plug 'itchyny/lightline.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'rking/ag.vim'
-Plug 'romainl/Apprentice'
 Plug 'scrooloose/nerdtree'
-Plug 'sheerun/vim-polyglot'
+
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+
 Plug 'vimwiki/vimwiki'
+
+" Indent 
+Plug 'sheerun/vim-polyglot'
+" Check syntax
 Plug 'w0rp/ale'
+
 Plug 'Rykka/InstantRst'
 
-" Plug 'jupyter-vim/jupyter-vim', { 'for': 'python' } 
-Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' } 
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
-Plug 'deoplete-plugins/deoplete-clang', { 'for': 'cpp' } 
+" Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins', 'for': 'python'}
+Plug 'deoplete-plugins/deoplete-jedi', {'for': 'python'}
+
+" Plug 'jupyter-vim/jupyter-vim', { 'for': 'python' } 
 
 Plug 'lervag/vimtex', { 'for': 'tex' }
+"
+"Colors
+Plug 'dracula/vim', {'as': 'dracula'}
+Plug 'arcticicestudio/nord-vim', {'as': 'nord'}
+Plug 'ayu-theme/ayu-vim', {'as': 'ayu'}
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -53,8 +62,8 @@ set shellslash
 set shiftwidth=4 	" auto-ident width when using cindent
 set softtabstop=4 	" spaces added when hitting tab
 set tabstop=8 		" real tab width
+set termguicolors
 set wildmode=longest,list,full
-
 set wildignore=*.o,*.a,*.so,*.pyc,*.swp,.git*
 
 syntax on
@@ -62,14 +71,17 @@ syntax on
 " ,tags,.git,.git/*,.idea/*,__pycache__/*,venv/*,.pytest-cache/*,*.egg-info/*
 
 " Configure Python
-let g:python_host_prog = '/bin/python2'
-let g:python3_host_prog = '/bin/python3'
+" let g:python_host_prog = '/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
+
+nmap <F8> :TagbarToggle<CR>
 
 " Colors
-colorscheme nord
-let g:lightline = {
-    \ 'colorscheme': 'dracula',
-    \ }
+colorscheme dracula
+let g:lightline#colorscheme = 'dracula'
+
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
 
 " Denite
 
@@ -155,7 +167,6 @@ call denite#custom#map(
 " Deoplete
 let g:deoplete#converter_auto_paren = 1
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
 
 " InstantRst
 let g:instant_rst_browser = "google-chrome-stable"
