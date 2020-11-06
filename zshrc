@@ -156,6 +156,10 @@ if _has fzf && _has ag; then
   export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
 fi
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d7eff26681cec646b45ff50547199ac0428b6755
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/albert/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
