@@ -108,7 +108,6 @@ alias tmux='TERM=screen-256color tmux'
 alias jn='jupyter notebook'
 alias jc='jupyter console'
 alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
-alias conda='/opt/miniconda3/bin/conda'
 
 function extract_clip() {
     fname=$1
@@ -141,3 +140,20 @@ _has() {
 if _has fzf && _has ag; then
   export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
 fi
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/albert/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/albert/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/albert/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/albert/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
