@@ -108,7 +108,6 @@ alias tmux='TERM=screen-256color tmux'
 alias jn='jupyter notebook'
 alias jc='jupyter console'
 alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
-alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 
 function extract_clip() {
     fname=$1
