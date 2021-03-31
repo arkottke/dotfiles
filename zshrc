@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="dracula"
+ZSH_THEME="mydracula"
 
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(extract fasd fzf git gitfast ssh-agent sudo tmux vi-mode)
+plugins=(vi-mode extract fasd fzf git gitfast ssh-agent sudo tmux)
 
 # User configuration
 autoload -U zmv
@@ -68,28 +68,8 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='nvim'
+  export EDITOR='vim'
 fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Add fake paths on MSYS for completion
-if [[ -n $MSYSTEM && $MSYSTEM == MSYS ]]; then
-    # complete hard drives in msys2
-    drives=$(mount | sed -rn 's#^[A-Z]: on /([a-z]).*#\1#p' | tr '\n' ' ')
-    zstyle ':completion:*' fake-files /: "/:$drives"
-    unset drives
-fi
-
-# Load solarized directory colors
-# eval `dircolors $HOME/.dir_colors`
-
-# Incremental search
-bindkey '^r' history-incremental-search-backward
 
 # Export java options for antialiasing
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
@@ -103,11 +83,18 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias vim="nvim"
+
 alias ko='kde-open5'
 alias tmux='TERM=screen-256color tmux'
+alias jl='source /home/albert/miniconda3/bin/activate && jupyter lab'
 alias jn='jupyter notebook'
 alias jc='jupyter console'
 alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
+
+# Use DSLR as webcam
+# https://medium.com/nerdery/dslr-webcam-setup-for-linux-9b6d1b79ae22
+alias start_webcam='gphoto2 --stdout --capture-movie | ffmpeg -hwaccel nvdec -c:v mjpeg_cuvid -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video0'
 
 function extract_clip() {
     fname=$1
@@ -136,10 +123,6 @@ function xlsx_to_csv() {
     libreoffice --headless --convert-to csv $1 --outdir .
 }
 
-# Load extensions
-[ -f /home/albert/.travis/travis.sh ] && source /home/albert/.travis/travis.sh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 if [[ -z "$TMUX" ]]; then
     # Create a new session if it doesn't exist
     tmux has-session || tmux new
@@ -149,11 +132,6 @@ fi
 _has() {
   return $( whence $1 >/dev/null )
 }
-
-# fzf + ag configuration
-if _has fzf && _has ag; then
-  export FZF_CTRL_T_COMMAND='ag --nocolor -g ""'
-fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
