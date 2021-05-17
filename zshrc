@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="mydracula"
+# ZSH_THEME="mydracula"
 
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
@@ -60,6 +60,9 @@ autoload -U zmv
 export PATH="/home/albert/.local/bin:/home/albert/.gem/ruby/2.7.0/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
+
+# Use StarShip
+eval "$(starship init zsh)"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
