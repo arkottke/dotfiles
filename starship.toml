@@ -1,3 +1,10 @@
-# Disable the package module, hiding it from the prompt completely
+[aws]
+disabled = true
+[cmake]
+disabled = true
 [package]
 disabled = true
+[python]
+symbol = ' '
+pyenv_version_name = true
+format = 'via [${symbol}(\($virtualenv\) )]($style)'
