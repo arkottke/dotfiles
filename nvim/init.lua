@@ -28,10 +28,17 @@ require('packer').startup(function(use)
   use {'nvim-treesitter/nvim-treesitter-textobjects', branch = '0.5-compat', run = ':TSUpdate' }
   use 'lukas-reineke/indent-blankline.nvim'
 
-  use 'nvim-lua/completion-nvim'
+  -- use 'nvim-lua/completion-nvim'
 
-  use 'SirVer/ultisnips'
-  use 'honza/vim-snippets'
+  use {'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' } --, config = ':COQnow --shut-up'}
+  -- 9000+ Snippets
+  use {'ms-jpq/coq.artifacts', branch = 'artifacts' }
+
+  use { 'LionC/nest.nvim' }
+  use 'liuchengxu/vim-which-key'
+
+  -- use 'SirVer/ultisnips'
+  -- use 'honza/vim-snippets'
 
   use 'unblevable/quick-scope'
   use 'machakann/vim-sandwich'
@@ -41,30 +48,18 @@ require('packer').startup(function(use)
 
   use 'stsewd/sphinx.nvim'
   use 'lervag/vimtex'
-  use 'oberblastmeister/neuron.nvim'
+  use { 'oberblastmeister/neuron.nvim', branch = 'unstable' }
   use 'psf/black'
 
   use 'shaunsingh/nord.nvim'
   use 'hoob3rt/lualine.nvim'
-
 end)
 
 -------------------- PLUGIN SETUP --------------------------
 g['mapleader'] = ','
--- telescope
-map('n', '<leader>t', '<cmd>lua require(\'telescope.builtin\').find_files()<cr>')
-map('n', '<leader>r', '<cmd>lua require(\'telescope.builtin\').file_browser()<cr>')
-map('n', '<leader>e', '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>')
-map('n', ';', '<cmd>lua require(\'telescope.builtin\').buffers()<cr>')
 -- completion
-cmd 'autocmd BufEnter * lua require\'completion\'.on_attach()'
+-- cmd 'autocmd BufEnter * lua require\'completion\'.on_attach()'
 
--- fugitive and git
-local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
-map('n', '<leader>g<space>', ':Git ')
-map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
-map('n', '<leader>gg', '<cmd>Git<CR>')
-map('n', '<leader>gl', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log))
 -- indent-blankline
 g['indent_blankline_char'] = '┊'
 g['indent_blankline_buftype_exclude'] = {'terminal'}
@@ -74,7 +69,7 @@ cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
 g['vimtex_quickfix_mode'] = 0
 -- completion-nvim
-g['completion_enable_snippet'] = 'UltiSnips'
+-- g['completion_enable_snippet'] = 'UltiSnips'
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
@@ -106,8 +101,8 @@ opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = false                    -- Disable line wrap
 
 -------------------- MAPPINGS ------------------------------
-map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
+-- map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
+-- map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
 
 -------------------- TEXT OBJECTS --------------------------
 for _, ch in ipairs({
@@ -225,25 +220,60 @@ require('neuron').setup{
     mappings = true,
     run = nil, -- function to run when in neuron dir
     neuron_dir = "~/Dropbox/misc/neuron", -- the directory of all of your notes, expanded by default (currently supports only one directory for notes, find a way to detect neuron.dhall to use any directory)
-    leader = "gz", -- the leader key to for all mappings, remember with 'go zettel'
+    leader = "<leader>z", -- the leader key to for all mappings, remember with 'go zettel'
 }
--- click enter on [[my_link]] or [[[my_link]]] to enter it
--- map('n', '<CR>', '<cmd>lua require\'neuron\'.enter_link()<CR>')
--- create a new note
-map('n', 'gzn', '<cmd>lua require\'neuron/cmd\'.new_edit(require\'neuron\'.config.neuron_dir)<CR>')
--- find your notes, click enter to create the note if there are not notes that match
-map('n', 'gzz', '<cmd>lua require\'neuron/telescope\'.find_zettels()<CR>')
--- insert the id of the note that is found
-map('n', 'gzZ', '<cmd>lua require\'neuron/telescope\'.find_zettels {insert = true}<CR>')
--- find the backlinks of the current note all the note that link this note
-map('n', 'gzb', '<cmd>lua require\'neuron/telescope\'.find_backlinks()<CR>')
--- same as above but insert the found id
-map('n', 'gzB', '<cmd>lua require\'neuron/telescope\'.find_backlinks {insert = true}<CR>')
--- find all tags and insert
-map('n', 'gzt', '<cmd>lua require\'neuron/telescope\'.find_tags()<CR>')
--- start the neuron server and render markdown, auto reload on save
-map('n', 'gzs', '<cmd>lua require\'neuron\'.rib {address = "127.0.0.1:8200", verbose = true}<CR>')
--- go to next [[my_link]] or [[[my_link]]]
-map('n', 'gz]', '<cmd>lua require\'neuron\'.goto_next_extmark()<CR>')
--- go to previous
-map('n', 'gz[', '<cmd>lua require\'neuron\'.goto_prev_extmark()<CR>')
+-- fugitive and git
+local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
+
+local nest = require('nest')
+nest.applyKeymaps {
+	-- Remove silent from ; : mapping, so that : shows up in command mode
+	{ ';', ':' , options = { silent = false } },
+	{ ':', ';' },
+
+	{ '<leader>', {
+		-- Telescope
+		{ 't', '<cmd>lua require(\'telescope.builtin\').find_files()<cr>' },
+		{ 'r', '<cmd>lua require(\'telescope.builtin\').file_browser()<cr>' },
+		{ 'e', '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>' },
+		{ ';', '<cmd>lua require(\'telescope.builtin\').buffers()<cr>' },
+		-- Git
+		{ 'g', {
+			{ '<space>', ':Git ' },
+			{ 'c', '<cmd>Git commit<cr>' },
+			{ 'd', '<cmd>Gvdiffsplit<CR>' },
+			{ 'l', fmt('<cmd>term git log --graph --all --format="%s"<CR><cmd>start<CR>', log) },
+			{ 'p', '<cmd>Git push<cr>' },
+			{ 'w', '<cmd>Gwrite<cr>' },
+		}},
+		-- Zettels
+		{ 'z', {
+			-- -- click enter on [[my_link]] or [[[my_link]]] to enter it
+			-- -- map('n', '<CR>', '<cmd>lua require\'neuron\'.enter_link()<CR>')
+			-- -- create a new note
+			{ 'n', '<cmd>lua require\'neuron/cmd\'.new_edit(require\'neuron\'.config.neuron_dir)<CR>' },
+			-- find your notes, click enter to create the note if there are not notes that match
+			{ 'z', '<cmd>lua require\'neuron/telescope\'.find_zettels()<CR>' },
+			-- insert the id of the note that is found
+			{ 'Z', '<cmd>lua require\'neuron/telescope\'.find_zettels {insert = true}<CR>' },
+			-- find the backlinks of the current note all the note that link this note
+			{ 'b', '<cmd>lua require\'neuron/telescope\'.find_backlinks()<CR>' },
+			-- same as above but insert the found id
+			{ 'B', '<cmd>lua require\'neuron/telescope\'.find_backlinks {insert = true}<CR>' },
+			-- find all tags and insert
+			{ 't', '<cmd>lua require\'neuron/telescope\'.find_tags()<CR>' },
+			-- start the neuron server and render markdown, auto reload on save
+			{ 's', '<cmd>lua require\'neuron\'.rib {address = "127.0.0.1:8200", verbose = true}<CR>' },
+			-- go to next [[my_link]] or [[[my_link]]]
+			{ ']', '<cmd>lua require\'neuron\'.goto_next_extmark()<CR>' },
+			-- go to previous
+			{ '[', '<cmd>lua require\'neuron\'.goto_prev_extmark()<CR>' },
+		}},
+    -- Vimtex
+    { 'v', {
+      { 'v', '<cmd>VimtexCompile<cr>' },
+      { 'e', '<cmd>VimtexErrors<cr>' },
+      { 't', '<cmd>VimtexTocToggle<cr>' },
+    }},
+	}},
+}
