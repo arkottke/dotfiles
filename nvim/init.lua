@@ -24,15 +24,14 @@ require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
 
-  use {'nvim-treesitter/nvim-treesitter', branch = '0.5-compat', run = ':TSUpdate' }
-  use {'nvim-treesitter/nvim-treesitter-textobjects', branch = '0.5-compat', run = ':TSUpdate' }
+  use { 'nvim-treesitter/nvim-treesitter', branch = '0.5-compat', run = ':TSUpdate' }
+  use { 'nvim-treesitter/nvim-treesitter-textobjects', branch = '0.5-compat', run = ':TSUpdate' }
   use 'lukas-reineke/indent-blankline.nvim'
 
   -- use 'nvim-lua/completion-nvim'
 
-  use {'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' } --, config = ':COQnow --shut-up'}
-  -- 9000+ Snippets
-  use {'ms-jpq/coq.artifacts', branch = 'artifacts' }
+  use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' } --, config = ':COQnow --shut-up'}
+  use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
 
   use { 'LionC/nest.nvim' }
   use 'liuchengxu/vim-which-key'
@@ -46,10 +45,12 @@ require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   use 'tpope/vim-unimpaired'
 
+  use { 'averms/black-nvim', run = ':UpdateRemotePlugins' }
+  
+
   use 'stsewd/sphinx.nvim'
   use 'lervag/vimtex'
   use { 'oberblastmeister/neuron.nvim', branch = 'unstable' }
-  use 'psf/black'
 
   use 'shaunsingh/nord.nvim'
   use 'hoob3rt/lualine.nvim'
@@ -57,8 +58,6 @@ end)
 
 -------------------- PLUGIN SETUP --------------------------
 g['mapleader'] = ','
--- completion
--- cmd 'autocmd BufEnter * lua require\'completion\'.on_attach()'
 
 -- indent-blankline
 g['indent_blankline_char'] = '┊'
@@ -68,8 +67,8 @@ g['indent_blankline_filetype_exclude'] = {'fugitive', 'fzf', 'help', 'man'}
 cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
 g['vimtex_quickfix_mode'] = 0
--- completion-nvim
--- g['completion_enable_snippet'] = 'UltiSnips'
+
+g['coq_settings'] = { auto_start = 'shut-up' }
 
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
@@ -117,12 +116,13 @@ end
 
 -------------------- LSP -----------------------------------
 local lsp = require('lspconfig')
+local coq = require('coq')
 for ls, cfg in pairs({
   bashls = {},
   ccls = {},
   jsonls = {},
   pylsp = {root_dir = lsp.util.root_pattern('.git', fn.getcwd())},
-}) do lsp[ls].setup(cfg) end
+}) do lsp[ls].setup(coq.lsp_ensure_capabilities(cfg)) end
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -237,6 +237,11 @@ nest.applyKeymaps {
 		{ 'r', '<cmd>lua require(\'telescope.builtin\').file_browser()<cr>' },
 		{ 'e', '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>' },
 		{ ';', '<cmd>lua require(\'telescope.builtin\').buffers()<cr>' },
+    -- Packer
+    { 'p', {
+      { 'p', '<cmd>PackerSync<cr>' },
+      { 's', '<cmd>PackerStatus<cr>' },
+    }},
 		-- Git
 		{ 'g', {
 			{ '<space>', ':Git ' },

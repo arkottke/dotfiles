@@ -9,7 +9,7 @@ augroup python
     "autocmd BufWritePost *.py Neomake
     autocmd BufWritePre *.py set makeprg=python\ %
 
-    autocmd BufWritePre *.py execute ':Black'
+    autocmd BufWritePre *.py execute ':call Black()'
    
     nmap <Leader>m :wa<CR>:make<CR>
     nmap <Leader>b :TagbarToggle<CR>
