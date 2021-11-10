@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode colorize extract fasd fzf git gitfast ssh-agent sudo tmux pipenv)
+plugins=(vi-mode colorize docker extract fasd fzf git gitfast ssh-agent sudo tmux)
 
 # User configuration
 autoload -U zmv
@@ -149,7 +149,8 @@ _has() {
 # unset __conda_setup
 # # <<< conda initialize <<<
 
-# Use pyenv to manage python environments
+# Use pyenv to manage python environments. Disable updating the prompt because
+# that is configured by starship
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 eval "$(pyenv init -)"
