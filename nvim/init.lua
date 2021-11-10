@@ -28,25 +28,23 @@ require('packer').startup(function(use)
   use { 'nvim-treesitter/nvim-treesitter-textobjects', branch = '0.5-compat', run = ':TSUpdate' }
   use 'lukas-reineke/indent-blankline.nvim'
 
-  -- use 'nvim-lua/completion-nvim'
-
-  use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' } --, config = ':COQnow --shut-up'}
-  use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/nvim-cmp'
+  
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/vim-vsnip'
+  use 'rafamadriz/friendly-snippets'
 
   use { 'LionC/nest.nvim' }
-  use 'liuchengxu/vim-which-key'
-
-  -- use 'SirVer/ultisnips'
-  -- use 'honza/vim-snippets'
 
   use 'unblevable/quick-scope'
   use 'machakann/vim-sandwich'
   use 'tpope/vim-commentary'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-unimpaired'
-
-  use { 'averms/black-nvim', run = ':UpdateRemotePlugins' }
-  
 
   use 'stsewd/sphinx.nvim'
   use 'lervag/vimtex'
@@ -68,12 +66,10 @@ cmd 'runtime macros/sandwich/keymap/surround.vim'
 -- vimtex
 g['vimtex_quickfix_mode'] = 0
 
-g['coq_settings'] = { auto_start = 'shut-up' }
-
 -------------------- OPTIONS -------------------------------
 local indent, width = 2, 80
 cmd 'colorscheme nord'
-opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
+opt.completeopt = {'menu', 'menuone', 'noselect'}  -- Completion options
 opt.cursorline = true               -- Highlight cursor line
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.formatoptions = 'crqnj'         -- Automatic formatting options
@@ -99,10 +95,6 @@ opt.updatetime = 100                -- Delay before swap file is saved
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = false                    -- Disable line wrap
 
--------------------- MAPPINGS ------------------------------
--- map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
--- map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', {expr = true})
-
 -------------------- TEXT OBJECTS --------------------------
 for _, ch in ipairs({
   '<space>', '!', '#', '$', '%', '&', '*', '+', ',', '-', '.',
@@ -116,13 +108,13 @@ end
 
 -------------------- LSP -----------------------------------
 local lsp = require('lspconfig')
-local coq = require('coq')
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 for ls, cfg in pairs({
-  bashls = {},
-  ccls = {},
-  jsonls = {},
-  pylsp = {root_dir = lsp.util.root_pattern('.git', fn.getcwd())},
-}) do lsp[ls].setup(coq.lsp_ensure_capabilities(cfg)) end
+  ccls = {capabilities = capabilities},
+  pylsp = {root_dir = lsp.util.root_pattern('.git', fn.getcwd()), capabilities = capabilities },
+}) do lsp[ls].setup(cfg) end
+
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -210,7 +202,9 @@ require('telescope').setup{
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
 
     -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
+    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker,
+
+    file_ignore_patterns = { "%.pyc" }
   }
 }
 
@@ -222,6 +216,79 @@ require('neuron').setup{
     neuron_dir = "~/Dropbox/misc/neuron", -- the directory of all of your notes, expanded by default (currently supports only one directory for notes, find a way to detect neuron.dhall to use any directory)
     leader = "<leader>z", -- the leader key to for all mappings, remember with 'go zettel'
 }
+
+-- NVIM-CMP
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
+local cmp = require('cmp')
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, { "i", "s" }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
 -- fugitive and git
 local log = [[\%C(yellow)\%h\%Cred\%d \%Creset\%s \%Cgreen(\%ar) \%Cblue\%an\%Creset]]
 
@@ -256,7 +323,7 @@ nest.applyKeymaps {
 			-- -- click enter on [[my_link]] or [[[my_link]]] to enter it
 			-- -- map('n', '<CR>', '<cmd>lua require\'neuron\'.enter_link()<CR>')
 			-- -- create a new note
-			{ 'n', '<cmd>lua require\'neuron/cmd\'.new_edit(require\'neuron\'.config.neuron_dir)<CR>' },
+			{ 'n', '<cmd>lua require\'neuron/cmd\'.new_edit(require\'neuron/config\'.neuron_dir)<CR>' },
 			-- find your notes, click enter to create the note if there are not notes that match
 			{ 'z', '<cmd>lua require\'neuron/telescope\'.find_zettels()<CR>' },
 			-- insert the id of the note that is found
