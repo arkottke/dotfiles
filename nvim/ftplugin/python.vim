@@ -8,11 +8,11 @@ augroup python
     " Run Neomake on save
     "autocmd BufWritePost *.py Neomake
     autocmd BufWritePre *.py set makeprg=python\ %
-    
+
     " Disabled because not all projects use this
     "autocmd BufWritePre *.py execute ':call Black()'
-   
+
     nmap <Leader>m :wa<CR>:make<CR>
     nmap <Leader>b :TagbarToggle<CR>
-    nnoremap <F9> :Black<CR>
+    nnoremap <leader>f :call Black()<CR>
 augroup END

@@ -1,5 +1,5 @@
 [user]
-        name = Albert Kottke
+    name = Albert Kottke
 	email = albert.kottke@gmail.com
 [push]
 	default = simple
@@ -8,4 +8,4 @@
 [core]
 	autocrlf = input
 [pull]
-	rebase = false
+	ff = only
