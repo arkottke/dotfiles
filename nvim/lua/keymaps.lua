@@ -12,7 +12,8 @@ local cmd = vim.cmd
 -----------------------------------------------------------
 
 -- clear search highlighting
-map('n', '<leader>c', ':nohl<cr>', default_opts)
+-- map('n', '<leader>c', ':nohl<cr>', default_opts)
+map('n', '<cr>', ':nohl<cr><cr>', default_opts)
 
 
 -----------------------------------------------------------
