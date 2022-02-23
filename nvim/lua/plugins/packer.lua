@@ -20,13 +20,15 @@ return packer.startup(function()
   use 'wbthomason/packer.nvim' -- packer can manage itself
 
   -- telescope
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope-file-browser.nvim'
-    }
-  }
+
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-file-browser.nvim"
+    },
+	})
 
   -- file explorer
   use 'kyazdani42/nvim-tree.lua'
@@ -96,10 +98,10 @@ return packer.startup(function()
   }
 
   -- focus window control
-  use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
+  -- use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
 
   -- aerial navigator
-  -- use 'stevearc/aerial.nvim'
+  use 'stevearc/aerial.nvim'
 
 
   -- which-key
@@ -130,4 +132,7 @@ return packer.startup(function()
 
   -- git interface
   use 'lambdalisue/gina.vim'
+
+  -- Glow for markdown preview
+  use 'ellisonleao/glow.nvim'
 end)
