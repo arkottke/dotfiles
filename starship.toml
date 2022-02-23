@@ -6,5 +6,3 @@ disabled = true
 disabled = true
 [python]
 symbol = ' '
-pyenv_version_name = true
-format = 'via [${symbol}(\($virtualenv\) )]($style)'
