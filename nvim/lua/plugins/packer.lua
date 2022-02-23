@@ -95,8 +95,20 @@ return packer.startup(function()
     end
   }
 
+  -- focus window control
+  use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
+
   -- aerial navigator
-  use 'stevearc/aerial.nvim'
+  -- use 'stevearc/aerial.nvim'
+
+
+  -- which-key
+  use {
+    'folke/which-key.nvim',
+    config = function()
+      require('which-key').setup()
+    end
+  }
 
   -- debugging
   use 'mfussenegger/nvim-dap'
