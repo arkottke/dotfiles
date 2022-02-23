@@ -50,14 +50,14 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode colorize docker extract fasd fzf git gitfast ssh-agent sudo tmux)
+plugins=(vi-mode colorize docker extract fasd fzf git gitfast ssh-agent sudo tmux zsh-autosuggestions)
 
 # User configuration
 autoload -U zmv
 # setopt HIST_FIND_NO_DUPS
 
 # Add local to path
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH:/opt/geopsy/bin"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -134,25 +134,25 @@ _has() {
   return $( whence $1 >/dev/null )
 }
 
-# # >>> conda initialize >>>
-# # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/home/albert/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/home/albert/miniconda3/etc/profile.d/conda.sh" ]; then
-#         . "/home/albert/miniconda3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/home/albert/miniconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# # <<< conda initialize <<<
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/albert/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/albert/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/albert/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/albert/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
 # Use pyenv to manage python environments. Disable updating the prompt because
 # that is configured by starship
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+# export VIRTUAL_ENV_DISABLE_PROMPT=1
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
