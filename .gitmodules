@@ -25,3 +25,6 @@
 [submodule "submodules/nord-alacritty"]
 	path = submodules/nord-alacritty
 	url = git@github.com:arcticicestudio/nord-alacritty.git
+[submodule "kitty/nord-kitty"]
+	path = kitty/nord-kitty
+	url = https://github.com/connorholyday/nord-kitty
