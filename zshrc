@@ -148,11 +148,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-# Use pyenv to manage python environments. Disable updating the prompt because
-# that is configured by starship
-# export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-# export VIRTUAL_ENV_DISABLE_PROMPT=1
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
-
