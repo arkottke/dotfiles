@@ -1,0 +1,12 @@
+[Unit]
+Description=Jupyter Lab
+
+[Service]
+ExecStart=/home/albert/.pyenv/versions/mambaforge/bin/jupyter-lab --notebook-dir=/home/albert/ --no-browser --NotebookApp.password='sha1:63cc0757a8d2:ca15dd2f7e4becc38d041b4b138ed46326e12c63'
+user=albert
+group=users
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
