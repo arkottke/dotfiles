@@ -135,4 +135,7 @@ return packer.startup(function()
 
   -- Glow for markdown preview
   use 'ellisonleao/glow.nvim'
+
+  -- Highlighting for kitty config
+  use { 'fladson/vim-kitty' }
 end)
