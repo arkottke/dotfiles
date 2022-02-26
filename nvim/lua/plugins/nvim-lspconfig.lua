@@ -62,7 +62,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'bashls', 'pyright', 'clangd', 'yamlls' }
+local servers = { 'bashls', 'clangd', 'yamlls' }
 
 -- Set settings for language servers below
 --
@@ -82,3 +82,26 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+-- Manually set up pyright
+nvim_lsp['pyright'].setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  ts_settings = ts_settings,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  cmd = { "pyright-langserver", "--stdio" },
+  filetypes = { "python" },
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = "workspace",
+        useLibraryCodeForTypes = true,
+        typeCheckingMode = "off"
+      }
+    }
+  },
+  single_file_support = true
+}

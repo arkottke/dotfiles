@@ -26,4 +26,4 @@ neovim/spell/en.utf-8.add.spl
 vim/spell/en.utf-8.add.spl
 
 # Packer compiled
-./nvim/plugin/packer_compiled.lua
+nvim/plugin/packer_compiled.lua
