@@ -4,7 +4,9 @@ disabled = true
 disabled = true
 [package]
 disabled = true
+[conda]
+disabled = true
 [python]
 symbol = ' '
-pyenv_version_name = true
+pyenv_version_name = false
 format = 'via [${symbol}(\($virtualenv\) )]($style)'
