@@ -121,8 +121,8 @@ return packer.startup(function()
   -- neuron note taking
   use { 'oberblastmeister/neuron.nvim', branch = 'unstable' }
 
-  -- black formatting
-  use { 'averms/black-nvim', run = ':UpdateRemotePlugins'}
+  -- code formatting
+  use { 'mhartington/formatter.nvim' }
 
   -- vimtex
   use 'lervag/vimtex'
