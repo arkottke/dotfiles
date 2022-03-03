@@ -124,6 +124,10 @@ function xlsx_to_csv() {
     libreoffice --headless --convert-to csv $1 --outdir .
 }
 
+if [[ -f "~/.secrets" ]]; then
+    source .secrets
+fi
+
 if [[ -z "$TMUX" ]]; then
     # Create a new session if it doesn't exist
     tmux has-session || tmux new
