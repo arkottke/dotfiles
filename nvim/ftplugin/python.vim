@@ -13,6 +13,4 @@ augroup python
     "autocmd BufWritePre *.py execute ':call Black()'
 
     nmap <Leader>m :wa<CR>:make<CR>
-    nmap <Leader>b :TagbarToggle<CR>
-    nnoremap <leader>f :call Black()<CR>
 augroup END

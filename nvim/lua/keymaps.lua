@@ -27,8 +27,7 @@ map('n', '<leader>ta', ':Telescope diagnostics<cr>', default_opts)
 map('n', '<leader>tc', ':Telescope commands<cr>', default_opts)
 map('n', '<leader>tb', ':Telescope file_browser<cr>', default_opts)
 
-
-map('n', ';', ':Telescope buffers<cr>', default_opts)
+map('n', ';', ':lua require(\'telescope.builtin\').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>', default_opts)
 
 -----------------------------------------------------------
 -- Neuron
@@ -59,3 +58,6 @@ map('n', '<leader>z[', ':lua require\'neuron\'.goto_prev_extmark()<cr>', default
 -----------------------------------------------------------
 
 map('n', '<leader>e', ':NvimTreeToggle<cr>', default_opts)
+
+
+map('n', '<leader>f', ':Format<cr>', default_opts)

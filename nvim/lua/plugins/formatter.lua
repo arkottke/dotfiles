@@ -52,7 +52,7 @@ require('formatter').setup({
           stdin = true,
         }
       end
-    }
+    },
     sh = {
       -- Shell Script Formatter
       function()

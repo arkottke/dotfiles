@@ -1,6 +1,7 @@
 require('settings')
 require('keymaps')
 require('plugins/packer')
+require('plugins/formatter')
 require('plugins/nvim-tree')
 -- require('plugins/indent-blankline')
 -- require('plugins/vista')
