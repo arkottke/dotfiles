@@ -87,6 +87,9 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias vim="nvim"
+# Pass terminfo to ssh server
+# https://sw.kovidgoyal.net/kitty/faq/#i-get-errors-about-the-terminal-being-unknown-or-opening-the-terminal-failing-when-sshing-into-a-different-computer
+alias ssh="kitty +kitten ssh"
 
 alias ko='kde-open5'
 alias jl='source /home/albert/miniconda3/bin/activate && jupyter lab'
