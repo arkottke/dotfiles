@@ -124,7 +124,7 @@ function xlsx_to_csv() {
     libreoffice --headless --convert-to csv $1 --outdir .
 }
 
-if [[ -f "~/.secrets" ]]; then
+if [[ -f "$HOME/.secrets" ]]; then
     source .secrets
 fi
 
@@ -133,10 +133,12 @@ if [[ -z "$TMUX" ]]; then
     tmux has-session || tmux new
 fi
 
-# Add pyenv, but let starship handle the prompt
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [[ -d "$HOME/.pyenv" ]]; then
+    # Add pyenv, but let starship handle the prompt
+    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+    export VIRTUAL_ENV_DISABLE_PROMPT=1
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
