@@ -127,7 +127,7 @@ function xlsx_to_csv() {
     libreoffice --headless --convert-to csv $1 --outdir .
 }
 
-if [ -f "$HOME/.secrets" ]; then
+if [[ -f "$HOME/.secrets" ]]; then
     source $HOME/.secrets
 fi
 
