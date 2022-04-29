@@ -62,6 +62,15 @@ require('formatter').setup({
           stdin = true,
         }
       end,
+    },
+    tex = {
+      function()
+        return {
+          exe = "latexindent",
+          args = {"-"},
+          stdin = true
+        }
+      end
     }
   }
 })

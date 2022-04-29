@@ -54,7 +54,11 @@ return packer.startup(function()
   use 'nvim-treesitter/nvim-treesitter'
 
   -- colorschemes
-  use 'shaunsingh/nord.nvim'
+  use { 'shaunsingh/nord.nvim' }
+  use { 'EdenEast/nightfox.nvim' }
+  use { 'morhetz/gruvbox' }
+  use { 'NLKNguyen/papercolor-theme' }
+  use { 'sainnhe/everforest' }
 
   -- LSP
   use 'neovim/nvim-lspconfig'
@@ -113,10 +117,11 @@ return packer.startup(function()
   }
 
   -- debugging
-  use 'mfussenegger/nvim-dap'
+  use { 'mfussenegger/nvim-dap' }
+  use { 'mfussenegger/nvim-dap-python' }
 
   -- tmux navigator
-  use 'alexghergh/nvim-tmux-navigation'
+  use { 'alexghergh/nvim-tmux-navigation' }
 
   -- neuron note taking
   use { 'oberblastmeister/neuron.nvim', branch = 'unstable' }
