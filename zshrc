@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode colorize docker extract fasd fzf git gitfast ssh-agent sudo tmux zsh-autosuggestions)
+plugins=(vi-mode colorize docker extract fasd fd fzf git gitfast ssh-agent sudo tmux zsh-autosuggestions)
 
 # User configuration
 autoload -U zmv
@@ -95,6 +95,7 @@ alias ko='kde-open5'
 alias jl='source /home/albert/miniconda3/bin/activate && jupyter lab'
 alias rl='source /home/albert/miniconda3/bin/activate && jupyter retro'
 alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
+alias fp='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'
 
 # Use DSLR as webcam
 # https://medium.com/nerdery/dslr-webcam-setup-for-linux-9b6d1b79ae22
