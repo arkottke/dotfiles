@@ -20,7 +20,6 @@ require('nvim-treesitter.configs').setup {
     "json",
     "json5",
     "julia",
-    "latex",
     "lua",
     "make",
     "markdown",
@@ -37,6 +36,7 @@ require('nvim-treesitter.configs').setup {
 
   highlight = {
     enable = true,
+    disable = { "latex" },
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same
     -- time. Set this to `true` if you depend on 'syntax' being enabled (like
