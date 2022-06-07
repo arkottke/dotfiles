@@ -24,14 +24,15 @@ opt.swapfile = false          -- don't use swapfile
 -----------------------------------------------------------
 -- Neovim UI
 -----------------------------------------------------------
-opt.number = true             -- show line number
-opt.showmatch = true          -- highlight matching parenthesis
-opt.foldmethod = 'marker'     -- enable folding (default 'foldmarker')
-opt.splitright = true         -- vertical split to the right
-opt.splitbelow = true         -- orizontal split to the bottom
-opt.ignorecase = true         -- ignore case letters when search
-opt.smartcase = true          -- ignore lowercase for the whole pattern
-opt.linebreak = true          -- wrap on word boundary
+opt.number = true                       -- show line number
+opt.showmatch = true                    -- highlight matching parenthesis
+opt.foldmethod = 'marker'               -- enable folding (default 'foldmarker')
+opt.splitright = true                   -- vertical split to the right
+opt.splitbelow = true                   -- orizontal split to the bottom
+opt.ignorecase = true                   -- ignore case letters when search
+opt.smartcase = true                    -- ignore lowercase for the whole pattern
+opt.linebreak = true                    -- wrap on word boundary
+opt.guifont = 'Hack Nerd Font Mono:h7'  -- GUI font
 
 -- remove whitespace on save
 cmd [[au BufWritePre * :%s/\s\+$//e]]
