@@ -72,9 +72,11 @@ return packer.startup(function()
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-nvim-lsp-document-symbol',
-      'SirVer/ultisnips',
-      'quangnguyen30192/cmp-nvim-ultisnips',
-      'honza/vim-snippets'
+      -- 'SirVer/ultisnips',
+      -- 'quangnguyen30192/cmp-nvim-ultisnips',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'rafamadriz/friendly-snippets'
     },
   }
 
