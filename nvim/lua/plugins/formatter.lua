@@ -1,76 +1,60 @@
-require('formatter').setup({
-  filetype = {
-    bib = {
-      function()
-        return {
-          exe = "bibclean", -- this should be available on your $PATH
-          args = {"-align-equals"},
-          stdin = true
-        }
-      end
+require("formatter").setup({
+	filetype = {
+		bib = {
+			function()
+				return {
+					exe = "bibclean", -- this should be available on your $PATH
+					args = { "-align-equals" },
+					stdin = true,
+				}
+			end,
+		},
+    c = {
+      require('formatter.filetypes.c').clangformat,
     },
     cpp = {
-      -- clang-format
-      function()
-        return {
-          exe = "clang-format",
-          args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
-          stdin = true,
-          cwd = vim.fn.expand('%:p:h')  -- Run clang-format in cwd of the file.
-        }
-      end
+      require('formatter.filetypes.cpp').clangformat,
     },
     json = {
-      function()
-        return {
-          exe = "prettier",
-          args = {"--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--double-quote"},
-          stdin = true
-        }
-      end
+      require('formatter.filetypes.json').prettierd,
     },
-    lua = {
-      function()
-        return {
-          exe = "stylua",
-          args = {
-            "--config-path "
-            .. os.getenv("XDG_CONFIG_HOME")
-            .. "/stylua/stylua.toml",
-            "-",
-          },
-          stdin = true,
-        }
-      end,
-    },
+		lua = {
+			require("formatter.filetypes.lua").stylua,
+		},
     python = {
-      -- Configuration for psf/black
-      function()
-        return {
-          exe = "black", -- this should be available on your $PATH
-          args = { '-' },
-          stdin = true,
-        }
-      end
+      require('formatter.filetypes.python').black,
     },
-    sh = {
-      -- Shell Script Formatter
-      function()
-        return {
-          exe = "shfmt",
-          args = { "-i", 2 },
-          stdin = true,
-        }
-      end,
+		sh = {
+			-- Shell Script Formatter
+			function()
+				return {
+					exe = "shfmt",
+					args = { "-i", 2 },
+					stdin = true,
+				}
+			end,
+		},
+		tex = {
+			function()
+				return {
+					exe = "latexindent",
+					args = { "-" },
+					stdin = true,
+				}
+			end,
+		},
+    toml = {
+      require('formatter.filetypes.toml').taplo,
     },
-    tex = {
-      function()
-        return {
-          exe = "latexindent",
-          args = {"-"},
-          stdin = true
-        }
-      end
-    }
-  }
+    yaml = {
+      require('formatter.filetypes.yaml').prettierd,
+    },
+		-- Use the special "*" filetype for defining formatter configurations on
+		-- any filetype
+		["*"] = {
+			-- "formatter.filetypes.any" defines default configurations for any
+			-- filetype
+			require("formatter.filetypes.any").remove_trailing_whitespace,
+		},
+	},
 })

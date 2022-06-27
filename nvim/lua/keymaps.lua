@@ -59,5 +59,10 @@ map('n', '<leader>z[', ':lua require\'neuron\'.goto_prev_extmark()<cr>', default
 
 map('n', '<leader>e', ':NvimTreeToggle<cr>', default_opts)
 
-
 map('n', '<leader>f', ':Format<cr>', default_opts)
+
+map('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>', default_opts)
+
+
+map('n', '<leader>dw', ':lua require\'diaglist\'.open_all_diagnostics()<cr>', default_opts)
+map('n', '<leader>d0', ':lua require\'diaglist\'.open_buffer_diagnostics()<cr>', default_opts)

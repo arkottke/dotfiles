@@ -62,6 +62,7 @@ return packer.startup(function()
 
   -- LSP
   use 'neovim/nvim-lspconfig'
+  use { 'onsails/diaglist.nvim' }
 
   -- autocomplete
   use {
@@ -72,13 +73,15 @@ return packer.startup(function()
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-nvim-lsp-document-symbol',
+      'onsails/lspkind.nvim',
       -- 'SirVer/ultisnips',
       -- 'quangnguyen30192/cmp-nvim-ultisnips',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-      'rafamadriz/friendly-snippets'
+      'rafamadriz/friendly-snippets',
     },
   }
+  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
 
   -- statusline
   use {
