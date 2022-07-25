@@ -21,6 +21,11 @@ opt.mouse = 'a'               -- enable mouse support
 opt.clipboard = 'unnamedplus' -- copy/paste to system clipboard
 opt.swapfile = false          -- don't use swapfile
 
+if fn.executable('rg') == 1 then
+  opt.grepprg = 'rg --vimgrep --no-heading'
+  opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+end
+
 -----------------------------------------------------------
 -- Neovim UI
 -----------------------------------------------------------
