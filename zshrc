@@ -67,6 +67,11 @@ eval "$(starship init zsh)"
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
+# Configure the history
+setopt    appendhistory       # Append history to the history file (no overwriting)
+setopt    nosharehistory      # Do not share history across terminals
+setopt    noincappendhistory  # Do not mmediately append to the history file, not just when a term is killed
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
