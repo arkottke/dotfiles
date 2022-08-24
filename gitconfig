@@ -3,6 +3,7 @@
 	email = albert.kottke@gmail.com
 [push]
 	default = simple
+	autoSetupRemote = true
 [credential]
 	helper = cache --timeout=3600
 [core]
