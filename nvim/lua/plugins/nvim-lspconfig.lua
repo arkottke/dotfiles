@@ -58,7 +58,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'bashls', 'clangd', 'yamlls' }
+local servers = { 'bashls', 'clangd', 'yamlls', 'marksman' }
 
 -- Set settings for language servers below
 --
