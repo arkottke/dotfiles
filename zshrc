@@ -73,10 +73,10 @@ setopt    nosharehistory      # Do not share history across terminals
 setopt    noincappendhistory  # Do not mmediately append to the history file, not just when a term is killed
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
+if [[ -f "/usr/bin/nvim" ]]; then
   export EDITOR='nvim'
+else
+  export EDITOR='vim'
 fi
 
 # Export java options for antialiasing
