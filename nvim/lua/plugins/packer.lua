@@ -128,8 +128,8 @@ return packer.startup(function()
   -- tmux navigator
   use { 'alexghergh/nvim-tmux-navigation' }
 
-  -- neuron note taking
-  use { 'oberblastmeister/neuron.nvim', branch = 'unstable' }
+  -- zettle note taking with zf
+  use { 'mickael-menu/zk-nvim' }
 
   -- code formatting
   use { 'mhartington/formatter.nvim' }
