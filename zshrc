@@ -101,7 +101,7 @@ alias jl='source /home/albert/miniconda3/bin/activate && jupyter lab'
 alias rl='source /home/albert/miniconda3/bin/activate && jupyter retro'
 alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
 alias fp='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'
-alias gprs='git pull --recurse-submodules --jobs=10'
+alias glrs='git pull --recurse-submodules --jobs=10'
 
 # Use DSLR as webcam
 # https://medium.com/nerdery/dslr-webcam-setup-for-linux-9b6d1b79ae22
