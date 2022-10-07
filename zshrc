@@ -106,6 +106,8 @@ alias fp='fzf --preview "bat --style=numbers --color=always --line-range :500 {}
 # https://medium.com/nerdery/dslr-webcam-setup-for-linux-9b6d1b79ae22
 alias start_webcam='gphoto2 --stdout --capture-movie | ffmpeg -hwaccel nvdec -c:v mjpeg_cuvid -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video0'
 
+export ZK_NOTEBOOK_DIR='/home/albert/Dropbox/misc/zettel/'
+
 function extract_clip() {
     fname=$1
     start=$2
