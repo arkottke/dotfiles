@@ -33,25 +33,18 @@ map('n', ';', ':lua require(\'telescope.builtin\').buffers({ sort_lastused = tru
 -- Neuron
 -----------------------------------------------------------
 
--- -- create a new note
-map('n', '<leader>zn', ':lua require\'neuron/cmd\'.new_edit(require\'neuron/config\'.neuron_dir)<cr>', default_opts)
--- find your notes, click enter to create the note if there are not notes that match
-map('n', '<leader>zz', ':lua require\'neuron/telescope\'.find_zettels()<cr>', default_opts)
--- insert the id of the note that is found
-map('n', '<leader>zZ', ':lua require\'neuron/telescope\'.find_zettels {insert = true}<cr>', default_opts)
--- find the backlinks of the current note all the note that link this note
-map('n', '<leader>zb', ':lua require\'neuron/telescope\'.find_backlinks()<cr>', default_opts)
--- same as above but insert the found id
-map('n', '<leader>zB', ':lua require\'neuron/telescope\'.find_backlinks {insert = true}<cr>', default_opts)
--- find all tags and insert
-map('n', '<leader>zt', ':lua require\'neuron/telescope\'.find_tags()<cr>', default_opts)
--- start the neuron server and render markdown, auto reload on save
-map('n', '<leader>zs', ':lua require\'neuron\'.rib {address = "127.0.0.1:8200", verbose = true}<cr>', default_opts)
--- go to next [[my_link]] or [[[my_link]]]
-map('n', '<leader>z]', ':lua require\'neuron\'.goto_next_extmark()<cr>', default_opts)
--- go to previous
-map('n', '<leader>z[', ':lua require\'neuron\'.goto_prev_extmark()<cr>', default_opts)
+-- Create a new note after asking for its title.
+map("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", default_opts)
 
+-- Open notes.
+map("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", default_opts)
+-- Open notes associated with the selected tags.
+map("n", "<leader>zt", "<Cmd>ZkTags<CR>", default_opts)
+
+-- Search for the notes matching a given query.
+map("n", "<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = vim.fn.input('Search: ') }<CR>", default_opts)
+-- Search for the notes matching the current visual selection.
+map("v", "<leader>zf", ":'<,'>ZkMatch<CR>", default_opts)
 
 -----------------------------------------------------------
 -- Misc

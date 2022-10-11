@@ -73,10 +73,10 @@ setopt    nosharehistory      # Do not share history across terminals
 setopt    noincappendhistory  # Do not mmediately append to the history file, not just when a term is killed
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
+if [[ -f "/usr/bin/nvim" ]]; then
   export EDITOR='nvim'
+else
+  export EDITOR='vim'
 fi
 
 # Export java options for antialiasing
@@ -101,10 +101,13 @@ alias jl='source /home/albert/miniconda3/bin/activate && jupyter lab'
 alias rl='source /home/albert/miniconda3/bin/activate && jupyter retro'
 alias reffzy='find /home/albert/Dropbox/references -type f | fzy | xargs kde-open5'
 alias fp='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'
+alias glrs='git pull --recurse-submodules --jobs=10'
 
 # Use DSLR as webcam
 # https://medium.com/nerdery/dslr-webcam-setup-for-linux-9b6d1b79ae22
 alias start_webcam='gphoto2 --stdout --capture-movie | ffmpeg -hwaccel nvdec -c:v mjpeg_cuvid -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video0'
+
+export ZK_NOTEBOOK_DIR='/home/albert/Dropbox/misc/zettel/'
 
 function extract_clip() {
     fname=$1

@@ -38,6 +38,7 @@ opt.ignorecase = true                   -- ignore case letters when search
 opt.smartcase = true                    -- ignore lowercase for the whole pattern
 opt.linebreak = true                    -- wrap on word boundary
 opt.guifont = 'Hack Nerd Font Mono:h7'  -- GUI font
+opt.formatoptions = 'croq'
 
 -- remove whitespace on save
 cmd [[au BufWritePre * :%s/\s\+$//e]]
