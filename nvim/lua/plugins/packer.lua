@@ -129,7 +129,8 @@ return packer.startup(function()
   use { 'alexghergh/nvim-tmux-navigation' }
 
   -- neuron note taking
-  use { 'oberblastmeister/neuron.nvim', branch = 'unstable' }
+  -- use { 'fiatjaf/neuron.vim' }
+  use { 'mickael-menu/zk-nvim' }
 
   -- code formatting
   use { 'mhartington/formatter.nvim' }
