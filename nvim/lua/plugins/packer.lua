@@ -60,7 +60,7 @@ return require("packer").startup(function()
 	-- use 'liuchengxu/vista.vim'
 
 	-- treesitter interface
-	use("nvim-treesitter/nvim-treesitter")
+	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
 	-- colorschemes
 	use({ "shaunsingh/nord.nvim" })
