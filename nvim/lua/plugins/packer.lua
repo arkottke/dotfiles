@@ -9,159 +9,157 @@
 --- neovim-lua/README.md
 --- https://github.com/brainfucksec/neovim-lua#readme
 
-
 local cmd = vim.cmd
 
 local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		vim.cmd([[packadd packer.nvim]])
+		return true
+	end
+	return false
 end
 
 local packer_bootstrap = ensure_packer()
 
 -- Add packages
-return require('packer').startup(function()
-  use 'wbthomason/packer.nvim' -- packer can manage itself
+return require("packer").startup(function()
+	use("wbthomason/packer.nvim") -- packer can manage itself
 
-  -- telescope
+	-- telescope
 
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-file-browser.nvim"
-    },
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope-file-browser.nvim",
+		},
 	})
 
-  -- file explorer
-  use 'kyazdani42/nvim-tree.lua'
+	-- file explorer
+	use("kyazdani42/nvim-tree.lua")
 
-  -- indent line
-  use 'lukas-reineke/indent-blankline.nvim'
+	-- indent line
+	use("lukas-reineke/indent-blankline.nvim")
 
-  -- autopair
-  -- use {
-  --   'windwp/nvim-autopairs',
-  --   config = function()
-  --     require('nvim-autopairs').setup()
-  --   end
-  -- }
+	-- autopair
+	-- use {
+	--   'windwp/nvim-autopairs',
+	--   config = function()
+	--     require('nvim-autopairs').setup()
+	--   end
+	-- }
 
-  -- icons
-  use 'kyazdani42/nvim-web-devicons'
+	-- icons
+	use("kyazdani42/nvim-web-devicons")
 
-  -- tagviewer
-  -- use 'liuchengxu/vista.vim'
+	-- tagviewer
+	-- use 'liuchengxu/vista.vim'
 
-  -- treesitter interface
-  use 'nvim-treesitter/nvim-treesitter'
+	-- treesitter interface
+	use("nvim-treesitter/nvim-treesitter")
 
-  -- colorschemes
-  use { 'shaunsingh/nord.nvim' }
-  use { 'EdenEast/nightfox.nvim' }
-  use { 'morhetz/gruvbox' }
-  use { 'NLKNguyen/papercolor-theme' }
-  use { 'sainnhe/everforest' }
+	-- colorschemes
+	use({ "shaunsingh/nord.nvim" })
+	use({ "EdenEast/nightfox.nvim" })
+	use({ "morhetz/gruvbox" })
+	use({ "NLKNguyen/papercolor-theme" })
+	use({ "sainnhe/everforest" })
 
-  -- LSP
-  use 'neovim/nvim-lspconfig'
-  use { 'onsails/diaglist.nvim' }
+	-- LSP
+	use("neovim/nvim-lspconfig")
+	use({ "onsails/diaglist.nvim" })
 
-  -- autocomplete
-  use {
-    'hrsh7th/nvim-cmp',
-    requires = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-nvim-lsp-document-symbol',
-      'onsails/lspkind.nvim',
-      -- 'SirVer/ultisnips',
-      -- 'quangnguyen30192/cmp-nvim-ultisnips',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-      'rafamadriz/friendly-snippets',
-    },
-  }
-  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
+	-- autocomplete
+	use({
+		"hrsh7th/nvim-cmp",
+		requires = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-nvim-lsp-document-symbol",
+			"onsails/lspkind.nvim",
+			-- 'SirVer/ultisnips',
+			-- 'quangnguyen30192/cmp-nvim-ultisnips',
+			"L3MON4D3/LuaSnip",
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+		},
+	})
+	use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
 
-  -- statusline
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-  }
+	-- statusline
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons" },
+	})
 
-  -- git labels
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
+	-- git labels
+	use({
+		"lewis6991/gitsigns.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("gitsigns").setup()
+		end,
+	})
 
-  use {
-    'petertriho/nvim-scrollbar',
-    requires = { 'kevinhwang91/nvim-hlslens' },
-    config = function()
-      require('scrollbar').setup()
-    end
-  }
+	use({
+		"petertriho/nvim-scrollbar",
+		requires = { "kevinhwang91/nvim-hlslens" },
+		config = function()
+			require("scrollbar").setup()
+		end,
+	})
 
-  -- focus window control
-  -- use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
+	-- focus window control
+	-- use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
 
-  -- aerial navigator
-  use 'stevearc/aerial.nvim'
+	-- aerial navigator
+	use("stevearc/aerial.nvim")
 
+	-- which-key
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup()
+		end,
+	})
 
-  -- which-key
-  use {
-    'folke/which-key.nvim',
-    config = function()
-      require('which-key').setup()
-    end
-  }
+	-- debugging
+	use({ "mfussenegger/nvim-dap" })
+	use({ "mfussenegger/nvim-dap-python" })
 
-  -- debugging
-  use { 'mfussenegger/nvim-dap' }
-  use { 'mfussenegger/nvim-dap-python' }
+	-- tmux navigator
+	use({ "alexghergh/nvim-tmux-navigation" })
 
-  -- tmux navigator
-  use { 'alexghergh/nvim-tmux-navigation' }
+	-- zettle note taking with zf
+	use({ "mickael-menu/zk-nvim" })
 
-  -- zettle note taking with zf
-  use { 'mickael-menu/zk-nvim' }
+	-- code formatting
+	use({ "mhartington/formatter.nvim" })
 
-  -- code formatting
-  use { 'mhartington/formatter.nvim' }
+	-- vimtex
+	use("lervag/vimtex")
 
-  -- vimtex
-  use 'lervag/vimtex'
+	-- lightspeed
+	use("ggandor/lightspeed.nvim")
 
-  -- lightspeed
-  use 'ggandor/lightspeed.nvim'
+	-- git interface
+	use("lambdalisue/gina.vim")
 
-  -- git interface
-  use 'lambdalisue/gina.vim'
+	-- Glow for markdown preview
+	use("ellisonleao/glow.nvim")
 
-  -- Glow for markdown preview
-  use 'ellisonleao/glow.nvim'
+	-- Highlighting for kitty config
+	use({ "fladson/vim-kitty" })
 
-  -- Highlighting for kitty config
-  use { 'fladson/vim-kitty' }
-
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require('packer').sync()
-  end
+	-- Automatically set up your configuration after cloning packer.nvim
+	-- Put this at the end after all plugins
+	if packer_bootstrap then
+		require("packer").sync()
+	end
 end)
