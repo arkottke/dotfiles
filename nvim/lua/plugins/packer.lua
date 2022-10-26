@@ -112,11 +112,9 @@ return require("packer").startup(function()
 		requires = { "kevinhwang91/nvim-hlslens" },
 		config = function()
 			require("scrollbar").setup()
+			require("scrollbar.handlers.search").setup()
 		end,
 	})
-
-	-- focus window control
-	-- use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
 
 	-- aerial navigator
 	use("stevearc/aerial.nvim")
@@ -149,13 +147,16 @@ return require("packer").startup(function()
 	use("ggandor/lightspeed.nvim")
 
 	-- git interface
-	use("lambdalisue/gina.vim")
+	use("tpope/vim-fugitive")
 
 	-- Glow for markdown preview
 	use("ellisonleao/glow.nvim")
 
 	-- Highlighting for kitty config
 	use({ "fladson/vim-kitty" })
+
+	-- Use JQ to see JSON path
+	use("phelipetls/jsonpath.nvim")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
