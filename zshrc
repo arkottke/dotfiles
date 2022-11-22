@@ -109,6 +109,9 @@ alias start_webcam='gphoto2 --stdout --capture-movie | ffmpeg -hwaccel nvdec -c:
 
 export ZK_NOTEBOOK_DIR='/home/albert/Dropbox/misc/zettel/'
 
+# Let Julia use multiple threads. 'auto' requires Julia 1.7+
+export JULIA_NUM_THREADS='auto'
+
 function extract_clip() {
     fname=$1
     start=$2
