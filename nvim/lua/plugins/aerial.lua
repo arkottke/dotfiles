@@ -1,15 +1,12 @@
-local aerial = require('aerial')
 
--- Default configuration
-aerial.setup({
+require('aerial').setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
   on_attach = function(bufnr)
-    -- Toggle the aerial window with <leader>a
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>a', '<cmd>AerialToggle!<CR>', {})
     -- Jump forwards/backwards with '{' and '}'
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '{', '<cmd>AerialPrev<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '}', '<cmd>AerialNext<CR>', {})
+    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
     -- Jump up the tree with '[[' or ']]'
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[[', '<cmd>AerialPrevUp<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']]', '<cmd>AerialNextUp<CR>', {})
+    vim.keymap.set('n', '[[', '<cmd>AerialPrevUp<CR>', {buffer = bufnr})
+    vim.keymap.set('n', ']]', '<cmd>AerialNextUp<CR>', {buffer = bufnr})
   end
 })
