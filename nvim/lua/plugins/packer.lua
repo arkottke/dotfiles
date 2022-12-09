@@ -149,6 +149,9 @@ return require("packer").startup(function()
 	-- git interface
 	use("tpope/vim-fugitive")
 
+  -- autosaved Sessions
+	use("tpope/vim-obsession")
+
 	-- Glow for markdown preview
 	use("ellisonleao/glow.nvim")
 
@@ -157,6 +160,9 @@ return require("packer").startup(function()
 
 	-- Use JQ to see JSON path
 	use("phelipetls/jsonpath.nvim")
+
+  -- Support for terraform
+  use('hashivim/vim-terraform')
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
