@@ -1,51 +1,62 @@
-telescope = require'telescope'
-
-telescope.setup{
-  defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case'
-    },
-    prompt_prefix = "> ",
-    selection_caret = "> ",
-    entry_prefix = "  ",
-    initial_mode = "insert",
-    selection_strategy = "reset",
-    sorting_strategy = "descending",
-    layout_strategy = "horizontal",
-    layout_config = {
-      horizontal = {
-        mirror = false,
+return {
+  "nvim-telescope/telescope.nvim",
+  cmd = "Telescope",
+  version = false, -- telescope did only one release, so use HEAD for now
+  dependencies = {
+    "nvim-telescope/telescope-fzy-native.nvim",
+  },
+  keys = {
+    { "<leader>,", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+    { "<leader>sr", "<cmd>Telescope live_grep<cr>", desc = "Find in files" },
+    { ";", "<cmd>Telescope buffers sort_lastused=true ignore_current_buffer=true<cr>", desc = "Switch buffer" },
+    { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Search help" },
+    -- {
+    -- 	"<leader>ss",
+    -- 	Util.telescope("lsp_document_symbols", {
+    -- 		symbols = {
+    -- 			"Class",
+    -- 			"Function",
+    -- 			"Method",
+    -- 			"Constructor",
+    -- 			"Interface",
+    -- 			"Module",
+    -- 			"Struct",
+    -- 			"Trait",
+    -- 			"Field",
+    -- 			"Property",
+    -- 		},
+    -- 	}),
+    -- 	desc = "Goto Symbol",
+    -- },
+  },
+  config = function(_, opts)
+    require('telescope').setup(opts)
+    -- Use fzy_native
+    require('telescope').load_extension('fzy_native')
+  end,
+  opts = {
+    defaults = {
+      prompt_prefix = " ",
+      selection_caret = " ",
+      mappings = {
+        i = {
+          ["<c-t>"] = function(...)
+            return require("trouble.providers.telescope").open_with_trouble(...)
+          end,
+          -- ["<a-i>"] = function()
+          -- 	Util.telescope("find_files", { no_ignore = true })()
+          -- end,
+          -- ["<a-h>"] = function()
+          -- 	Util.telescope("find_files", { hidden = true })()
+          -- end,
+          ["<C-Down>"] = function(...)
+            return require("telescope.actions").cycle_history_next(...)
+          end,
+          ["<C-Up>"] = function(...)
+            return require("telescope.actions").cycle_history_prev(...)
+          end,
+        },
       },
-      vertical = {
-        mirror = false,
-      },
     },
-    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
-    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    path_display = "shorten",
-    winblend = 0,
-    border = {},
-    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    color_devicons = true,
-    use_less = true,
-    path_display = {},
-    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
-
-    -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker,
-
-    file_ignore_patterns = { "%.pyc", "%.so" }
-  }
+  },
 }
-
-telescope.load_extension'file_browser'
-telescope.load_extension'fzf'

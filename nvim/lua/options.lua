@@ -6,7 +6,6 @@
 -----------------------------------------------------------
 -- Neovim API aliases
 -----------------------------------------------------------
---local map = vim.api.nvim_set_keymap  -- set global keymap
 local cmd = vim.cmd     				-- execute Vim commands
 local exec = vim.api.nvim_exec 	-- execute Vimscript
 local fn = vim.fn       				-- call Vim functions
@@ -16,7 +15,7 @@ local opt = vim.opt         		-- global/buffer/windows-scoped options
 -----------------------------------------------------------
 -- General
 -----------------------------------------------------------
-g.mapleader = ','             -- change leader to a comma
+--- g.mapleader = ','             -- change leader to a comma
 opt.mouse = 'a'               -- enable mouse support
 opt.clipboard = 'unnamedplus' -- copy/paste to system clipboard
 opt.swapfile = false          -- don't use swapfile
@@ -38,7 +37,8 @@ opt.ignorecase = true                   -- ignore case letters when search
 opt.smartcase = true                    -- ignore lowercase for the whole pattern
 opt.linebreak = true                    -- wrap on word boundary
 opt.guifont = 'Hack Nerd Font Mono:h7'  -- GUI font
-opt.formatoptions = 'croq'
+
+-- opt.formatoptions = 'croq'
 
 -- remove whitespace on save
 cmd [[au BufWritePre * :%s/\s\+$//e]]
@@ -54,7 +54,7 @@ exec([[
 -- Memory, CPU
 -----------------------------------------------------------
 opt.hidden = true         -- enable background buffers
-opt.history = 100         -- remember n lines in history
+opt.history = 200         -- remember n lines in history
 opt.lazyredraw = true     -- faster scrolling
 opt.synmaxcol = 240       -- max column for syntax highlight
 
@@ -62,7 +62,7 @@ opt.synmaxcol = 240       -- max column for syntax highlight
 -- Colorscheme
 -----------------------------------------------------------
 opt.termguicolors = true      -- enable 24-bit RGB colors
-cmd [[colorscheme nord]]
+cmd [[colorscheme catppuccin-frappe]]
 
 -----------------------------------------------------------
 -- Tabs, indent
@@ -74,7 +74,6 @@ opt.smartindent = true    -- autoindent new lines
 
 -- don't auto commenting new lines
 cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
-
 
 -- 2 spaces for selected filetypes
 cmd [[

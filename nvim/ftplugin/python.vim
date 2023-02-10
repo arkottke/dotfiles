@@ -1,16 +1,3 @@
 set textwidth=88
-" Turn on spell checking
-" set spell spelllang=en_us
 
-augroup python
-    " Remove trailing whitespace
-    autocmd BufWritePre *.py :%s/\s\+$//e
-    " Run Neomake on save
-    "autocmd BufWritePost *.py Neomake
-    autocmd BufWritePre *.py set makeprg=python\ %
-
-    " Disabled because not all projects use this
-    "autocmd BufWritePre *.py execute ':call Black()'
-
-    nmap <Leader>m :wa<CR>:make<CR>
-augroup END
+set formatoptions+=c
