@@ -2,16 +2,14 @@ return {
   {
     "L3MON4D3/LuaSnip",
     event = "BufReadPre",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
-      end,
-    },
     opts = {
       history = true,
       delete_check_events = "TextChanged",
+      update_events = "TextChanged,TextChangedI",
     },
+    init = function()
+      require("luasnip.loaders.from_lua").lazy_load({ paths = "~/.config/nvim/snippets/" })
+    end,
     -- stylua: ignore
     keys = {
       {
@@ -21,8 +19,12 @@ return {
         end,
         expr = true, silent = true, mode = "i",
       },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+      { "<tab>",   function() require("luasnip").jump(1) end,   mode = "s" },
+      { "<s-tab>", function() require("luasnip").jump( -1) end, mode = { "i", "s" } },
+      { "<leader>L",
+        function() require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" }) end,
+        expr = true, mode = { "s" }
+      },
     },
   },
 }
