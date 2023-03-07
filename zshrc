@@ -124,10 +124,10 @@ function extract_clip() {
     avconv -ss $start -t $length -i $fname -an -aq 5 -ac 2 -qmax 25 -threads 2 myvideo.webm
 }
 
-function to_gdrive() {
+function to_drive() {
     for i do
         echo "Transferring: $i"
-        rclone copy -P $i gdrive:working/
+        rclone copy -P $i drive:working/
     done
 }
 
