@@ -1,0 +1,87 @@
+# NOTE SETTINGS
+[note]
+
+# Language used when writing notes.
+# This is used to generate slugs or with date formats.
+language = "en"
+
+# The default title used for new note, if no `--title` flag is provided.
+default-title = "Untitled"
+
+# Template used to generate a note's filename, without extension.
+filename = "{{id}}"
+
+# The file extension used for the notes.
+extension = "md"
+
+# Template used to generate a note's content.
+# If not an absolute path, it is relative to .zk/templates/
+template = "default.md"
+
+# Configure random ID generation.
+
+# The charset used for random IDs.
+id-charset = "hex"
+
+# Length of the generated IDs.
+id-length = 8
+
+# Letter case for the random IDs.
+id-case = "lower"
+
+[group.weekly]
+# Directories listed here will automatically use this group when creating notes.
+paths = ["weekly"]
+
+[group.weekly.note]
+# %Y-%m-%d is actually the default format, so you could use {{format-date now}} instead.
+filename = "{{format-date now '%Y-W%W'}}"
+extension = "md"
+template = "weekly.md"
+
+# EXTRA VARIABLES
+[extra]
+author = "Albert"
+
+
+# MARKDOWN SETTINGS
+[format.markdown]
+
+# link-format = "[{{title}}]({{filename}}.md)"
+link-format = "markdown"
+link-drop-extension = false
+
+# Enable support for #hashtags
+hashtags = true
+
+# EXTERNAL TOOLS
+[tool]
+
+# Default editor used to open notes.
+editor = "nvim"
+
+# Pager used to scroll through long output.
+pager = "less -FIRX"
+
+# Command used to preview a note during interactive fzf mode.
+fzf-preview = "bat -p --color always {-1}"
+
+# NAMED FILTERS
+[filter]
+recents = "--sort created- --created-after 'last two weeks'"
+
+# COMMAND ALIASES
+[alias]
+# Edit the last modified note.
+edlast = "zk edit --limit 1 --sort modified- $@"
+# Edit the notes selected interactively among the notes created the last two weeks.
+recent = "zk edit --sort created- --created-after 'last two weeks' --interactive"
+
+# LSP (EDITOR INTEGRATION)
+[lsp]
+
+[lsp.diagnostics]
+# Report titles of wiki-links as hints.
+wiki-title = "hint"
+# Warn for dead links between notes.
+dead-link = "error"
