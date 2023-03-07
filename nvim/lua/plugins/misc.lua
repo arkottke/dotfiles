@@ -33,6 +33,7 @@ return {
 		},
 		keys = {
 			{ "<leader>zn", "<cmd>ZkNew { title = vim.fn.input('Title: ') }<cr>", desc = "New note" },
+			{ "<leader>zd", "<cmd>ZkNew { dir = 'weekly', date = 'today' }<cr>", desc = "New diary" },
 			{ "<leader>zo", "<cmd>ZkNotes { sort = { 'modified' } }<cr>", desc = "Open note" },
 			{ "<leader>zt", "<cmd>ZkTags<cr>", desc = "Open note by tag" },
 			{
