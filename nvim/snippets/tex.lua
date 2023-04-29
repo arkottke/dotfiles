@@ -28,7 +28,7 @@ return {
     { condition = line_begin }
   ),
   s(
-  { trig = "bf", dscr = "Bold text" },
+    { trig = "bf", dscr = "Bold text" },
     fmta(
       [[
       \textbf{<>}
@@ -37,7 +37,7 @@ return {
     )
   ),
   s(
-  { trig = "tt", dscr = "Typewriter text" },
+    { trig = "tt", dscr = "Typewriter text" },
     fmta(
       [[
       \texttt{<>}
@@ -74,7 +74,7 @@ return {
     fmta(
       [[
       \subsection{<>}%
-      \label{ssec:<>}
+      \label{sec:<>}
 
     ]],
       { i(1), i(2) }
@@ -85,7 +85,7 @@ return {
     fmta(
       [[
       \subsubsection{<>}%
-      \label{sssec:<>}
+      \label{sec:<>}
 
     ]],
       { i(1), i(2) }
@@ -106,7 +106,7 @@ return {
       [[
       \begin{figure}
       \centering
-      \includegraphics[width=<>\textwidth]{<>},
+      \includegraphics[width=<>\textwidth]{<>}
       \caption{<>}%
       \label{fig:<>}
       \end{figure}
