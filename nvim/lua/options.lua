@@ -40,9 +40,30 @@ opt.guifont = 'Hack Nerd Font Mono:h7' -- GUI font
 opt.cursorline = true                  -- Cursorline
 
 -- opt.formatoptions = 'croq'
+opt.wildignore:append {
+  '*.swp',
+  '*.zip',
+  '*.tar.gz',
+  '*.7z',
+  '*.exe',
+  '*.pdf',
+  '*.docx',
+  '*.xlsx',
+  -- Python files
+  '*.egg-info/',
+  '*.pyc',
+  '__pycache__/',
+  '.pytest_cache/',
+  '*.whl',
+  '.ipynb_checkpoints/',
+  '_build/'
+}
 
 -- remove whitespace on save
 cmd [[au BufWritePre * :%s/\s\+$//e]]
+
+cmd [[au BufWritePre * lua vim.lsp.buf.format()]]
+
 -- highlight on yank
 exec([[
   augroup YankHighlight
@@ -81,7 +102,6 @@ cmd [[
   autocmd FileType xml,html,xhtml,css,scss,javascript,lua,yaml,json setlocal shiftwidth=2 tabstop=2
 ]]
 
--- cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
 -----------------------------------------------------------
 -- Autocompletion
