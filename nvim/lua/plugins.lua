@@ -450,7 +450,7 @@ return {
       },
     },
   },
-  { "lervag/vimtex", lazy = true, ft = "tex" },
+  { "lervag/vimtex", lazy = "BufReadPost", ft = "tex" },
   {
     "Tummetott/reticle.nvim",
     lazy = "BufReadPost",
