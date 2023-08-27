@@ -61,7 +61,8 @@ hashtags = true
 editor = "nvim"
 
 # Pager used to scroll through long output.
-pager = "less -FIRX"
+#pager = "less -FIRX"
+pager = "bat -p --color always"
 
 # Command used to preview a note during interactive fzf mode.
 fzf-preview = "bat -p --color always {-1}"
