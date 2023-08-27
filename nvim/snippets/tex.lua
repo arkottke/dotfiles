@@ -157,4 +157,18 @@ return {
       }
     )
   ),
+  s(
+    {  trig = "frame", dscr = "Frame" },
+    fmta(
+      [[
+      \begin{frame}{<>}
+      <>
+      \end{frame}
+      ]],
+      {
+        i(1, "title"),
+        i(2)
+      }
+    )
+  )
 }
