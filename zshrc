@@ -157,3 +157,5 @@ if [[ -d "$HOME/.pyenv" ]]; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
+
+source /home/albert/.config/op/plugins.sh
