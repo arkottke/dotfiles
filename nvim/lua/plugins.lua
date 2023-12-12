@@ -25,6 +25,7 @@ return {
 			local luasnip = require("luasnip")
 
 			cmp.setup({
+				preselect = cmp.PreselectMode.None,
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -276,25 +277,6 @@ return {
 		end,
 	},
 	{
-		"echasnovski/mini.indentscope",
-		version = false, -- wait till new 0.7.0 release to put it back on semver
-		event = "BufReadPre",
-		opts = {
-			-- symbol = "▏",
-			symbol = "│",
-			options = { try_as_border = true },
-		},
-		config = function(_, opts)
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-				callback = function()
-					vim.b.miniindentscope_disable = true
-				end,
-			})
-			require("mini.indentscope").setup(opts)
-		end,
-	},
-	{
 		"folke/lazy.nvim",
 		version = false,
 		opts = {
@@ -357,16 +339,17 @@ return {
 			{ "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
 		},
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = "BufReadPost",
-		opts = {
-			char = "│",
-			filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy" },
-			show_trailing_blankline_indent = false,
-			show_current_context = false,
-		},
-	},
+	-- {
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	event = "BufReadPost",
+	-- 	main = "ibl",
+	-- 	opts = {
+	-- 		char = "│",
+	-- 		filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy" },
+	-- 		show_trailing_blankline_indent = false,
+	-- 		show_current_context = false,
+	-- 	},
+	-- },
 	{
 		"alexghergh/nvim-tmux-navigation",
 		opts = {
@@ -441,14 +424,8 @@ return {
 			extensions = { "neo-tree", "lazy", "fugitive", "trouble" },
 		},
 	},
-	{
-		"echasnovski/mini.pairs",
-		event = "VeryLazy",
-		version = false, -- wait till new 0.7.0 release to put it back on semver
-		config = function(_, opts)
-			require("mini.pairs").setup(opts)
-		end,
-	},
+	{ "echasnovski/mini.indentscope", version = false },
+	{ "echasnovski/mini.pairs", version = false },
 	{
 		"echasnovski/mini.surround",
 		version = false, -- wait till new 0.7.0 release to put it back on semver
@@ -480,25 +457,6 @@ return {
 		},
 		config = function(_, opts)
 			require("mini.surround").setup(opts)
-		end,
-	},
-	{
-		"echasnovski/mini.indentscope",
-		version = false, -- wait till new 0.7.0 release to put it back on semver
-		event = "BufReadPre",
-		opts = {
-			-- symbol = "▏",
-			symbol = "│",
-			options = { try_as_border = true },
-		},
-		config = function(_, opts)
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-				callback = function()
-					vim.b.miniindentscope_disable = true
-				end,
-			})
-			require("mini.indentscope").setup(opts)
 		end,
 	},
 	{
@@ -559,16 +517,6 @@ return {
 			{ "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
 			{ "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
 			{ "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
-		},
-	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = "BufReadPost",
-		opts = {
-			char = "│",
-			filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy" },
-			show_trailing_blankline_indent = false,
-			show_current_context = false,
 		},
 	},
 	{
