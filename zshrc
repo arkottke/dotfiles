@@ -158,4 +158,6 @@ if [[ -d "$HOME/.pyenv" ]]; then
     eval "$(pyenv virtualenv-init -)"
 fi
 
-source /home/albert/.config/op/plugins.sh
+if [[ -f /home/albert/.config/op/plugins.sh ]]; then
+    source /home/albert/.config/op/plugins.sh
+fi
