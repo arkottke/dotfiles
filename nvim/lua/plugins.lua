@@ -329,19 +329,19 @@ return {
 		cmd = { "TodoTrouble", "TodoTelescope" },
 		event = "BufReadPost",
 		config = true,
-		-- stylua: ignore
-		keys = {
-			{ "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-			{ "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-			{ "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
-			{ "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
-			{ "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
-		},
+    -- stylua: ignore
+    keys = {
+      { "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+      { "[t",         function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+      { "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
+      { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
+    },
 	},
 	{
-	"lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-        opts = {},
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		opts = {},
 		-- event = "BufReadPost",
 		-- opts = {
 		-- 	char = "│",
@@ -475,7 +475,6 @@ return {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
-		name = "treesitter",
 		build = ":TSUpdate",
 		event = "BufReadPost",
 	},
