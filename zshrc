@@ -139,6 +139,9 @@ function xlsx_to_csv() {
     libreoffice --headless --convert-to csv $1 --outdir .
 }
 
+# Use platformpaths for jupyter
+export JUPYTER_PLATFORM_DIRS=1
+
 if [[ -f "$HOME/.secrets" ]]; then
     source $HOME/.secrets
 fi
