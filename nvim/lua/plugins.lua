@@ -27,6 +27,9 @@ return {
 
       cmp.setup({
         preselect = cmp.PreselectMode.None,
+        completion = {
+          keyword_length = 2
+        },
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -106,7 +109,7 @@ return {
       { "jose-elias-alvarez/null-ls.nvim" },
     },
     keys = {
-      { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" },
+      { "<leader>pm", "<cmd>Mason<cr>", desc = "Mason" },
     },
     config = function()
       -- This is where all the LSP shenanigans will live
@@ -194,7 +197,12 @@ return {
         ["]"] = { name = "+next" },
         ["["] = { name = "+prev" },
         ["<leader>b"] = { name = "+buffer" },
-        ["<leader>c"] = { name = "+code" },
+        ["<leader>p"] = { name = "+plugins" },
+        ["<leader>e"] = { name = "+neogen" },
+        ["<leader>n"] = { name = "+nvimtree" },
+        ["<leader>s"] = { name = "+search" },
+        ["<leader>x"] = { name = "+todo" },
+        ["<leader>z"] = { name = "+notes" },
       })
     end,
   },
@@ -245,39 +253,6 @@ return {
     end,
   },
   {
-    "echasnovski/mini.surround",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    keys = function(plugin, keys)
-      -- Populate the keys based on the user's options
-      local opts = require("lazy.core.plugin").values(plugin, "opts", false)
-      local mappings = {
-        { opts.mappings.add,            desc = "Add surrounding",                     mode = { "n", "v" } },
-        { opts.mappings.delete,         desc = "Delete surrounding" },
-        { opts.mappings.find,           desc = "Find right surrounding" },
-        { opts.mappings.find_left,      desc = "Find left surrounding" },
-        { opts.mappings.highlight,      desc = "Highlight surrounding" },
-        { opts.mappings.replace,        desc = "Replace surrounding" },
-        { opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
-      }
-      return vim.list_extend(mappings, keys)
-    end,
-    opts = {
-      -- use ms mappings instead of s to prevent conflict with leap
-      mappings = {
-        add = "gza",            -- Add surrounding in Normal and Visual modes
-        delete = "gzd",         -- Delete surrounding
-        find = "gzf",           -- Find surrounding (to the right)
-        find_left = "gzF",      -- Find surrounding (to the left)
-        highlight = "gzh",      -- Highlight surrounding
-        replace = "gzr",        -- Replace surrounding
-        update_n_lines = "gzn", -- Update `n_lines`
-      },
-    },
-    config = function(_, opts)
-      require("mini.surround").setup(opts)
-    end,
-  },
-  {
     "folke/lazy.nvim",
     version = false,
     opts = {
@@ -286,7 +261,7 @@ return {
       },
     },
     keys = {
-      { "<leader>cl", "<cmd>Lazy update<cr>", desc = "Lazy" },
+      { "<leader>pl", "<cmd>Lazy sync<cr>", desc = "Lazy sync" },
     },
   },
   {
@@ -384,8 +359,8 @@ return {
       snippet_engine = "luasnip"
     },
     keys = {
-      { "<leader>gf", "<cmd>lua require('neogen').generate()<cr>",                   desc = "Neogen Generate" },
-      { "<leader>gc", "<cmd>lua require('neogen').generate({ type = 'class' })<cr>", desc = "Neogen Generate Class" },
+      { "<leader>ef", "<cmd>lua require('neogen').generate()<cr>",                   desc = "Neogen Generate" },
+      { "<leader>ec", "<cmd>lua require('neogen').generate({ type = 'class' })<cr>", desc = "Neogen Generate Class" },
     }
   },
   {
