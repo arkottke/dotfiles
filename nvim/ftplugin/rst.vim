@@ -1,3 +1,4 @@
-
+encoding=utf-8
 spell on
-textwidth = 80
+spelllang=en_us
+textwidth=80
