@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode colorize docker extract fasd fd fzf git gitfast ssh-agent sudo tmux zsh-autosuggestions)
+plugins=(vi-mode colorize docker extract fasd fzf git gitfast ssh-agent sudo tmux zsh-autosuggestions)
 
 # User configuration
 autoload -U zmv
