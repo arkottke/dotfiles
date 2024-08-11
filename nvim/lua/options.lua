@@ -25,6 +25,8 @@ if fn.executable('rg') == 1 then
   opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
 end
 
+opt.spellfile = '~/.config/nvim/spell/en.utf-8.add'
+
 -----------------------------------------------------------
 -- Neovim UI
 -----------------------------------------------------------
