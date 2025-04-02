@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode colorize docker extract fasd fzf git gitfast ssh-agent sudo tmux zsh-autosuggestions)
+plugins=(vi-mode colorize docker extract fasd fzf git gitfast ssh-agent sudo tmux zsh-autosuggestions autoenv)
 
 # User configuration
 autoload -U zmv
@@ -151,17 +151,7 @@ if [[ -z "$TMUX" ]]; then
     tmux has-session || tmux new
 fi
 
-if [[ -d "$HOME/.pyenv" ]]; then
-    # Add pyenv, but let starship handle the prompt
-    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-    export VIRTUAL_ENV_DISABLE_PROMPT=1
-    export PYENV_ROOT="$HOME/.pyenv"
-    export MAMBA_ROOT_PREFIX="$PYENV_ROOT/versions/miniforge3-latest"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
+# One-pass configuration
 if [[ -f /home/albert/.config/op/plugins.sh ]]; then
     source /home/albert/.config/op/plugins.sh
 fi
