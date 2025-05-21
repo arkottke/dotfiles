@@ -5,7 +5,7 @@
 	default = simple
 	autoSetupRemote = true
 [credential]
-	helper = cache --timeout=3600
+	helper = manager
 [core]
     pager = delta
 	autocrlf = input
