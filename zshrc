@@ -50,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode colorize docker direnv extract fasd fzf git gitfast ssh-agent sudo tmux zsh-autosuggestions)
+plugins=(vi-mode colorize docker extract fasd fzf git ssh-agent sudo tmux zsh-autosuggestions)
 
 # User configuration
 autoload -U zmv
@@ -74,9 +74,9 @@ setopt    noincappendhistory  # Do not mmediately append to the history file, no
 
 # Preferred editor for local and remote sessions
 if [[ -f "/usr/bin/nvim" ]]; then
-  export EDITOR='nvim'
+    export EDITOR='nvim'
 else
-  export EDITOR='vim'
+    export EDITOR='vim'
 fi
 
 # Export java options for antialiasing
@@ -92,6 +92,7 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias vim="nvim"
+alias chromium-headless-shell="google-chrome-stable --headless --disable-gpu"
 # Pass terminfo to ssh server
 # https://sw.kovidgoyal.net/kitty/faq/#i-get-errors-about-the-terminal-being-unknown-or-opening-the-terminal-failing-when-sshing-into-a-different-computer
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
@@ -155,3 +156,9 @@ fi
 if [[ -f /home/albert/.config/op/plugins.sh ]]; then
     source /home/albert/.config/op/plugins.sh
 fi
+
+# Created by `userpath` on 2025-05-23 16:51:07
+export PATH="$PATH:/home/albert/.local/share/hatch/pythons/3.12/python/bin"
+
+# Use ^y to expand or complete consistent with blink
+bindkey "^y" expand-or-complete
