@@ -1,29 +1,46 @@
+# Catppuccin Mocha
 [colors]
 draw_bold_text_with_bright_colors = true
 
 [colors.bright]
-black = "#686868"
-blue = "#5CCFE6"
-cyan = "#95E6CB"
-green = "#A6CC70"
-magenta = "#FFEE99"
-red = "#F27983"
-white = "#FFFFFF"
-yellow = "#FFCC66"
+black = "#585b70"
+blue = "#89b4fa"
+cyan = "#94e2d5"
+green = "#a6e3a1"
+magenta = "#f5c2e7"
+red = "#f38ba8"
+white = "#a6adc8"
+yellow = "#f9e2af"
 
 [colors.normal]
-black = "#191E2A"
-blue = "#73D0FF"
-cyan = "#95E6CB"
-green = "#BAE67E"
-magenta = "#FFD580"
-red = "#FF3333"
-white = "#C7C7C7"
-yellow = "#FFA759"
+black = "#45475a"
+blue = "#89b4fa"
+cyan = "#94e2d5"
+green = "#a6e3a1"
+magenta = "#f5c2e7"
+red = "#f38ba8"
+white = "#bac2de"
+yellow = "#f9e2af"
+
+[colors.cursor]
+cursor = "#f5e0dc"
+text = "#1e1e2e"
 
 [colors.primary]
-background = "#202734"
-foreground = "#CBCCC6"
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[[colors.indexed_colors]]
+color = "#f5e0dc"
+index = 16
+
+[[colors.indexed_colors]]
+color = "#f2cdcd"
+index = 17
+
+[colors.selection]
+background = "#585b70"
+text = "#cdd6f4"
 
 [env]
 TERM = "xterm-256color"

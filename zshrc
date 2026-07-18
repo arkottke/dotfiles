@@ -46,6 +46,9 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# Need to move the FASD cache directory outside of ~/.cache because that is cleared at reboot
+export _FASD_DATA="$HOME/.fasd"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -160,5 +163,22 @@ fi
 # Created by `userpath` on 2025-05-23 16:51:07
 export PATH="$PATH:/home/albert/.local/share/hatch/pythons/3.12/python/bin"
 
+export ANDROID_HOME=/home/albert/Android/Sdk
+export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
+
 # Use ^y to expand or complete consistent with blink
 bindkey "^y" expand-or-complete
+
+# Fix Kitty terminal ssh completion error
+zstyle ':completion:*:*:(ssh|scp|sftp):*' matcher-list ''
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/home/albert/.juliaup/bin' $path)
+export PATH
+# Tab completion for juliaup and julia channel selection
+[ -f "/home/albert/.julia/juliaup/completions/zsh.zsh" ] && source "/home/albert/.julia/juliaup/completions/zsh.zsh"
+
+# <<< juliaup initialize <<<
