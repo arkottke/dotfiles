@@ -1,157 +1,918 @@
-" LOAD PLUGINS
-" ------------
+" Pure-builtin Vim configuration.
+"
+" Companion to ~/.config/nvim (a from-scratch, zero-plugin Neovim config):
+" same keymaps and feel, but for systems that only have stock Vim. This is
+" a single self-contained file -- no plugin manager, no submodules, nothing
+" to install beyond Vim itself. Copy it to ~/.vimrc on any machine.
+"
+" The one feature Neovim has that Vim fundamentally does not is a builtin
+" LSP client. There is no way to fake that without a plugin, so this file
+" does not try: LSP-shaped keymaps (gr*) are approximated with ctags/grep
+" instead, and completion falls back to Vim's builtin omni/keyword
+" completion. See the "LSP APPROXIMATION" section below for specifics.
+"
+" Targets Vim >= 8.0. Newer features (popupwin, textprop, maplist(),
+" wildoptions=fuzzy) are used when available and degrade gracefully
+" otherwise -- guarded with has()/exists() so this won't error on an older
+" or minimal build.
 
-" Specify a directory for plugins
-call plug#begin('~/.vim/plugged')
-
-Plug 'Raimondi/delimitMate'
-Plug 'SirVer/ultisnips'
-Plug 'airblade/vim-rooter'
-Plug 'altercation/vim-colors-solarized'
-Plug 'derekwyatt/vim-fswitch'
-Plug 'dracula/vim'
-Plug 'honza/vim-snippets'
-Plug 'itchyny/lightline.vim'
-" Plug 'justmao945/vim-clang'
-Plug 'lifepillar/vim-mucomplete'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'
-Plug 'mileszs/ack.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-vinegar'
-Plug 'vimwiki/vimwiki'
-Plug 'w0rp/ale'
-Plug 'christoomey/vim-tmux-navigator'
-
-Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
-
-Plug 'lervag/vimtex', { 'for': 'tex' }
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'}
-Plug 'junegunn/fzf.vim'
-
-call plug#end()
-
-" GENERAL SETTINGS
-" ----------------
-
-colorscheme dracula
-
-let mapleader=","
-
-set autoindent
-set backspace=indent,eol,start
-set complete-=i
-set completeopt=menuone,noinsert,noselect
-" set completeopt=menuone,longest,preview,noinsert,noselect
-set cursorline
-set expandtab
-set incsearch
-set laststatus=2
-set nojoinspaces
-set number
-set ruler
-set shellslash
-set showcmd
-set smarttab
-set shiftwidth=4 	" auto-ident width when using cindent
-set softtabstop=4 	" spaces added when hitting tab
-set tabstop=8 		" real tab width
-
-set diffopt+=iwhite,vertical
-
-set t_Co=256
-set background=dark
-colorscheme dracula
-
-" turn on command line completion wild style
-set wildmenu 
-" ignore these list file extensions
-set wildignore=tags,*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
-            \,*.pdf,*.un~,*.swp,*.xlsx,*.docx,*/.git/*,*/.svn/*,*.pyc
-" turn on wild mode huge list
-set wildmode=list:longest 
-
-" Essential for filetype plugins.
+" ============================================================
+" SECTION 1: FOUNDATION
+" ============================================================
+set nocompatible
+syntax enable
 filetype plugin indent on
-syntax on
 
-if has('gui_running')
-    set cursorline
-    set lines=25 columns=90
+let mapleader = ' '
+let maplocalleader = ' '
+
+set number
+set mouse=a
+set noshowmode
+if has('clipboard')
+  set clipboard=unnamedplus
+endif
+set breakindent
+if has('persistent_undo')
+  set undofile
+  if !isdirectory(expand('~/.vim/undo'))
+    call mkdir(expand('~/.vim/undo'), 'p')
+  endif
+  execute 'set undodir=' . expand('~/.vim/undo')
+endif
+set ignorecase
+set smartcase
+if exists('&signcolumn')
+  set signcolumn=yes
+endif
+set updatetime=250
+set timeoutlen=300
+set splitright
+set splitbelow
+set list
+set listchars=tab:»\ ,trail:·,nbsp:␣
+set cursorline
+set scrolloff=10
+set confirm
+
+" [[ Basic keymaps ]]
+nnoremap <silent> <Esc> :nohlsearch<CR>
+
+" No vim.diagnostic equivalent; quickfix is the closest general "list of
+" locations" concept and is what the search/grep pickers below populate.
+nnoremap <leader>q :copen<CR>
+
+if has('terminal')
+  tnoremap <Esc><Esc> <C-\><C-n>
 endif
 
-set guioptions=ce 
-"              ||
-"              |+-- use simple dialogs rather than pop-ups
-"              +  use GUI tabs, not console style tabs
+" Overridden with tmux-aware versions in Section 8, same as the original.
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
 
-" PLUGIN SETTINGS
-" --------------
+" Highlight when yanking, like vim.hl.on_yank() in the nvim config.
+if exists('##TextYankPost') && has('timers')
+  function! s:HighlightYank() abort
+    if v:event.operator !=# 'y' | return | endif
+    let [l:lnum1] = getpos("'[")[1:1]
+    let [l:lnum2] = getpos("']")[1:1]
+    let l:id = matchaddpos('IncSearch', map(range(l:lnum1, l:lnum2), '[v:val]'))
+    call timer_start(150, {-> matchdelete(l:id)})
+  endfunction
+  augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * call s:HighlightYank()
+  augroup END
+endif
 
-" let g:airline_theme='dracula'
+" ============================================================
+" SECTION 2: UI
+" ============================================================
+try
+  colorscheme habamax
+catch
+  colorscheme desert
+endtry
 
-" FZF (replaces Ctrl-P, FuzzyFinder and Command-T)
-nmap ; :Buffers<CR>
-nmap <Leader>t :Files<CR>
-nmap <Leader>r :Tags<CR>
+" netrw as the file explorer, same as the nvim config's `-`.
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 25
+nnoremap - :Explore<CR>
 
-" Tell ack.vim to use ag (the Silver Searcher) instead
-let g:ackprg = 'ag --vimgrep'
+" [[ Statusline ]]
+set laststatus=2
 
-" Configure lightline
-let g:lightline = {
-	\ 'colorscheme': 'Dracula',
-	\ }
+function! s:GitBranch() abort
+  let l:now = localtime()
+  if !exists('b:git_branch') || (l:now - get(b:, 'git_branch_stamp', 0)) > 15
+    let b:git_branch_stamp = l:now
+    let l:out = system('git branch --show-current 2>/dev/null')
+    let b:git_branch = v:shell_error == 0 ? substitute(l:out, '\n\+$', '', '') : ''
+  endif
+  return b:git_branch !=# '' ? '  ' . b:git_branch . ' ' : ''
+endfunction
 
-" Ultisnips triggers
-let g:UltiSnipsExpandTrigger='<C-h>'
-let g:UltiSnipsJumpForwardTrigger='<C-j>'
-let g:UltiSnipsJumpBackwardTrigger='<C-k>'
+function! StatusLine() abort
+  return ' %{mode()} %{' . expand('<SID>') . 'GitBranch()}%f %h%m%r%=%y %2l:%-2v '
+endfunction
+set statusline=%!StatusLine()
 
-" Jedi
-let g:jedi#popup_on_dot = 0
+" [[ TODO/FIXME/NOTE highlighting ]]
+highlight default CustomTodo      guifg=#1e1e2e guibg=#89b4fa gui=bold ctermfg=0 ctermbg=4
+highlight default CustomTodoWarn  guifg=#1e1e2e guibg=#f9e2af gui=bold ctermfg=0 ctermbg=3
+highlight default CustomTodoError guifg=#1e1e2e guibg=#f38ba8 gui=bold ctermfg=0 ctermbg=1
 
-" Clang
- let g:clang_c_options = '-std=gnu14'
- let g:clang_c_completeopt = 'menuone,noinsert,noselect'
- let g:clang_cpp_options = '-std=c++14 -stdlib=libc++'
- let g:clang_cpp_completeopt = 'menuone,noinsert,noselect'
+function! s:ApplyTodoHighlight() abort
+  if &buftype !=# '' | return | endif
+  call clearmatches()
+  for [l:word, l:hl] in items({
+        \ 'TODO': 'CustomTodo', 'NOTE': 'CustomTodo', 'PERF': 'CustomTodo',
+        \ 'FIXME': 'CustomTodoError', 'BUG': 'CustomTodoError',
+        \ 'HACK': 'CustomTodoWarn', 'WARN': 'CustomTodoWarn', 'WARNING': 'CustomTodoWarn',
+        \ })
+    call matchadd(l:hl, '\v<' . l:word . '>:?')
+  endfor
+endfunction
 
-" mucomplete settings
-set shortmess+=c   " Shut off completion messages
-" set belloff+=ctrlg " If Vim beeps during completion
-let g:mucomplete#enable_auto_at_startup = 1
+augroup custom_todo
+  autocmd!
+  autocmd BufWinEnter,BufWritePost * call s:ApplyTodoHighlight()
+augroup END
 
-let g:mucomplete#chains = { 
-            \ 'default' : ['path', 'omni', 'keyn', 'dict', 'uspl', 'ulti'], 
-            \ 'cpp' : ['omni', 'incl', 'ulti'] }
+" ============================================================
+" SECTION 3: SEARCH & NAVIGATION
+" vim.ui.select's closest builtin equivalent is inputlist(); quickfix
+" (populated via :grep, wired to ripgrep) replaces the Telescope pickers.
+" ============================================================
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --glob=!.git
+  set grepformat=%f:%l:%c:%m
+endif
+set wildmenu
+set path+=**
+set wildignore+=*.o,*.obj,*.pyc,*.class,*/.git/*,*/node_modules/*,*/__pycache__/*
+try
+  set wildoptions=fuzzy
+catch
+endtry
 
-" Add comment support to CSV files
-" let g:csv_comment = '#'
+function! s:PickFromList(items, prompt) abort
+  if empty(a:items) | return -1 | endif
+  let l:display = [a:prompt]
+  for l:i in range(len(a:items))
+    call add(l:display, printf('%d: %s', l:i + 1, a:items[l:i]))
+  endfor
+  let l:choice = inputlist(l:display)
+  if l:choice < 1 || l:choice > len(a:items) | return -1 | endif
+  return l:choice - 1
+endfunction
 
-let g:ale_sign_error = '•'
-let g:ale_sign_warning = '•'
- 
-" hi Error   cterm=bold gui=bold
-" hi Warning cterm=bold gui=bold
-"
+function! s:SearchHelp() abort
+  call feedkeys(':help ', 'n')
+endfunction
 
-" Disable latex
-let g:polyglot_disabled = ['latex']
+function! s:SearchKeymaps() abort
+  if exists('*maplist')
+    let l:items = []
+    for l:m in maplist()
+      if get(l:m, 'buffer', 0) isnot 0 | continue | endif
+      call add(l:items, printf('[%s] %-18s %s', l:m.mode, l:m.lhs, l:m.rhs))
+    endfor
+    call s:PickFromList(l:items, 'Keymaps:')
+  else
+    redir => l:out
+    silent map
+    redir END
+    new
+    setlocal buftype=nofile bufhidden=wipe noswapfile
+    call setline(1, split(l:out, '\n'))
+  endif
+endfunction
 
-" Switch between C source files
-nmap <silent> <Leader>of :FSHere<cr>
-nmap <silent> <Leader>ol :FSRight<cr>
-nmap <silent> <Leader>oL :FSSplitRight<cr>
-nmap <silent> <Leader>oh :FSLeft<cr>
-nmap <silent> <Leader>oH :FSSplitLeft<cr>
-nmap <silent> <Leader>ok :FSAbove<cr>
-nmap <silent> <Leader>oK :FSSplitAbove<cr>
-nmap <silent> <Leader>oj :FSBelow<cr>
-nmap <silent> <Leader>oJ :FSSplitBelow<cr>
+function! s:SearchFiles(...) abort
+  let l:cwd = a:0 > 0 ? a:1 : getcwd()
+  if executable('fd')
+    let l:cmd = 'fd --type f --hidden --exclude .git . ' . shellescape(l:cwd)
+  elseif executable('rg')
+    let l:cmd = 'rg --files --hidden --glob !.git ' . shellescape(l:cwd)
+  else
+    let l:cmd = 'find ' . shellescape(l:cwd) . ' -type f -not -path "*/.git/*"'
+  endif
+  let l:files = systemlist(l:cmd)
+  if len(l:files) > 200 | let l:files = l:files[0:199] | endif
+  let l:idx = s:PickFromList(l:files, 'Files:')
+  if l:idx >= 0 | execute 'edit ' . fnameescape(l:files[l:idx]) | endif
+endfunction
 
-" vim:set tw=100:
+function! s:SearchGrep(...) abort
+  let l:pattern = a:0 > 0 && a:1 !=# '' ? a:1 : input('Grep: ')
+  if l:pattern ==# '' | return | endif
+  silent! execute 'grep! ' . shellescape(l:pattern)
+  copen
+endfunction
+
+function! s:SearchWord() abort
+  call s:SearchGrep(expand('<cword>'))
+endfunction
+
+function! s:SearchWordVisual() abort range
+  let l:save = @v
+  silent normal! gv"vy
+  let l:word = @v
+  let @v = l:save
+  call s:SearchGrep(l:word)
+endfunction
+
+function! s:SearchOpenFiles() abort
+  let l:pattern = input('Grep in open files: ')
+  if l:pattern ==# '' | return | endif
+  let l:files = []
+  for l:b in range(1, bufnr('$'))
+    if buflisted(l:b) && bufname(l:b) !=# ''
+      call add(l:files, fnameescape(bufname(l:b)))
+    endif
+  endfor
+  silent! execute 'grep! ' . shellescape(l:pattern) . ' ' . join(l:files, ' ')
+  copen
+endfunction
+
+function! s:SearchDiagnostics() abort
+  echo 'No diagnostics: Vim has no builtin LSP'
+endfunction
+
+function! s:SearchOldfiles() abort
+  let l:files = filter(copy(v:oldfiles), 'filereadable(v:val)')
+  let l:idx = s:PickFromList(l:files, 'Recent files:')
+  if l:idx >= 0 | execute 'edit ' . fnameescape(l:files[l:idx]) | endif
+endfunction
+
+function! s:SearchCommands() abort
+  let l:cmds = getcompletion('', 'command')
+  let l:idx = s:PickFromList(l:cmds, 'Command:')
+  if l:idx >= 0 | call feedkeys(':' . l:cmds[l:idx] . ' ', 'n') | endif
+endfunction
+
+function! s:SearchBuffers() abort
+  let l:bufs = []
+  let l:nums = []
+  for l:b in range(1, bufnr('$'))
+    if buflisted(l:b)
+      call add(l:bufs, bufname(l:b) !=# '' ? bufname(l:b) : '[No Name #' . l:b . ']')
+      call add(l:nums, l:b)
+    endif
+  endfor
+  let l:idx = s:PickFromList(l:bufs, 'Buffers:')
+  if l:idx >= 0 | execute 'buffer ' . l:nums[l:idx] | endif
+endfunction
+
+function! s:SearchMenu() abort
+  let l:actions = ['Help', 'Keymaps', 'Files', 'Grep', 'Diagnostics', 'Recent Files', 'Commands', 'Buffers']
+  let l:fns = ['SearchHelp', 'SearchKeymaps', 'SearchFiles', 'SearchGrep', 'SearchDiagnostics', 'SearchOldfiles', 'SearchCommands', 'SearchBuffers']
+  let l:idx = s:PickFromList(l:actions, 'Search:')
+  if l:idx >= 0 | call call('s:' . l:fns[l:idx], []) | endif
+endfunction
+
+nnoremap <silent> <leader>sh :call <SID>SearchHelp()<CR>
+nnoremap <silent> <leader>sk :call <SID>SearchKeymaps()<CR>
+nnoremap <silent> <leader>sf :call <SID>SearchFiles()<CR>
+nnoremap <silent> <leader>ss :call <SID>SearchMenu()<CR>
+nnoremap <silent> <leader>sw :call <SID>SearchWord()<CR>
+xnoremap <silent> <leader>sw :call <SID>SearchWordVisual()<CR>
+nnoremap <silent> <leader>sg :call <SID>SearchGrep()<CR>
+nnoremap <silent> <leader>sd :call <SID>SearchDiagnostics()<CR>
+nnoremap <silent> <leader>sr :copen<CR>
+nnoremap <silent> <leader>s. :call <SID>SearchOldfiles()<CR>
+nnoremap <silent> <leader>sc :call <SID>SearchCommands()<CR>
+nnoremap <silent> <leader><leader> :call <SID>SearchBuffers()<CR>
+nnoremap <leader>/ /
+nnoremap <silent> <leader>s/ :call <SID>SearchOpenFiles()<CR>
+nnoremap <silent> <leader>sn :call <SID>SearchFiles(expand('$MYVIMRC:h'))<CR>
+
+" ============================================================
+" SECTION 4: LSP APPROXIMATION
+" No builtin LSP in Vim. `grd`/`gri` use ctags (:MakeTags to (re)generate),
+" `grr` falls back to a project grep, `grn` prefills a buffer-local
+" substitute. gO/gW/gra/grx (symbols/code actions/codelens) have no
+" reasonable non-LSP equivalent and are intentionally left unmapped.
+" ============================================================
+command! MakeTags execute '!ctags -R --exclude=.git .'
+
+nnoremap grd <C-]>
+nnoremap grD <C-]>
+nnoremap gri <C-]>
+nnoremap grr :call <SID>SearchWord()<CR>
+nnoremap grn :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+
+" ============================================================
+" SECTION 5: FORMATTING
+" Same idea as lua/custom/format.lua: shell out to an external formatter
+" per filetype via a buffer filter; `gq`/'formatprg' otherwise.
+" ============================================================
+function! s:FormatBuffer() abort
+  let l:ft = &filetype
+  let l:cmds = {
+        \ 'python': ['ruff check --fix --select I --stdin-filename ' . shellescape(expand('%')) . ' -',
+        \            'ruff format --stdin-filename ' . shellescape(expand('%')) . ' -'],
+        \ 'markdown': ['prettier --parser markdown'],
+        \ 'tex': ['latexindent'],
+        \ 'lua': ['stylua -'],
+        \ }
+  if !has_key(l:cmds, l:ft)
+    normal! gggqG
+    return
+  endif
+  let l:view = winsaveview()
+  for l:cmd in l:cmds[l:ft]
+    if !executable(split(l:cmd)[0]) | continue | endif
+    silent execute '%!' . l:cmd
+    if v:shell_error != 0
+      silent undo
+      echohl ErrorMsg | echo 'Format failed: ' . l:cmd | echohl None
+      call winrestview(l:view)
+      return
+    endif
+  endfor
+  call winrestview(l:view)
+endfunction
+nnoremap <silent> <leader>f :call <SID>FormatBuffer()<CR>
+xnoremap <silent> <leader>f :call <SID>FormatBuffer()<CR>
+
+" ============================================================
+" SECTION 6: COMPLETION
+" No LSP, so no completion source beyond Vim's builtin
+" keyword/omni-completion (ftplugins ship omnifuncs for several languages).
+" ============================================================
+try
+  set completeopt=menuone,noselect,popup
+catch
+  set completeopt=menuone,noselect
+endtry
+inoremap <C-space> <C-x><C-o>
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" ============================================================
+" SECTION 7: FOLDING
+" No treesitter in Vim; syntax-based folding is the closest builtin match.
+" ============================================================
+if has('folding')
+  set foldmethod=syntax
+  set foldlevel=99
+endif
+
+" ============================================================
+" SECTION 8: EDITING ENHANCEMENTS
+" Hand-rolled replacements for mini.surround, leap.nvim, which-key.nvim,
+" gitsigns.nvim and nvim-tmux-navigation, using only builtin Vimscript.
+" ============================================================
+
+" [[ Surround: sa{motion}{char} / sa (visual) / sd{char} / sr{char}{char} ]]
+let s:surround_pairs = {
+      \ '(': ['(', ')'], ')': ['(', ')'],
+      \ '[': ['[', ']'], ']': ['[', ']'],
+      \ '{': ['{', '}'], '}': ['{', '}'],
+      \ '<': ['<', '>'], '>': ['<', '>'],
+      \ }
+
+function! s:SurroundPair(char) abort
+  return get(s:surround_pairs, a:char, [a:char, a:char])
+endfunction
+
+function! s:SurroundGetChar(prompt) abort
+  redraw
+  echohl Question | echo a:prompt | echohl None
+  let l:c = getchar()
+  echo ''
+  if l:c == 27 | return '' | endif
+  return nr2char(l:c)
+endfunction
+
+function! s:SurroundWrapRange(srow, scol, erow, ecol, open, close) abort
+  call setline(a:erow, strpart(getline(a:erow), 0, a:ecol) . a:close . strpart(getline(a:erow), a:ecol))
+  call setline(a:srow, strpart(getline(a:srow), 0, a:scol - 1) . a:open . strpart(getline(a:srow), a:scol - 1))
+endfunction
+
+function! s:SurroundAddOperator(type) abort
+  let [l:srow, l:scol] = getpos("'[")[1:2]
+  let [l:erow, l:ecol] = getpos("']")[1:2]
+  let l:char = s:SurroundGetChar('Surround with: ')
+  if l:char ==# '' | return | endif
+  let [l:open, l:close] = s:SurroundPair(l:char)
+  if a:type ==# 'line'
+    call append(l:erow, l:close)
+    call append(l:srow - 1, l:open)
+  else
+    call s:SurroundWrapRange(l:srow, l:scol, l:erow, l:ecol, l:open, l:close)
+  endif
+endfunction
+
+function! s:SurroundAddNormal() abort
+  set operatorfunc=<SID>SurroundAddOperator
+  return 'g@'
+endfunction
+
+function! s:SurroundAddVisual() abort
+  let l:char = s:SurroundGetChar('Surround with: ')
+  if l:char ==# '' | return | endif
+  let [l:open, l:close] = s:SurroundPair(l:char)
+  let [l:srow, l:scol] = getpos("'<")[1:2]
+  let [l:erow, l:ecol] = getpos("'>")[1:2]
+  call s:SurroundWrapRange(l:srow, l:scol, l:erow, l:ecol, l:open, l:close)
+endfunction
+
+function! s:SurroundFindBracket(open, close) abort
+  let l:save = getpos('.')
+  let [l:oline, l:ocol] = searchpairpos('\V' . escape(a:open, '\'), '', '\V' . escape(a:close, '\'), 'bnW')
+  call setpos('.', l:save)
+  let [l:cline, l:ccol] = searchpairpos('\V' . escape(a:open, '\'), '', '\V' . escape(a:close, '\'), 'nW')
+  call setpos('.', l:save)
+  if l:oline == 0 || l:cline == 0 | return [] | endif
+  return [l:oline, l:ocol, l:cline, l:ccol]
+endfunction
+
+function! s:SurroundFindSameLine(char) abort
+  let l:lnum = line('.')
+  let l:line = getline(l:lnum)
+  let l:col = col('.')
+  let l:positions = []
+  for l:i in range(1, len(l:line))
+    if l:line[l:i - 1] ==# a:char | call add(l:positions, l:i) | endif
+  endfor
+  let l:i = 0
+  while l:i + 1 < len(l:positions)
+    let [l:a, l:b] = [l:positions[l:i], l:positions[l:i + 1]]
+    if l:a <= l:col && l:col <= l:b | return [l:lnum, l:a, l:lnum, l:b] | endif
+    let l:i += 2
+  endwhile
+  return []
+endfunction
+
+function! s:SurroundFind(char) abort
+  let [l:open, l:close] = s:SurroundPair(a:char)
+  if l:open !=# l:close | return s:SurroundFindBracket(l:open, l:close) | endif
+  return s:SurroundFindSameLine(a:char)
+endfunction
+
+function! s:SurroundDelete() abort
+  let l:char = s:SurroundGetChar('Delete surround: ')
+  if l:char ==# '' | return | endif
+  let l:pos = s:SurroundFind(l:char)
+  if empty(l:pos) | echo 'surround: not found' | return | endif
+  let [l:oline, l:ocol, l:cline, l:ccol] = l:pos
+  call setline(l:cline, strpart(getline(l:cline), 0, l:ccol - 1) . strpart(getline(l:cline), l:ccol))
+  call setline(l:oline, strpart(getline(l:oline), 0, l:ocol - 1) . strpart(getline(l:oline), l:ocol))
+endfunction
+
+function! s:SurroundReplace() abort
+  let l:char = s:SurroundGetChar('Replace surround: ')
+  if l:char ==# '' | return | endif
+  let l:pos = s:SurroundFind(l:char)
+  if empty(l:pos) | echo 'surround: not found' | return | endif
+  let l:newchar = s:SurroundGetChar('Replace with: ')
+  if l:newchar ==# '' | return | endif
+  let [l:open, l:close] = s:SurroundPair(l:newchar)
+  let [l:oline, l:ocol, l:cline, l:ccol] = l:pos
+  call setline(l:cline, strpart(getline(l:cline), 0, l:ccol - 1) . l:close . strpart(getline(l:cline), l:ccol))
+  call setline(l:oline, strpart(getline(l:oline), 0, l:ocol - 1) . l:open . strpart(getline(l:oline), l:ocol))
+endfunction
+
+nnoremap <expr> sa <SID>SurroundAddNormal()
+xnoremap <silent> sa :<C-u>call <SID>SurroundAddVisual()<CR>
+nnoremap <silent> sd :call <SID>SurroundDelete()<CR>
+nnoremap <silent> sr :call <SID>SurroundReplace()<CR>
+
+" [[ Leap: s / S ]]
+let s:leap_labels = 'asdfghjklqwertyuiopzxcvbnm'
+
+function! s:Leap() abort
+  let l:c1 = getchar()
+  if l:c1 == 27 | return | endif
+  let l:c2 = getchar()
+  if l:c2 == 27 | return | endif
+  let l:needle = nr2char(l:c1) . nr2char(l:c2)
+  let l:matches = []
+  for l:lnum in range(line('w0'), line('w$'))
+    let l:line = getline(l:lnum)
+    let l:init = 0
+    while 1
+      let l:idx = stridx(l:line, l:needle, l:init)
+      if l:idx == -1 | break | endif
+      call add(l:matches, [l:lnum, l:idx + 1])
+      let l:init = l:idx + 1
+    endwhile
+  endfor
+  if empty(l:matches) | echo 'leap: no matches' | return | endif
+  if len(l:matches) == 1
+    call cursor(l:matches[0][0], l:matches[0][1])
+    return
+  endif
+  let [l:cl, l:cc] = getpos('.')[1:2]
+  call sort(l:matches, {a, b -> (abs(a[0] - l:cl) * 1000 + abs(a[1] - l:cc)) - (abs(b[0] - l:cl) * 1000 + abs(b[1] - l:cc))})
+  if len(l:matches) > len(s:leap_labels)
+    let l:matches = l:matches[0 : len(s:leap_labels) - 1]
+  endif
+  if has('textprop')
+    try
+      if empty(prop_type_get('LeapLabel'))
+        call prop_type_add('LeapLabel', {'highlight': 'IncSearch'})
+      endif
+      for l:i in range(len(l:matches))
+        call prop_add(l:matches[l:i][0], l:matches[l:i][1], {'type': 'LeapLabel', 'text': s:leap_labels[l:i]})
+      endfor
+      redraw
+      let l:choice = getchar()
+      call prop_remove({'type': 'LeapLabel', 'all': 1})
+      if l:choice == 27 | return | endif
+      let l:idx = stridx(s:leap_labels, nr2char(l:choice))
+      if l:idx >= 0 && l:idx < len(l:matches)
+        call cursor(l:matches[l:idx][0], l:matches[l:idx][1])
+      endif
+      return
+    catch
+    endtry
+  endif
+  " No textprop: jump straight to the nearest match (no label picker).
+  call cursor(l:matches[0][0], l:matches[0][1])
+endfunction
+
+function! s:LeapFromWindow() abort
+  if winnr('$') <= 1
+    call s:Leap()
+    return
+  endif
+  echo 'Pick window (1-' . winnr('$') . '): '
+  let l:c = getchar()
+  let l:n = str2nr(nr2char(l:c))
+  if l:n >= 1 && l:n <= winnr('$')
+    execute l:n . 'wincmd w'
+  endif
+  call s:Leap()
+endfunction
+
+nnoremap <silent> s :call <SID>Leap()<CR>
+xnoremap <silent> s :<C-u>call <SID>Leap()<CR>
+nnoremap <silent> S :call <SID>LeapFromWindow()<CR>
+
+" [[ which-key-ish popup on bare <leader> ]]
+function! s:WhichKeyItems(prefix) abort
+  let l:groups = {}
+  if !exists('*maplist') | return l:groups | endif
+  for l:m in maplist()
+    if l:m.mode !=# 'n' || get(l:m, 'buffer', 0) isnot 0 | continue | endif
+    let l:lhs = l:m.lhs
+    if len(l:lhs) <= len(a:prefix) || strpart(l:lhs, 0, len(a:prefix)) !=# a:prefix | continue | endif
+    let l:nextchar = strpart(l:lhs, len(a:prefix), 1)
+    if !has_key(l:groups, l:nextchar) | let l:groups[l:nextchar] = {'count': 0} | endif
+    let l:groups[l:nextchar].count += 1
+    if len(l:lhs) == len(a:prefix) + 1
+      let l:groups[l:nextchar].desc = l:m.rhs
+    endif
+  endfor
+  return l:groups
+endfunction
+
+function! s:WhichKeyPopup(items) abort
+  let l:lines = []
+  for l:key in sort(keys(a:items))
+    let l:g = a:items[l:key]
+    let l:label = l:g.count > 1 ? '+' . l:g.count . ' more' : get(l:g, 'desc', l:key)
+    call add(l:lines, printf(' %-4s %s', l:key, l:label))
+  endfor
+  if empty(l:lines) | return -1 | endif
+  if has('popupwin')
+    return popup_create(l:lines, {
+          \ 'line': &lines - 2 - len(l:lines), 'col': 1,
+          \ 'minwidth': max(map(copy(l:lines), 'len(v:val)')) + 2,
+          \ 'border': [], 'zindex': 300,
+          \ })
+  endif
+  echo join(l:lines, '  ')
+  return -1
+endfunction
+
+let s:wk_replaying = 0
+
+function! s:WhichKeyTrigger() abort
+  if s:wk_replaying | return | endif
+  let l:keys = ' '
+  let l:popup = -1
+  while 1
+    if l:popup != -1 | call popup_close(l:popup) | let l:popup = -1 | endif
+    let l:items = s:WhichKeyItems(l:keys)
+    if empty(l:items) | break | endif
+    let l:popup = s:WhichKeyPopup(l:items)
+    redraw
+    let l:c = getchar()
+    if l:c == 27
+      if l:popup != -1 | call popup_close(l:popup) | endif
+      return
+    endif
+    let l:keys .= nr2char(l:c)
+  endwhile
+  if l:popup != -1 | call popup_close(l:popup) | endif
+  if l:keys ==# ' ' | return | endif
+  nunmap <space>
+  let s:wk_replaying = 1
+  call feedkeys(l:keys, 'mtx')
+  let s:wk_replaying = 0
+  nnoremap <silent> <space> :call <SID>WhichKeyTrigger()<CR>
+endfunction
+
+nnoremap <silent> <space> :call <SID>WhichKeyTrigger()<CR>
+
+" [[ Git hunks (gitsigns-ish): ]c/[c, <leader>h*, <leader>tb, ih ]]
+let s:git_state = {}
+let s:git_roots = {}
+let s:git_blame_enabled = {}
+let s:git_sign_defined = 0
+
+function! s:GitRoot(dir) abort
+  if has_key(s:git_roots, a:dir) | return s:git_roots[a:dir] | endif
+  let l:out = system('git -C ' . shellescape(a:dir) . ' rev-parse --show-toplevel 2>/dev/null')
+  let l:root = v:shell_error == 0 ? substitute(l:out, '\n\+$', '', '') : ''
+  let s:git_roots[a:dir] = l:root
+  return l:root
+endfunction
+
+function! s:GitParseDiff(lines) abort
+  let l:hunks = []
+  let l:cur = {}
+  for l:line in a:lines
+    let l:m = matchlist(l:line, '^@@ -\(\d\+\),\?\(\d*\) +\(\d\+\),\?\(\d*\) @@')
+    if !empty(l:m)
+      let l:cur = {
+            \ 'old_start': str2nr(l:m[1]), 'old_count': l:m[2] ==# '' ? 1 : str2nr(l:m[2]),
+            \ 'new_start': str2nr(l:m[3]), 'new_count': l:m[4] ==# '' ? 1 : str2nr(l:m[4]),
+            \ 'lines': [l:line],
+            \ }
+      call add(l:hunks, l:cur)
+    elseif !empty(l:cur) && (l:line[0:0] ==# '+' || l:line[0:0] ==# '-')
+      call add(l:cur.lines, l:line)
+    endif
+  endfor
+  return l:hunks
+endfunction
+
+function! s:GitHunkRange(h) abort
+  if a:h.new_count == 0 | return [a:h.new_start, a:h.new_start] | endif
+  return [a:h.new_start, a:h.new_start + a:h.new_count - 1]
+endfunction
+
+function! s:GitDefineSigns() abort
+  if s:git_sign_defined || !has('signs') | return | endif
+  let s:git_sign_defined = 1
+  call sign_define('GitAdd', {'text': '+', 'texthl': 'GitSignsAdd'})
+  call sign_define('GitChange', {'text': '~', 'texthl': 'GitSignsChange'})
+  call sign_define('GitDelete', {'text': '_', 'texthl': 'GitSignsDelete'})
+  highlight default GitSignsAdd    guifg=#a6e3a1 ctermfg=2
+  highlight default GitSignsChange guifg=#f9e2af ctermfg=3
+  highlight default GitSignsDelete guifg=#f38ba8 ctermfg=1
+endfunction
+
+function! s:GitPlaceSigns(bufnr, hunks) abort
+  if !has('signs') | return | endif
+  call sign_unplace('GitSigns', {'buffer': a:bufnr})
+  let l:line_count = line('$')
+  let l:id = 1
+  for l:h in a:hunks
+    if l:h.old_count == 0
+      for l:row in range(l:h.new_start, l:h.new_start + l:h.new_count - 1)
+        if l:row >= 1 && l:row <= l:line_count
+          call sign_place(l:id, 'GitSigns', 'GitAdd', a:bufnr, {'lnum': l:row}) | let l:id += 1
+        endif
+      endfor
+    elseif l:h.new_count == 0
+      call sign_place(l:id, 'GitSigns', 'GitDelete', a:bufnr, {'lnum': max([1, min([l:h.new_start, l:line_count])])})
+      let l:id += 1
+    else
+      for l:row in range(l:h.new_start, l:h.new_start + l:h.new_count - 1)
+        if l:row >= 1 && l:row <= l:line_count
+          call sign_place(l:id, 'GitSigns', 'GitChange', a:bufnr, {'lnum': l:row}) | let l:id += 1
+        endif
+      endfor
+    endif
+  endfor
+endfunction
+
+function! s:GitRefresh(...) abort
+  let l:bufnr = a:0 > 0 ? a:1 : bufnr('%')
+  let l:name = bufname(l:bufnr)
+  if l:name ==# '' || getbufvar(l:bufnr, '&buftype') !=# '' | return | endif
+  let l:name = fnamemodify(l:name, ':p')
+  let l:dir = fnamemodify(l:name, ':h')
+  let l:root = s:GitRoot(l:dir)
+  if l:root ==# ''
+    let s:git_state[l:bufnr] = {}
+    if has('signs') | call sign_unplace('GitSigns', {'buffer': l:bufnr}) | endif
+    return
+  endif
+  call s:GitDefineSigns()
+  let l:out = systemlist('git -C ' . shellescape(l:dir) . ' diff --no-color --no-ext-diff -U0 -- ' . shellescape(l:name))
+  if v:shell_error != 0 | return | endif
+  let l:hunks = s:GitParseDiff(l:out)
+  let s:git_state[l:bufnr] = {'hunks': l:hunks, 'root': l:root, 'rel': strpart(l:name, len(l:root) + 1)}
+  call s:GitPlaceSigns(l:bufnr, l:hunks)
+endfunction
+
+function! s:GitHunkUnderCursor() abort
+  let l:st = get(s:git_state, bufnr('%'), {})
+  if empty(l:st) | return {} | endif
+  let l:lnum = line('.')
+  for l:h in l:st.hunks
+    let [l:s, l:e] = s:GitHunkRange(l:h)
+    if l:lnum >= l:s && l:lnum <= l:e | return l:h | endif
+  endfor
+  return {}
+endfunction
+
+function! s:GitNavHunk(dir) abort
+  let l:st = get(s:git_state, bufnr('%'), {})
+  if empty(l:st) || empty(l:st.hunks) | return | endif
+  let l:lnum = line('.')
+  let l:rows = sort(map(copy(l:st.hunks), 's:GitHunkRange(v:val)[0]'), 'n')
+  if a:dir ==# 'next'
+    let l:next = filter(copy(l:rows), 'v:val > l:lnum')
+    let l:target = empty(l:next) ? l:rows[0] : l:next[0]
+  else
+    let l:prev = filter(copy(l:rows), 'v:val < l:lnum')
+    let l:target = empty(l:prev) ? l:rows[-1] : l:prev[-1]
+  endif
+  call cursor(l:target, 1)
+endfunction
+
+function! s:GitBuildPatch(rel, h) abort
+  let l:lines = ['diff --git a/' . a:rel . ' b/' . a:rel, '--- a/' . a:rel, '+++ b/' . a:rel]
+  call extend(l:lines, a:h.lines)
+  return l:lines
+endfunction
+
+function! s:GitOldLines(h) abort
+  let l:lines = []
+  for l:l in a:h.lines
+    if l:l[0:0] ==# '-' | call add(l:lines, l:l[1:]) | endif
+  endfor
+  return l:lines
+endfunction
+
+function! s:GitStageHunk() abort
+  let l:st = get(s:git_state, bufnr('%'), {})
+  let l:h = s:GitHunkUnderCursor()
+  if empty(l:h) | echo 'No hunk under cursor' | return | endif
+  let l:patch_file = tempname()
+  call writefile(s:GitBuildPatch(l:st.rel, l:h), l:patch_file)
+  call system('git -C ' . shellescape(l:st.root) . ' apply --cached --unidiff-zero ' . shellescape(l:patch_file))
+  let l:failed = v:shell_error != 0
+  call delete(l:patch_file)
+  if l:failed
+    echohl ErrorMsg | echo 'git apply failed' | echohl None
+  endif
+  call s:GitRefresh()
+endfunction
+
+function! s:GitReplaceLines(bufnr, start_row, end_row, new_lines) abort
+  if a:end_row > a:start_row
+    call deletebufline(a:bufnr, a:start_row + 1, a:end_row)
+  endif
+  if !empty(a:new_lines)
+    call appendbufline(a:bufnr, a:start_row, a:new_lines)
+  endif
+endfunction
+
+function! s:GitResetHunk() abort
+  let l:bufnr = bufnr('%')
+  let l:h = s:GitHunkUnderCursor()
+  if empty(l:h) | echo 'No hunk under cursor' | return | endif
+  let l:old = s:GitOldLines(l:h)
+  if l:h.new_count == 0
+    let [l:start_row, l:end_row] = [l:h.new_start, l:h.new_start]
+  else
+    let [l:start_row, l:end_row] = [l:h.new_start - 1, l:h.new_start - 1 + l:h.new_count]
+  endif
+  call s:GitReplaceLines(l:bufnr, l:start_row, l:end_row, l:old)
+  call s:GitRefresh()
+endfunction
+
+function! s:GitStageBuffer() abort
+  write
+  let l:name = expand('%:p')
+  call system('git -C ' . shellescape(fnamemodify(l:name, ':h')) . ' add -- ' . shellescape(l:name))
+  call s:GitRefresh()
+endfunction
+
+function! s:GitResetBuffer() abort
+  let l:name = expand('%:p')
+  call system('git -C ' . shellescape(fnamemodify(l:name, ':h')) . ' checkout -- ' . shellescape(l:name))
+  edit!
+  call s:GitRefresh()
+endfunction
+
+function! s:GitPreviewHunk() abort
+  let l:h = s:GitHunkUnderCursor()
+  if empty(l:h) | echo 'No hunk under cursor' | return | endif
+  if has('popupwin')
+    call popup_create(l:h.lines, {'line': 'cursor+1', 'col': 'cursor', 'border': [], 'maxheight': 15, 'maxwidth': 90})
+  else
+    new
+    setlocal buftype=nofile bufhidden=wipe noswapfile
+    call setline(1, l:h.lines)
+    setlocal filetype=diff
+  endif
+endfunction
+
+function! s:GitBlameLine() abort
+  let l:name = expand('%:p')
+  if l:name ==# '' | return | endif
+  let l:lnum = line('.')
+  let l:out = system('git -C ' . shellescape(fnamemodify(l:name, ':h')) . ' blame -L ' . l:lnum . ',' . l:lnum
+        \ . ' --date=short -- ' . shellescape(l:name))
+  if v:shell_error != 0 | echo 'git blame failed' | return | endif
+  echo substitute(l:out, '\n\+$', '', '')
+endfunction
+
+function! s:GitToggleBlame() abort
+  let l:bufnr = bufnr('%')
+  let s:git_blame_enabled[l:bufnr] = !get(s:git_blame_enabled, l:bufnr, 0)
+  if s:git_blame_enabled[l:bufnr] | call s:GitBlameLine() | endif
+endfunction
+
+function! s:GitDiffThis(...) abort
+  let l:rev = a:0 > 0 ? a:1 : ':0'
+  let l:name = expand('%:p')
+  let l:dir = fnamemodify(l:name, ':h')
+  let l:ft = &filetype
+  let l:out = systemlist('git -C ' . shellescape(l:dir) . ' show ' . l:rev . ':./' . fnamemodify(l:name, ':t'))
+  if v:shell_error != 0
+    echohl ErrorMsg | echo 'git show failed' | echohl None
+    return
+  endif
+  vsplit
+  enew
+  call setline(1, l:out)
+  let &filetype = l:ft
+  diffthis
+  wincmd p
+  diffthis
+endfunction
+
+function! s:GitSelectHunk() abort
+  let l:h = s:GitHunkUnderCursor()
+  if empty(l:h) | return | endif
+  let [l:s, l:e] = s:GitHunkRange(l:h)
+  execute 'normal! ' . l:s . 'GV' . l:e . 'G'
+endfunction
+
+augroup git_signs
+  autocmd!
+  autocmd BufReadPost,BufWritePost,FocusGained * call s:GitRefresh()
+  if has('timers')
+    autocmd TextChanged,InsertLeave * call timer_start(300, {-> s:GitRefresh(bufnr('%'))})
+  else
+    autocmd TextChanged,InsertLeave * call s:GitRefresh()
+  endif
+  autocmd CursorHold,CursorMoved * if get(s:git_blame_enabled, bufnr('%'), 0) | call s:GitBlameLine() | endif
+augroup END
+
+nnoremap <silent> ]c :call <SID>GitNavHunk('next')<CR>
+nnoremap <silent> [c :call <SID>GitNavHunk('prev')<CR>
+nnoremap <silent> <leader>hs :call <SID>GitStageHunk()<CR>
+nnoremap <silent> <leader>hr :call <SID>GitResetHunk()<CR>
+nnoremap <silent> <leader>hS :call <SID>GitStageBuffer()<CR>
+nnoremap <silent> <leader>hR :call <SID>GitResetBuffer()<CR>
+nnoremap <silent> <leader>hp :call <SID>GitPreviewHunk()<CR>
+nnoremap <silent> <leader>hb :call <SID>GitBlameLine()<CR>
+nnoremap <silent> <leader>hd :call <SID>GitDiffThis()<CR>
+nnoremap <silent> <leader>hD :call <SID>GitDiffThis('HEAD')<CR>
+nnoremap <silent> <leader>tb :call <SID>GitToggleBlame()<CR>
+onoremap <silent> ih :call <SID>GitSelectHunk()<CR>
+xnoremap <silent> ih :call <SID>GitSelectHunk()<CR>
+
+" [[ tmux pane navigation: <C-hjkl> ]]
+function! s:TmuxAtEdge(dir) abort
+  let l:before = winnr()
+  execute 'wincmd ' . a:dir
+  let l:moved = winnr() !=# l:before
+  if l:moved | execute l:before . 'wincmd w' | endif
+  return !l:moved
+endfunction
+
+function! s:TmuxNavigate(dir) abort
+  let l:tmux_dir = {'h': 'L', 'j': 'D', 'k': 'U', 'l': 'R'}
+  if !empty($TMUX) && s:TmuxAtEdge(a:dir)
+    call system('tmux select-pane -' . l:tmux_dir[a:dir])
+    return
+  endif
+  execute 'wincmd ' . a:dir
+endfunction
+
+nnoremap <silent> <C-h> :call <SID>TmuxNavigate('h')<CR>
+nnoremap <silent> <C-j> :call <SID>TmuxNavigate('j')<CR>
+nnoremap <silent> <C-k> :call <SID>TmuxNavigate('k')<CR>
+nnoremap <silent> <C-l> :call <SID>TmuxNavigate('l')<CR>
+if !empty($TMUX)
+  nnoremap <silent> <C-\> :call system('tmux select-pane -l')<CR>
+endif
+
+" vim:set ts=2 sts=2 sw=2 et:
