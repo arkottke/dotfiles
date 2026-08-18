@@ -130,8 +130,13 @@ function extract_clip() {
 
 function to_drive() {
     for i do
-        echo "Transferring: $i"
-        rclone copy -P $i drive:working/
+        if [[ -d "$i" ]]; then
+            local dest="drive:working/${i%/}"
+        else
+            local dest="drive:working/$(dirname "$i")"
+        fi
+        echo "Transferring: $i -> $dest"
+        rclone copy -P "$i" "$dest"
     done
 }
 
