@@ -26,6 +26,7 @@ Path                    Symlink target                      Notes
 ``vim/vimrc``           ``~/.vimrc``                        pure builtin, no plugin manager
 ``vim/ftplugin``        ``~/.vim/ftplugin``
 ``vim/spell``           ``~/.vim/spell``
+``nvim/``               *(not deployed)*                    pure-builtin Neovim config, kept as reference
 ``pikaur.conf``         Arch/pikaur only
 ``redshift.conf``       X11 only
 ``pycodestyle``         picked up by tools that read it directly
@@ -34,10 +35,15 @@ Path                    Symlink target                      Notes
 ``minttyrc``            Windows/mintty only
 =====================  ==================================  ================================
 
-Neovim is **not** part of this repo. ``~/.config/nvim`` is its own git
-repo (github.com/arkottke/kickstart.nvim) -- a pure-builtin, zero-plugin
-Neovim config with the same keymaps/feel as ``vim/vimrc`` below. Clone it
-directly to ``~/.config/nvim`` rather than symlinking anything from here.
+Neovim is **not** deployed from this repo. ``~/.config/nvim`` is its own git
+repo (github.com/arkottke/kickstart.nvim) -- a kickstart.nvim fork that stays
+plugin-based via ``vim.pack``. Clone it directly to ``~/.config/nvim`` rather
+than symlinking anything from here.
+
+This repo also carries ``nvim/`` -- a pure-builtin, zero-plugin Neovim config
+with the same keymaps/feel as ``vim/vimrc`` below and as ``~/.config/nvim``.
+It's kept here as a maintained reference (see ``nvim/CLAUDE.md``), not
+currently symlinked or cloned anywhere.
 
 Deploying to a new machine
 ---------------------------
