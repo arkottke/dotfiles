@@ -133,7 +133,12 @@ function to_drive() {
         if [[ -d "$i" ]]; then
             local dest="drive:working/${i%/}"
         else
-            local dest="drive:working/$(dirname "$i")"
+            local parent="$(dirname "$i")"
+            if [[ "$parent" == "." ]]; then
+                local dest="drive:working"
+            else
+                local dest="drive:working/$parent"
+            fi
         fi
         echo "Transferring: $i -> $dest"
         rclone copy -P "$i" "$dest"
