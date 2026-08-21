@@ -23,10 +23,9 @@ Path                    Symlink target                      Notes
 ``starship.toml``       ``~/.config/starship.toml``
 ``kitty/``              ``~/.config/kitty``                 needs submodules (themes)
 ``zk/``                 ``~/.config/zk``
-``vim/vimrc``           ``~/.vimrc``                        pure builtin, no plugin manager
+``vim/vimrc``           ``~/.vimrc``                        vim-plug, a few no-external-deps plugins
 ``vim/ftplugin``        ``~/.vim/ftplugin``
 ``vim/spell``           ``~/.vim/spell``
-``nvim/``               *(not deployed)*                    pure-builtin Neovim config, kept as reference
 ``pikaur.conf``         Arch/pikaur only
 ``redshift.conf``       X11 only
 ``pycodestyle``         picked up by tools that read it directly
@@ -39,11 +38,6 @@ Neovim is **not** deployed from this repo. ``~/.config/nvim`` is its own git
 repo (github.com/arkottke/kickstart.nvim) -- a kickstart.nvim fork that stays
 plugin-based via ``vim.pack``. Clone it directly to ``~/.config/nvim`` rather
 than symlinking anything from here.
-
-This repo also carries ``nvim/`` -- a pure-builtin, zero-plugin Neovim config
-with the same keymaps/feel as ``vim/vimrc`` below and as ``~/.config/nvim``.
-It's kept here as a maintained reference (see ``nvim/CLAUDE.md``), not
-currently symlinked or cloned anywhere.
 
 Deploying to a new machine
 ---------------------------
@@ -69,12 +63,19 @@ Deploying to a new machine
      ln -sf "$PWD"/kitty          ~/.config/kitty
      ln -sf "$PWD"/zk             ~/.config/zk
 
-3. Vim -- single file plus two runtime dirs, no plugin manager required::
+3. Vim -- single file plus two runtime dirs, plugins via vim-plug (all
+   chosen to have no external tooling dependency -- no tree-sitter, no
+   Node, no LSP servers)::
 
      ln -sf "$PWD"/vim/vimrc ~/.vimrc
      mkdir -p ~/.vim
      ln -sf "$PWD"/vim/ftplugin ~/.vim/ftplugin
      ln -sf "$PWD"/vim/spell    ~/.vim/spell
+
+   The first launch of ``vim`` bootstraps vim-plug automatically and runs
+   ``PlugInstall``. For a non-interactive/scripted deploy instead::
+
+     vim +PlugInstall +qall
 
 4. Neovim -- clone the separate repo instead of symlinking::
 

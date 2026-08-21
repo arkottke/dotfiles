@@ -1,9 +1,12 @@
-" Pure-builtin Vim configuration.
-"
-" Companion to ~/.config/nvim (a from-scratch, zero-plugin Neovim config):
-" same keymaps and feel, but for systems that only have stock Vim. This is
-" a single self-contained file -- no plugin manager, no submodules, nothing
-" to install beyond Vim itself. Copy it to ~/.vimrc on any machine.
+" Companion to ~/.config/nvim (a plugin-based kickstart.nvim fork, managed
+" via vim.pack): same keymaps and feel, but for systems that only have
+" stock Vim. Most of that parity is still hand-rolled Vimscript below with
+" no dependencies beyond Vim itself, but a handful of genuine gaps (indent
+" detection, colorscheme, fuzzy pickers) are filled by a few small plugins
+" via vim-plug, chosen to have no external tooling dependency of their own
+" (no tree-sitter, no Node, no LSP servers). Copy this file to ~/.vimrc and
+" the plugin runtime dirs under ~/.vim/ on any machine; vim-plug bootstraps
+" itself on first launch.
 "
 " The one feature Neovim has that Vim fundamentally does not is a builtin
 " LSP client. There is no way to fake that without a plugin, so this file
@@ -22,6 +25,38 @@
 set nocompatible
 syntax enable
 filetype plugin indent on
+
+" [[ Plugin manager: vim-plug ]]
+" Self-installing -- clones plug.vim on first launch, then installs the
+" plugins below and re-sources this file. Kept to a short list, each entry
+" chosen to have no external tooling dependency (no tree-sitter, no Node,
+" no LSP servers): fzf installs its own binary via vim-plug's 'do' hook
+" rather than requiring one pre-installed.
+let s:plug_vim = expand('~/.vim/autoload/plug.vim')
+if empty(glob(s:plug_vim))
+  silent execute '!curl -fLo ' . s:plug_vim . ' --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+  " Indent auto-detection -- parity with guess-indent.nvim, no equivalent
+  " existed here before.
+  Plug 'tpope/vim-sleuth'
+  " Matches ~/.config/nvim's actual active colorscheme (catppuccin-frappe,
+  " set in custom/plugins/catppuccin.lua).
+  Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+  " Fuzzy pickers -- upgrades the inputlist()-based Section 3 pickers to
+  " something closer to Telescope, on the same <leader>s* keys.
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
+call plug#end()
+
+" NOTE: surround/leap/which-key/gitsigns/tmux-navigation are deliberately
+" NOT plugins -- Section 8 below already hand-rolls working, keymap-matched
+" Vimscript for all of them, and replacing working code with a plugin
+" equivalent would trade tested behavior for regression risk with no
+" functional gain.
 
 let mapleader = ' '
 let maplocalleader = ' '
@@ -91,9 +126,15 @@ endif
 " SECTION 2: UI
 " ============================================================
 try
-  colorscheme habamax
+  colorscheme catppuccin_frappe
 catch
-  colorscheme desert
+  " Plugin not installed yet (fresh clone, before :PlugInstall has run) --
+  " degrade gracefully instead of erroring at startup.
+  try
+    colorscheme habamax
+  catch
+    colorscheme desert
+  endtry
 endtry
 
 " netrw as the file explorer, same as the nvim config's `-`.
@@ -144,8 +185,9 @@ augroup END
 
 " ============================================================
 " SECTION 3: SEARCH & NAVIGATION
-" vim.ui.select's closest builtin equivalent is inputlist(); quickfix
-" (populated via :grep, wired to ripgrep) replaces the Telescope pickers.
+" fzf.vim provides the fuzzy pickers here (parity with Telescope in the
+" nvim config); grep/diagnostics/open-files search stay hand-rolled since
+" there's no fzf.vim equivalent worth wrapping and no LSP to query.
 " ============================================================
 if executable('rg')
   set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --glob=!.git
@@ -159,6 +201,12 @@ try
 catch
 endtry
 
+" Match the old hand-rolled pickers' fd-first, hidden-but-not-.git file
+" listing preference.
+if executable('fd')
+  let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --exclude .git'
+endif
+
 function! s:PickFromList(items, prompt) abort
   if empty(a:items) | return -1 | endif
   let l:display = [a:prompt]
@@ -170,48 +218,12 @@ function! s:PickFromList(items, prompt) abort
   return l:choice - 1
 endfunction
 
-function! s:SearchHelp() abort
-  call feedkeys(':help ', 'n')
-endfunction
-
-function! s:SearchKeymaps() abort
-  if exists('*maplist')
-    let l:items = []
-    for l:m in maplist()
-      if get(l:m, 'buffer', 0) isnot 0 | continue | endif
-      call add(l:items, printf('[%s] %-18s %s', l:m.mode, l:m.lhs, l:m.rhs))
-    endfor
-    call s:PickFromList(l:items, 'Keymaps:')
-  else
-    redir => l:out
-    silent map
-    redir END
-    new
-    setlocal buftype=nofile bufhidden=wipe noswapfile
-    call setline(1, split(l:out, '\n'))
-  endif
-endfunction
-
-function! s:SearchFiles(...) abort
-  let l:cwd = a:0 > 0 ? a:1 : getcwd()
-  if executable('fd')
-    let l:cmd = 'fd --type f --hidden --exclude .git . ' . shellescape(l:cwd)
-  elseif executable('rg')
-    let l:cmd = 'rg --files --hidden --glob !.git ' . shellescape(l:cwd)
-  else
-    let l:cmd = 'find ' . shellescape(l:cwd) . ' -type f -not -path "*/.git/*"'
-  endif
-  let l:files = systemlist(l:cmd)
-  if len(l:files) > 200 | let l:files = l:files[0:199] | endif
-  let l:idx = s:PickFromList(l:files, 'Files:')
-  if l:idx >= 0 | execute 'edit ' . fnameescape(l:files[l:idx]) | endif
-endfunction
-
 function! s:SearchGrep(...) abort
-  let l:pattern = a:0 > 0 && a:1 !=# '' ? a:1 : input('Grep: ')
-  if l:pattern ==# '' | return | endif
-  silent! execute 'grep! ' . shellescape(l:pattern)
-  copen
+  if a:0 > 0 && a:1 !=# ''
+    execute 'Rg ' . a:1
+  else
+    Rg
+  endif
 endfunction
 
 function! s:SearchWord() abort
@@ -243,53 +255,28 @@ function! s:SearchDiagnostics() abort
   echo 'No diagnostics: Vim has no builtin LSP'
 endfunction
 
-function! s:SearchOldfiles() abort
-  let l:files = filter(copy(v:oldfiles), 'filereadable(v:val)')
-  let l:idx = s:PickFromList(l:files, 'Recent files:')
-  if l:idx >= 0 | execute 'edit ' . fnameescape(l:files[l:idx]) | endif
-endfunction
-
-function! s:SearchCommands() abort
-  let l:cmds = getcompletion('', 'command')
-  let l:idx = s:PickFromList(l:cmds, 'Command:')
-  if l:idx >= 0 | call feedkeys(':' . l:cmds[l:idx] . ' ', 'n') | endif
-endfunction
-
-function! s:SearchBuffers() abort
-  let l:bufs = []
-  let l:nums = []
-  for l:b in range(1, bufnr('$'))
-    if buflisted(l:b)
-      call add(l:bufs, bufname(l:b) !=# '' ? bufname(l:b) : '[No Name #' . l:b . ']')
-      call add(l:nums, l:b)
-    endif
-  endfor
-  let l:idx = s:PickFromList(l:bufs, 'Buffers:')
-  if l:idx >= 0 | execute 'buffer ' . l:nums[l:idx] | endif
-endfunction
-
 function! s:SearchMenu() abort
   let l:actions = ['Help', 'Keymaps', 'Files', 'Grep', 'Diagnostics', 'Recent Files', 'Commands', 'Buffers']
-  let l:fns = ['SearchHelp', 'SearchKeymaps', 'SearchFiles', 'SearchGrep', 'SearchDiagnostics', 'SearchOldfiles', 'SearchCommands', 'SearchBuffers']
+  let l:cmds = ['Helptags', 'Maps', 'Files', 'Rg', 'call s:SearchDiagnostics()', 'History', 'Commands', 'Buffers']
   let l:idx = s:PickFromList(l:actions, 'Search:')
-  if l:idx >= 0 | call call('s:' . l:fns[l:idx], []) | endif
+  if l:idx >= 0 | execute l:cmds[l:idx] | endif
 endfunction
 
-nnoremap <silent> <leader>sh :call <SID>SearchHelp()<CR>
-nnoremap <silent> <leader>sk :call <SID>SearchKeymaps()<CR>
-nnoremap <silent> <leader>sf :call <SID>SearchFiles()<CR>
+nnoremap <silent> <leader>sh :Helptags<CR>
+nnoremap <silent> <leader>sk :Maps<CR>
+nnoremap <silent> <leader>sf :Files<CR>
 nnoremap <silent> <leader>ss :call <SID>SearchMenu()<CR>
 nnoremap <silent> <leader>sw :call <SID>SearchWord()<CR>
 xnoremap <silent> <leader>sw :call <SID>SearchWordVisual()<CR>
-nnoremap <silent> <leader>sg :call <SID>SearchGrep()<CR>
+nnoremap <silent> <leader>sg :Rg<CR>
 nnoremap <silent> <leader>sd :call <SID>SearchDiagnostics()<CR>
 nnoremap <silent> <leader>sr :copen<CR>
-nnoremap <silent> <leader>s. :call <SID>SearchOldfiles()<CR>
-nnoremap <silent> <leader>sc :call <SID>SearchCommands()<CR>
-nnoremap <silent> <leader><leader> :call <SID>SearchBuffers()<CR>
+nnoremap <silent> <leader>s. :History<CR>
+nnoremap <silent> <leader>sc :Commands<CR>
+nnoremap <silent> <leader><leader> :Buffers<CR>
 nnoremap <leader>/ /
 nnoremap <silent> <leader>s/ :call <SID>SearchOpenFiles()<CR>
-nnoremap <silent> <leader>sn :call <SID>SearchFiles(expand('$MYVIMRC:h'))<CR>
+nnoremap <silent> <leader>sn :execute 'Files ' . expand('$MYVIMRC:h')<CR>
 
 " ============================================================
 " SECTION 4: LSP APPROXIMATION
