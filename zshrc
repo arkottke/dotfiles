@@ -46,21 +46,18 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Need to move the FASD cache directory outside of ~/.cache because that is cleared at reboot
-export _FASD_DATA="$HOME/.fasd"
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode colorize docker extract fasd fzf git ssh-agent sudo tmux zsh-autosuggestions)
+plugins=(vi-mode colorize docker extract zoxide fzf git ssh-agent sudo tmux zsh-autosuggestions)
 
 # User configuration
 autoload -U zmv
 # setopt HIST_FIND_NO_DUPS
 
 # Add local to path
-export PATH="$HOME/.local/bin:$PATH:/opt/geopsy/bin"
+export PATH="$HOME/.local/bin:$HOME/.fzf/bin:$PATH:/opt/geopsy/bin"
 
 source $ZSH/oh-my-zsh.sh
 
