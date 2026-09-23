@@ -10,7 +10,7 @@
     pager = delta
 	autocrlf = input
 [pull]
-	rebase = true
+	rebase = merges
 [fetch]
 	prune = true
 [diff]
