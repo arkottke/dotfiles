@@ -167,9 +167,6 @@ if [[ -f /home/albert/.config/op/plugins.sh ]]; then
     source /home/albert/.config/op/plugins.sh
 fi
 
-# Created by `userpath` on 2025-05-23 16:51:07
-export PATH="$PATH:/home/albert/.local/share/hatch/pythons/3.12/python/bin"
-
 export ANDROID_HOME=/home/albert/Android/Sdk
 export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
 
@@ -178,17 +175,6 @@ bindkey "^y" expand-or-complete
 
 # Fix Kitty terminal ssh completion error
 zstyle ':completion:*:*:(ssh|scp|sftp):*' matcher-list ''
-
-# >>> juliaup initialize >>>
-
-# !! Contents within this block are managed by juliaup !!
-
-path=('/home/albert/.juliaup/bin' $path)
-export PATH
-# Tab completion for juliaup and julia channel selection
-[ -f "/home/albert/.julia/juliaup/completions/zsh.zsh" ] && source "/home/albert/.julia/juliaup/completions/zsh.zsh"
-
-# <<< juliaup initialize <<<
 
 # >>> claude-auto-retry >>>
 # Drop any pre-existing `claude` alias (Claude Code's own installer adds one)
@@ -231,4 +217,3 @@ claude() {
   return $_car_exit
 }
 # <<< claude-auto-retry <<<
-
